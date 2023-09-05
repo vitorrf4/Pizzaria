@@ -1,14 +1,14 @@
 namespace pizzaria;
 
-public class Acompanhamento
+public class Regiao
 {
     private int id;
     private string nome;
-    private double preco;
+    private string preco;
 
-    public Acompanhamento() { }
+    public Regiao() { }
 
-    public Acompanhamento(int id, string nome, double preco)
+    public Regiao(int id, string nome, string preco)
     {
         this.id = id;
         this.nome = nome;
@@ -26,8 +26,8 @@ public class Acompanhamento
         get => nome;
         set => nome = value;
     }
-    
-    public double Preco
+
+    public string Preco
     {
         get => preco;
         set => preco = value;

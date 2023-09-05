@@ -1,32 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Aluno\\Desktop\\V\\04-09\\API_Estacionamento.csproj": {}
+    "/home/vitor/Pizzaria/API_Estacionamento.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Aluno\\Desktop\\V\\04-09\\API_Estacionamento.csproj": {
+    "/home/vitor/Pizzaria/API_Estacionamento.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Aluno\\Desktop\\V\\04-09\\API_Estacionamento.csproj",
+        "projectUniqueName": "/home/vitor/Pizzaria/API_Estacionamento.csproj",
         "projectName": "API_Estacionamento",
-        "projectPath": "C:\\Users\\Aluno\\Desktop\\V\\04-09\\API_Estacionamento.csproj",
-        "packagesPath": "C:\\Users\\Aluno\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Aluno\\Desktop\\V\\04-09\\obj\\",
+        "projectPath": "/home/vitor/Pizzaria/API_Estacionamento.csproj",
+        "packagesPath": "/home/vitor/.nuget/packages/",
+        "outputPath": "/home/vitor/Pizzaria/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Aluno\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/home/vitor/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -73,7 +66,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/snap/dotnet-sdk/218/sdk/7.0.400/RuntimeIdentifierGraph.json"
         }
       }
     }
