@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace pizzaria;
 
 public class Cliente 
@@ -10,11 +12,12 @@ public class Cliente
 
     public Cliente(string cpf, string nome, string telefone)
     {
-        this._cpf = cpf;
-        this._nome = nome;
-        this._telefone = telefone;
+        _cpf = cpf;
+        _nome = nome;
+        _telefone = telefone;
     }
 
+    [Key]
     public string Cpf
     {
         get => _cpf;

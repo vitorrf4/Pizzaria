@@ -1,5 +1,3 @@
-using System.Security.Cryptography;
-
 namespace pizzaria;
 
 public class Tamanho
