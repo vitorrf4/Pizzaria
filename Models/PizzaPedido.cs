@@ -1,73 +1,80 @@
 namespace pizzaria;
 using System;
-using System.Collections;
 
 public class PizzaPedido 
 {
-    private int id;
-    private List<Sabor> sabores = new();
-    private double preco;
-    private Tamanho tamanho;
+    private int _id;
+    private List<Sabor> _sabores = new();
+    private double _preco;
+    private Tamanho _tamanho;
 
-    public PizzaPedido() { }
+    public PizzaPedido(Sabor frango) { }
 
     public PizzaPedido(List<Sabor> sabores, Tamanho tamanho)
     {
-        this.sabores = sabores;
-        this.tamanho = tamanho;
-        calcularPreco();
+        _sabores = sabores;
+        _tamanho = tamanho;
+        CalcularPreco();
     }
 
     public int Id
     {
-        get => id;
-        set => id = value;
+        get => _id;
+        set => _id = value;
     }
 
     public List<Sabor> Sabores
     {
-        get => sabores;
-        set => sabores = value;
+        get => _sabores;
+        set => _sabores = value;
     }
 
     public double Preco
     {
-        get => preco;
-        set => preco = value;
+        get => _preco;
+        set => _preco = value;
     }
 
     public Tamanho Tamanho
     {
-        get => tamanho;
-        set => tamanho = value;
+        get => _tamanho;
+        set => _tamanho = value;
     }
 
-    public void calcularPreco()
+    private double CalcularPreco()
     {
         // preco = ((sabor1 + sabor2...saborN) / quantidade de sabores) + (preco * tamanho)
 
-        double precoTotal = 0;
+        double precoTotal = 0.0;
 
-        foreach(Sabor sabor in sabores)
+        foreach(Sabor sabor in _sabores)
         {
             precoTotal += sabor.Preco;
         }
 
-        if (sabores.Count > 0)
-            precoTotal = precoTotal / sabores.Count;
+        if (_sabores.Count > 0)
+        {
+            precoTotal = precoTotal / _sabores.Count;
+        }
 
-        precoTotal += precoTotal * tamanho.Preco;
+        precoTotal += precoTotal * (_tamanho.Preco / 100.0);
 
-        this.preco = precoTotal;
+        _preco = precoTotal;
+        return _preco;
     }
 
     override public string ToString()
     {
-        Console.Write($"Pedido {id} | ");
         Console.Write($"Sabores: ");
-        sabores.ForEach(s => Console.Write(s.Nome + ", "));
-        Console.Write($"| Tamanho: {tamanho.Nome} | ");
-        Console.Write($"Preço: {preco}");
+        for (int i = 0; i < _sabores.Count; i++)
+        {
+            Console.Write(_sabores[i].Nome);
+            if (i != (_sabores.Count - 1))
+                Console.Write(", ");
+        }
+
+        Console.Write($" | Tamanho: {_tamanho.Nome} | ");
+        Console.Write($"Preço: R${_preco}");
 
         return "";
     }

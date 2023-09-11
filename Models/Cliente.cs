@@ -2,34 +2,39 @@ namespace pizzaria;
 
 public class Cliente 
 {
-    public string cpf;
-    public string nome;
-    public string telefone;
+    private string _cpf;
+    private string _nome;
+    private string _telefone;
 
     public Cliente() { }
 
     public Cliente(string cpf, string nome, string telefone)
     {
-        this.cpf = cpf;
-        this.nome = nome;
-        this.telefone = telefone;
+        this._cpf = cpf;
+        this._nome = nome;
+        this._telefone = telefone;
     }
 
     public string Cpf
     {
-        get => cpf;
-        set => cpf = value;
+        get => _cpf;
+        set => _cpf = value;
     }
 
     public string Nome
     {
-        get => nome;
-        set => nome = value;
+        get => _nome;
+        set => _nome = value;
     }
 
     public string Telefone
     {
-        get => telefone;
-        set => telefone = value;
+        get => _telefone;
+        set => _telefone = value;
+    }
+
+    public override string ToString()
+    {
+        return $"CPF: {_cpf} | Nome: {_nome} | Telefone: {_telefone}";
     }
 }

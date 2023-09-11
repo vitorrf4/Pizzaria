@@ -2,35 +2,39 @@ namespace pizzaria;
 
 public class Acompanhamento
 {
-    private int id;
-    private string nome;
-    private double preco;
+    private int _id;
+    private string _nome;
+    private double _preco;
 
     public Acompanhamento() { }
 
     public Acompanhamento(int id, string nome, double preco)
     {
-        this.id = id;
-        this.nome = nome;
-        this.preco = preco;
+        _id = id;
+        _nome = nome;
+        _preco = preco;
     }
 
     public int Id
     {
-        get => id;
-        set => id = value;
+        get => _id;
+        set => _id = value;
     }
 
     public string Nome
     {
-        get => nome;
-        set => nome = value;
+        get => _nome;
+        set => _nome = value;
     }
     
     public double Preco
     {
-        get => preco;
-        set => preco = value;
+        get => _preco;
+        set => _preco = value;
     }
 
+    public override string ToString()
+    {
+        return $"ID: {_id} | Nome: {_nome} | Preço: {_preco}";
+    }
 }

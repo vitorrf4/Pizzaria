@@ -2,35 +2,40 @@ namespace pizzaria;
 
 public class Regiao
 {
-    private int id;
-    private string nome;
-    private string preco;
+    private int _id;
+    private string _nome;
+    private double _preco;
 
     public Regiao() { }
 
-    public Regiao(int id, string nome, string preco)
+    public Regiao(int id, string nome, double preco)
     {
-        this.id = id;
-        this.nome = nome;
-        this.preco = preco;
+        _id = id;
+        _nome = nome;
+        _preco = preco;
     }
 
     public int Id
     {
-        get => id;
-        set => id = value;
+        get => _id;
+        set => _id = value;
     }
 
     public string Nome
     {
-        get => nome;
-        set => nome = value;
+        get => _nome;
+        set => _nome = value;
     }
 
-    public string Preco
+    public double Preco
     {
-        get => preco;
-        set => preco = value;
+        get => _preco;
+        set => _preco = value;
+    }
+
+    public override string ToString()
+    {
+        return $"Região: {_nome} | Preço Frete: R${_preco}";
     }
 
 }

@@ -1,25 +1,28 @@
 {
   "format": 1,
   "restore": {
-    "/home/vitor/Pizzaria/API_Estacionamento.csproj": {}
+    "c:\\Users\\Vitor\\Pizzaria\\API_Estacionamento.csproj": {}
   },
   "projects": {
-    "/home/vitor/Pizzaria/API_Estacionamento.csproj": {
+    "c:\\Users\\Vitor\\Pizzaria\\API_Estacionamento.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/vitor/Pizzaria/API_Estacionamento.csproj",
+        "projectUniqueName": "c:\\Users\\Vitor\\Pizzaria\\API_Estacionamento.csproj",
         "projectName": "API_Estacionamento",
-        "projectPath": "/home/vitor/Pizzaria/API_Estacionamento.csproj",
-        "packagesPath": "/home/vitor/.nuget/packages/",
-        "outputPath": "/home/vitor/Pizzaria/obj/",
+        "projectPath": "c:\\Users\\Vitor\\Pizzaria\\API_Estacionamento.csproj",
+        "packagesPath": "C:\\Users\\Vitor\\.nuget\\packages\\",
+        "outputPath": "c:\\Users\\Vitor\\Pizzaria\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/vitor/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\Vitor\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\sdk\\7.0.307\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -66,7 +69,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/snap/dotnet-sdk/218/sdk/7.0.400/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.307\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -1,35 +1,41 @@
+using System.Security.Cryptography;
+
 namespace pizzaria;
 
 public class Tamanho
 {
-    private string nome;
-    private int qntdFatias;
-    private double preco;
+    private string _nome;
+    private int _qntdFatias;
+    private double _preco;
 
     public Tamanho() { }
 
     public Tamanho(string nome, int qntdFatias,double preco) 
     { 
-        this.nome = nome;
-        this.qntdFatias = qntdFatias;
-        this.preco = preco;
+        _nome = nome;
+        _qntdFatias = qntdFatias;
+        _preco = preco;
     }
 
     public string Nome
     {
-        get => nome;
-        set => this.nome = value;
+        get => _nome;
+        set => _nome = value;
     }
 
     public int QntdFatias
     {
-        get => qntdFatias;
-        set => this.qntdFatias = value;
+        get => _qntdFatias;
+        set => _qntdFatias = value;
     }
 
     public double Preco
     {
-        get => preco;
-        set => this.preco = value;
+        get => _preco;
+        set => _preco = value;
+    }
+    public override string ToString()
+    {
+        return $"Nome: {_nome} | Quantidade de Fatias: {_qntdFatias} | Preço: {_preco}";
     }
 }
