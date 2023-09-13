@@ -6,7 +6,7 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v7.0": {
-      "API_Estacionamento/1.0.0": {
+      "Pizzaria/1.0.0": {
         "dependencies": {
           "Microsoft.AspNetCore.OpenApi": "7.0.10",
           "Microsoft.EntityFrameworkCore": "7.0.10",
@@ -16,7 +16,7 @@
           "Swashbuckle.AspNetCore": "6.5.0"
         },
         "runtime": {
-          "API_Estacionamento.dll": {}
+          "Pizzaria.dll": {}
         }
       },
       "Humanizer.Core/2.14.1": {
@@ -871,7 +871,7 @@
     }
   },
   "libraries": {
-    "API_Estacionamento/1.0.0": {
+    "Pizzaria/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

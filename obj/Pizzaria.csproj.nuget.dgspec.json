@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\Vitor\\downloads\\pizzaria\\API_Estacionamento.csproj": {}
+    "C:\\Users\\Vitor\\downloads\\pizzaria\\Pizzaria.csproj": {}
   },
   "projects": {
-    "c:\\Users\\Vitor\\downloads\\pizzaria\\API_Estacionamento.csproj": {
+    "C:\\Users\\Vitor\\downloads\\pizzaria\\Pizzaria.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\Vitor\\downloads\\pizzaria\\API_Estacionamento.csproj",
-        "projectName": "API_Estacionamento",
-        "projectPath": "c:\\Users\\Vitor\\downloads\\pizzaria\\API_Estacionamento.csproj",
+        "projectUniqueName": "C:\\Users\\Vitor\\downloads\\pizzaria\\Pizzaria.csproj",
+        "projectName": "Pizzaria",
+        "projectPath": "C:\\Users\\Vitor\\downloads\\pizzaria\\Pizzaria.csproj",
         "packagesPath": "C:\\Users\\Vitor\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\Vitor\\downloads\\pizzaria\\obj\\",
+        "outputPath": "C:\\Users\\Vitor\\downloads\\pizzaria\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Vitor\\AppData\\Roaming\\NuGet\\NuGet.Config",
