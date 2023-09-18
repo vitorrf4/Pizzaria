@@ -67,4 +67,13 @@ public class ClienteController : ControllerBase // nosso controller precisa herd
         await _context.SaveChangesAsync(); // salva as alterações no banco
         return Created("", cliente);
     }
+
+    [HttpPut]
+    [Route("alterar")]
+    public async Task<ActionResult> Alterar(Cliente cliente)
+    {
+        _context.Cliente.Update(cliente);
+        await _context.SaveChangesAsync();
+        return Ok();
+    }
 }
