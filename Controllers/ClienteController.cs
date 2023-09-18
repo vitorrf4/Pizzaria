@@ -76,4 +76,16 @@ public class ClienteController : ControllerBase // nosso controller precisa herd
         await _context.SaveChangesAsync();
         return Ok();
     }
+
+    [HttpDelete]
+    [Route("excluir/{cpf}")]
+    public async Task<ActionResult> Deletar(string cpf)
+    {
+        var cliente = await _context.Cliente.FindAsync(cpf);
+        if (cliente == null) return NotFound();
+        
+        _context.Cliente.Remove(cliente);
+        await _context.SaveChangesAsync();
+        return NoContent();
+    }
 }
