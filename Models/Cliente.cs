@@ -17,7 +17,7 @@ public class Cliente
         _telefone = telefone;
     }
 
-    [Key]
+    [Key] // chave primária no banco de dados
     public string Cpf
     {
         get => _cpf;
