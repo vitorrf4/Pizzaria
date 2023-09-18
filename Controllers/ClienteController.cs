@@ -58,13 +58,13 @@ public class ClienteController : ControllerBase // nosso controller precisa herd
 
     [HttpPost]
     [Route("cadastrar")]
-    public ActionResult<Cliente> Cadastrar(Cliente cliente) // Como é um tipo complexo, o objeto Cliente virá do corpo da requisiçao, não da url
+    public async Task<ActionResult<Cliente>> Cadastrar(Cliente cliente) // Como é um tipo complexo, o objeto Cliente virá do corpo da requisiçao, não da url
     {
         if (_context.Cliente.Contains(cliente))
             return Conflict("Um cliente com esse CPF já está cadastrado");
 
-        _context.Add(cliente); // adiciona o objeto Cliente mandado no corpo da requisição no banco
-        _context.SaveChanges(); // salva as alterações no banco
+        await _context.AddAsync(cliente); // adiciona o objeto Cliente mandado no corpo da requisição no banco
+        await _context.SaveChangesAsync(); // salva as alterações no banco
         return Created("", cliente);
     }
 }
