@@ -78,14 +78,26 @@ public class ClienteController : ControllerBase // nosso controller precisa herd
     }
 
     [HttpDelete]
-    [Route("excluir/{cpf}")]
+    [Route("deletar/{cpf}")]
     public async Task<ActionResult> Deletar(string cpf)
     {
         var cliente = await _context.Cliente.FindAsync(cpf);
         if (cliente == null) return NotFound();
-        
+
         _context.Cliente.Remove(cliente);
         await _context.SaveChangesAsync();
         return NoContent();
+    }
+
+    [HttpPatch]
+    [Route("/mudar_telefone/{cpf}")]
+    public async Task<ActionResult> MudarTelefone(string cpf, [FromBody] string telefone)
+    {
+        var cliente = await _context.Cliente.FindAsync(cpf);
+        if (cliente == null) return NotFound();
+
+        cliente.Telefone = telefone;
+        await _context.SaveChangesAsync();
+        return Ok(cliente);
     }
 }
