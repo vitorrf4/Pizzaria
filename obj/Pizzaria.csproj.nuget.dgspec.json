@@ -1,28 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Vitor\\downloads\\pizzaria\\Pizzaria.csproj": {}
+    "/Users/cleantoamorim/Developer/Study/Universidade_Positivo/desenvolvimento-de-software-visual/pizzaria/Pizzaria/Pizzaria.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Vitor\\downloads\\pizzaria\\Pizzaria.csproj": {
+    "/Users/cleantoamorim/Developer/Study/Universidade_Positivo/desenvolvimento-de-software-visual/pizzaria/Pizzaria/Pizzaria.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Vitor\\downloads\\pizzaria\\Pizzaria.csproj",
+        "projectUniqueName": "/Users/cleantoamorim/Developer/Study/Universidade_Positivo/desenvolvimento-de-software-visual/pizzaria/Pizzaria/Pizzaria.csproj",
         "projectName": "Pizzaria",
-        "projectPath": "C:\\Users\\Vitor\\downloads\\pizzaria\\Pizzaria.csproj",
-        "packagesPath": "C:\\Users\\Vitor\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Vitor\\downloads\\pizzaria\\obj\\",
+        "projectPath": "/Users/cleantoamorim/Developer/Study/Universidade_Positivo/desenvolvimento-de-software-visual/pizzaria/Pizzaria/Pizzaria.csproj",
+        "packagesPath": "/Users/cleantoamorim/.nuget/packages/",
+        "outputPath": "/Users/cleantoamorim/Developer/Study/Universidade_Positivo/desenvolvimento-de-software-visual/pizzaria/Pizzaria/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Vitor\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/cleantoamorim/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\sdk\\7.0.308\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
+          "/usr/local/share/dotnet/sdk/7.0.306/Sdks/Microsoft.NET.Sdk.Web/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -47,13 +45,17 @@
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[7.0.10, )"
+              "version": "[7.0.11, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[7.0.10, )"
+              "version": "[7.0.11, )"
+            },
+            "Microsoft.EntityFrameworkCore.InMemory": {
+              "target": "Package",
+              "version": "[7.0.11, )"
             },
             "Microsoft.EntityFrameworkCore.Sqlite": {
               "target": "Package",
@@ -87,7 +89,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.308\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.306/RuntimeIdentifierGraph.json"
         }
       }
     }

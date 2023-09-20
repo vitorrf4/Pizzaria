@@ -14,7 +14,7 @@ namespace API_Estacionamento.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "7.0.10");
+            modelBuilder.HasAnnotation("ProductVersion", "7.0.11");
 
             modelBuilder.Entity("pizzaria.Cliente", b =>
                 {
@@ -32,6 +32,31 @@ namespace API_Estacionamento.Migrations
                     b.HasKey("Cpf");
 
                     b.ToTable("Cliente");
+                });
+
+            modelBuilder.Entity("pizzaria.PedidoFinal", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ClienteCpf")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClienteCpf");
+
+                    b.ToTable("PedidoFinal");
+                });
+
+            modelBuilder.Entity("pizzaria.PedidoFinal", b =>
+                {
+                    b.HasOne("pizzaria.Cliente", "Cliente")
+                        .WithMany()
+                        .HasForeignKey("ClienteCpf");
+
+                    b.Navigation("Cliente");
                 });
 #pragma warning restore 612, 618
         }

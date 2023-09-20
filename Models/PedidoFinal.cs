@@ -1,17 +1,34 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace pizzaria;
 
 public class PedidoFinal 
 {
     private int _id;
     private Cliente _cliente;
-    private List<PizzaPedido> _pizzas = new();
+    private List<PizzaPedido> _pizzas;
     private List<AcompanhamentoPedido> _acompanhamentos;
     private double _precoTotal;
     private DateTime _horaPedido;
     private Regiao _regiao;
 
+    //Exemplo
+    //public int joao {get; set;}
+
     public PedidoFinal(){}
 
+    [Key]
+    public int Id{
+        get => _id;
+        set => _id = value;
+
+    }
+
+    public Cliente Cliente{
+        get =>  _cliente;
+        set => _cliente = value;
+
+    }
     public PedidoFinal(int id, Cliente cliente, List<PizzaPedido> pizzas, List<AcompanhamentoPedido> acompanhamentos, Regiao regiao){
         _id = id;
         _cliente = cliente;
