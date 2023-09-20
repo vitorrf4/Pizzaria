@@ -4,77 +4,63 @@ namespace pizzaria;
 
 public class PedidoFinal 
 {
-    private int _id;
-    private Cliente _cliente;
-    private List<PizzaPedido> _pizzas;
-    private List<AcompanhamentoPedido> _acompanhamentos;
-    private double _precoTotal;
-    private DateTime _horaPedido;
-    private Regiao _regiao;
-
-    //Exemplo
-    //public int joao {get; set;}
+    [Key]
+    public int Id { get; set; }
+    public Cliente Cliente { get; set; }
+    public List<PizzaPedido> Pizzas { get; set; }
+    private List<AcompanhamentoPedido> Acompanhamentos { get; set; }
+    private double PrecoTotal { get; set; }
+    private DateTime HoraPedido { get; set; }
+    private Regiao Regiao { get; set; }
 
     public PedidoFinal(){}
 
-    [Key]
-    public int Id{
-        get => _id;
-        set => _id = value;
-
-    }
-
-    public Cliente Cliente{
-        get =>  _cliente;
-        set => _cliente = value;
-
-    }
     public PedidoFinal(int id, Cliente cliente, List<PizzaPedido> pizzas, List<AcompanhamentoPedido> acompanhamentos, Regiao regiao){
-        _id = id;
-        _cliente = cliente;
-        _pizzas = pizzas;
-        _acompanhamentos = acompanhamentos;
-        _horaPedido = DateTime.Now;
-        _regiao = regiao;
+        Id = id;
+        Cliente = cliente;
+        Pizzas = pizzas;
+        Acompanhamentos = acompanhamentos;
+        HoraPedido = DateTime.Now;
+        Regiao = regiao;
         CalcularPrecoTotal();
     }
 
     private double CalcularPrecoTotal(){
         double precoPedido = 0.0;
         double precoAcompanhamento = 0.0;
-        double precoRegiao = _regiao.Preco;
+        double precoRegiao = Regiao.Preco;
 
-        foreach(PizzaPedido pizza in _pizzas)
+        foreach(PizzaPedido pizza in Pizzas)
         {
             precoPedido += pizza.Preco;
         }
 
-        foreach(AcompanhamentoPedido acompanhamento in _acompanhamentos)
+        foreach(AcompanhamentoPedido acompanhamento in Acompanhamentos)
         {
             precoAcompanhamento += acompanhamento.PrecoTotal;
         }
 
-        _precoTotal = precoPedido + precoAcompanhamento + precoRegiao;
-        return _precoTotal;
+        PrecoTotal = precoPedido + precoAcompanhamento + precoRegiao;
+        return PrecoTotal;
     }
 
     public override string ToString()
     {
         int index = 1;
 
-        Console.WriteLine($"Pedido #{_id}");
-        Console.WriteLine($"Cliente: {_cliente.Nome}");
+        Console.WriteLine($"Pedido #{Id}");
+        Console.WriteLine($"Cliente: {Cliente.Nome}");
         Console.Write($"PIZZAS \n");
-        _pizzas.ForEach(delegate(PizzaPedido pizza)
+        Pizzas.ForEach(delegate(PizzaPedido pizza)
         {
             Console.WriteLine($"Pizza #{index}: ");
             Console.WriteLine(pizza);
             index++;
         });
-        _acompanhamentos.ForEach(Console.WriteLine);
-        Console.Write(_regiao + " \n");
-        Console.Write($"Hora do Pedido: {_horaPedido} | ");
-        Console.Write($"Preço Total do Pedido: R${_precoTotal}");
+        Acompanhamentos.ForEach(Console.WriteLine);
+        Console.Write(Regiao + " \n");
+        Console.Write($"Hora do Pedido: {HoraPedido} | ");
+        Console.Write($"Preço Total do Pedido: R${PrecoTotal}");
 
         return "";
     }

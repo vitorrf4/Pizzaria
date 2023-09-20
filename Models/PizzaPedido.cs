@@ -1,44 +1,22 @@
 namespace pizzaria;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 public class PizzaPedido 
 {
-    private int _id;
-    private List<Sabor> _sabores = new();
-    private double _preco;
-    private Tamanho _tamanho;
+    [Key]
+    public int Id  { get; set; }
+    public List<Sabor> Sabores { get; set; }
+    public double Preco { get; set; }
+    public Tamanho Tamanho { get; set; }
 
-    public PizzaPedido(Sabor frango) { }
+    public PizzaPedido() { }
 
     public PizzaPedido(List<Sabor> sabores, Tamanho tamanho)
     {
-        _sabores = sabores;
-        _tamanho = tamanho;
+        Sabores = sabores;
+        Tamanho = tamanho;
         CalcularPreco();
-    }
-
-    public int Id
-    {
-        get => _id;
-        set => _id = value;
-    }
-
-    public List<Sabor> Sabores
-    {
-        get => _sabores;
-        set => _sabores = value;
-    }
-
-    public double Preco
-    {
-        get => _preco;
-        set => _preco = value;
-    }
-
-    public Tamanho Tamanho
-    {
-        get => _tamanho;
-        set => _tamanho = value;
     }
 
     private double CalcularPreco()
@@ -47,34 +25,34 @@ public class PizzaPedido
 
         double precoTotal = 0.0;
 
-        foreach(Sabor sabor in _sabores)
+        foreach(Sabor sabor in Sabores)
         {
             precoTotal += sabor.Preco;
         }
 
-        if (_sabores.Count > 0)
+        if (Sabores.Count > 0)
         {
-            precoTotal = precoTotal / _sabores.Count;
+            precoTotal = precoTotal / Sabores.Count;
         }
 
-        precoTotal += precoTotal * (_tamanho.Preco / 100.0);
+        precoTotal += precoTotal * (Tamanho.MultiplicadorPreco / 100.0);
 
-        _preco = precoTotal;
-        return _preco;
+        Preco = precoTotal;
+        return Preco;
     }
 
     override public string ToString()
     {
         Console.Write($"Sabores: ");
-        for (int i = 0; i < _sabores.Count; i++)
+        for (int i = 0; i < Sabores.Count; i++)
         {
-            Console.Write(_sabores[i].Nome);
-            if (i != (_sabores.Count - 1))
+            Console.Write(Sabores[i].Nome);
+            if (i != (Sabores.Count - 1))
                 Console.Write(", ");
         }
 
-        Console.Write($" | Tamanho: {_tamanho.Nome} | ");
-        Console.Write($"Preço: R${_preco}");
+        Console.Write($" | Tamanho: {Tamanho.Nome} | ");
+        Console.Write($"Preço: R${Preco}");
 
         return "";
     }

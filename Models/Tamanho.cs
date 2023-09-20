@@ -1,39 +1,25 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace pizzaria;
 
 public class Tamanho
 {
-    private string _nome;
-    private int _qntdFatias;
-    private double _preco;
+    [Key]
+    public string Nome { get; set; }
+    public int QntdFatias { get; set; }
+    public double MultiplicadorPreco { get; set; }
 
     public Tamanho() { }
 
     public Tamanho(string nome, int qntdFatias,double preco) 
     { 
-        _nome = nome;
-        _qntdFatias = qntdFatias;
-        _preco = preco;
+        Nome = nome;
+        QntdFatias = qntdFatias;
+        MultiplicadorPreco = preco;
     }
 
-    public string Nome
-    {
-        get => _nome;
-        set => _nome = value;
-    }
-
-    public int QntdFatias
-    {
-        get => _qntdFatias;
-        set => _qntdFatias = value;
-    }
-
-    public double Preco
-    {
-        get => _preco;
-        set => _preco = value;
-    }
     public override string ToString()
     {
-        return $"Nome: {_nome} | Quantidade de Fatias: {_qntdFatias} | Preço: {_preco}";
+        return $"Nome: {Nome} | Quantidade de Fatias: {QntdFatias} | Preço: {MultiplicadorPreco}";
     }
 }
