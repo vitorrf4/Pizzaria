@@ -1,3 +1,8 @@
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
+
 namespace pizzaria;
 
 public class Sabor 
@@ -5,36 +10,25 @@ public class Sabor
     private int _id;
     private string _nome;
     private double _preco;
+    [JsonIgnore]
+    public List<PizzaPedido> PizzaPedidos { get; set; }
 
     public Sabor() { }
 
-    public Sabor(int id, string nome, double preco)
+    public Sabor(string nome, double preco)
     {
-        _id = id;
         _nome = nome;
         _preco = preco;
     }
 
-    public int Id
-    {
-        get => _id;
-        set => _id = value;
-    }
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
+    public string ?Nome { get; set; }
+    public double Preco { get; set; }
 
-    public string Nome
-    {
-        get => _nome;
-        set => _nome = value;
-    }
-
-    public double Preco
-    {
-        get => _preco;
-        set => _preco = value;
-    }
-
-    public override string ToString()
-    {
-        return $"ID: {_id} | Nome: {_nome} | Preço: {_preco}";
-    }
+    //public override string ToString()
+    //{
+    //    return $"ID: {_id} | Nome: {_nome} | Preço: {_preco}";
+    //}
 }

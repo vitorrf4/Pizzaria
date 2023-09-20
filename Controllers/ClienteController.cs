@@ -34,15 +34,19 @@ public class ClienteController : ControllerBase
         if (cliente == null)
             return NotFound();
         
-        return cliente.ToString();
+        return Ok(cliente);
     }
 
     [HttpPost]
     [Route("cadastrar")]
     public IActionResult Cadastrar(Cliente cliente)
     {
+        if (cliente == (null))
+            return BadRequest();
+
         _context.Add(cliente);
         _context.SaveChanges();
-        return Created("", cliente);
+
+        return Created("/cliente/listar/" + cliente.Cpf, cliente);
     }
 }

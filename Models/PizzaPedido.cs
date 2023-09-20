@@ -1,14 +1,19 @@
 namespace pizzaria;
 using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 public class PizzaPedido 
 {
     private int _id;
-    private List<Sabor> _sabores = new();
     private double _preco;
     private Tamanho _tamanho;
+    private List<Sabor> _sabores = new();
+    [JsonIgnore]
+    public List<PedidoFinal> Pedidos { get; set; }
 
-    public PizzaPedido(Sabor frango) { }
+    public PizzaPedido() { }
 
     public PizzaPedido(List<Sabor> sabores, Tamanho tamanho)
     {
@@ -17,6 +22,8 @@ public class PizzaPedido
         CalcularPreco();
     }
 
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id
     {
         get => _id;
@@ -43,7 +50,7 @@ public class PizzaPedido
 
     private double CalcularPreco()
     {
-        // preco = ((sabor1 + sabor2...saborN) / quantidade de sabores) + (preco * tamanho)
+        // PREÇO TOTAL = ((sabor1 + sabor2...saborN) / quantidade de sabores) + (preco * tamanho)
 
         double precoTotal = 0.0;
 

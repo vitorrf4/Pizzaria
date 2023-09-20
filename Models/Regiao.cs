@@ -1,3 +1,6 @@
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+
 namespace pizzaria;
 
 public class Regiao
@@ -8,13 +11,14 @@ public class Regiao
 
     public Regiao() { }
 
-    public Regiao(int id, string nome, double preco)
+    public Regiao(string nome, double preco)
     {
-        _id = id;
         _nome = nome;
         _preco = preco;
     }
 
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id
     {
         get => _id;

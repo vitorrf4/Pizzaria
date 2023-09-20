@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace pizzaria;
 
 public class Tamanho
@@ -15,6 +17,7 @@ public class Tamanho
         _preco = preco;
     }
 
+    [Key]
     public string Nome
     {
         get => _nome;

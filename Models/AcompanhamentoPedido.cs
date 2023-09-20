@@ -1,3 +1,7 @@
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
+
 namespace pizzaria;
 
 public class AcompanhamentoPedido
@@ -7,16 +11,20 @@ public class AcompanhamentoPedido
     private int _quantidade;
     private double _precoTotal;
 
+    [JsonIgnore]
+    public List<PedidoFinal> Pedidos { get; set; }
+
     public AcompanhamentoPedido() { }
 
-    public AcompanhamentoPedido(int id, Acompanhamento acompanhamento, int quantidade)
+    public AcompanhamentoPedido(Acompanhamento acompanhamento, int quantidade)
     {
-        _id = id;
         _acompanhamento = acompanhamento;
         _quantidade = quantidade;
         _precoTotal = acompanhamento.Preco * quantidade;
     }
 
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id 
     {
         get => _id;

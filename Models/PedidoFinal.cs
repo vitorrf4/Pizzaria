@@ -1,3 +1,6 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace pizzaria;
 
 public class PedidoFinal 
@@ -10,10 +13,10 @@ public class PedidoFinal
     private DateTime _horaPedido;
     private Regiao _regiao;
 
-    public PedidoFinal(){}
+    public PedidoFinal(){ }
 
-    public PedidoFinal(int id, Cliente cliente, List<PizzaPedido> pizzas, List<AcompanhamentoPedido> acompanhamentos, Regiao regiao){
-        _id = id;
+    public PedidoFinal(Cliente cliente, List<PizzaPedido> pizzas, List<AcompanhamentoPedido> acompanhamentos, Regiao regiao) 
+    {
         _cliente = cliente;
         _pizzas = pizzas;
         _acompanhamentos = acompanhamentos;
@@ -22,7 +25,18 @@ public class PedidoFinal
         CalcularPrecoTotal();
     }
 
-    private double CalcularPrecoTotal(){
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
+    public Cliente Cliente { get; set; }
+    public List<PizzaPedido> Pizzas { get; set; }
+    public List<AcompanhamentoPedido> Acompanhamentos{ get; set; }
+    public double PrecoTotal { get; set; }
+    public DateTime HoraPedido { get; set; }
+    public Regiao Regiao { get; set; }
+
+    private double CalcularPrecoTotal() 
+    {
         double precoPedido = 0.0;
         double precoAcompanhamento = 0.0;
         double precoRegiao = _regiao.Preco;
@@ -57,7 +71,7 @@ public class PedidoFinal
         _acompanhamentos.ForEach(Console.WriteLine);
         Console.Write(_regiao + " \n");
         Console.Write($"Hora do Pedido: {_horaPedido} | ");
-        Console.Write($"Preço Total do Pedido: R${_precoTotal}");
+        Console.WriteLine($"Preço Total do Pedido: R${_precoTotal}");
 
         return "";
     }

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Vitor\\downloads\\pizzaria\\Pizzaria.csproj": {}
+    "C:\\Users\\Vitor\\source\\repos\\Pizzaria\\Pizzaria.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Vitor\\downloads\\pizzaria\\Pizzaria.csproj": {
+    "C:\\Users\\Vitor\\source\\repos\\Pizzaria\\Pizzaria.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Vitor\\downloads\\pizzaria\\Pizzaria.csproj",
+        "projectUniqueName": "C:\\Users\\Vitor\\source\\repos\\Pizzaria\\Pizzaria.csproj",
         "projectName": "Pizzaria",
-        "projectPath": "C:\\Users\\Vitor\\downloads\\pizzaria\\Pizzaria.csproj",
+        "projectPath": "C:\\Users\\Vitor\\source\\repos\\Pizzaria\\Pizzaria.csproj",
         "packagesPath": "C:\\Users\\Vitor\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Vitor\\downloads\\pizzaria\\obj\\",
+        "outputPath": "C:\\Users\\Vitor\\source\\repos\\Pizzaria\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Vitor\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -22,7 +22,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\sdk\\7.0.308\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -41,6 +40,10 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Mvc.Testing": {
+              "target": "Package",
+              "version": "[7.0.11, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[7.0.10, )"
@@ -87,7 +90,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.308\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     }
