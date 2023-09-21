@@ -6,11 +6,9 @@ public class PizzariaDBContext : DbContext{
     public DbSet<Cliente> Cliente { get; set; }
     public DbSet<PedidoFinal> PedidoFinal { get; set; }
 
-    public PizzariaDBContext()
+    public PizzariaDBContext() 
     {
-        //Database.EnsureDeleted();
-        //Database.Migrate();
-        Database.EnsureCreated();
+        Database.EnsureCreated(); // garante que a database seja criada caso não exista
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
