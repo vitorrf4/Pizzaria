@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Aluno\\Pizzaria\\Pizzaria.csproj": {}
+    "c:\\Users\\Aluno\\Pizzaria\\Pizzaria.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Aluno\\Pizzaria\\Pizzaria.csproj": {
+    "c:\\Users\\Aluno\\Pizzaria\\Pizzaria.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Aluno\\Pizzaria\\Pizzaria.csproj",
+        "projectUniqueName": "c:\\Users\\Aluno\\Pizzaria\\Pizzaria.csproj",
         "projectName": "Pizzaria",
-        "projectPath": "C:\\Users\\Aluno\\Pizzaria\\Pizzaria.csproj",
+        "projectPath": "c:\\Users\\Aluno\\Pizzaria\\Pizzaria.csproj",
         "packagesPath": "C:\\Users\\Aluno\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Aluno\\Pizzaria\\obj\\",
+        "outputPath": "c:\\Users\\Aluno\\Pizzaria\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

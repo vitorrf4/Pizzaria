@@ -28,13 +28,13 @@ public class PedidoFinalController : ControllerBase
 
     [HttpGet]
     [Route("listar/{id}")]
-    public async Task<ActionResult<string>> Buscar([FromRoute] int id)   
+    public async Task<ActionResult<PedidoFinal>> Buscar([FromRoute] int id)   
     {
         var PedidoFinal = await _context.PedidoFinal.FindAsync(id);
         if (PedidoFinal == null)
             return NotFound();
         
-        return PedidoFinal.ToString();
+        return Ok(PedidoFinal);
     }
 
     [HttpPost]
@@ -61,6 +61,7 @@ public class PedidoFinalController : ControllerBase
     {
         var pedidoFinal = await _context.PedidoFinal.FindAsync(id);
         if(pedidoFinal is null) return NotFound();
+        
         _context.PedidoFinal.Remove(pedidoFinal);
         await _context.SaveChangesAsync();
         return Ok();

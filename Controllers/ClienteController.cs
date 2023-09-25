@@ -22,7 +22,7 @@ public class ClienteController : ControllerBase // nosso controller precisa herd
     }
 
     [HttpGet()] // define que o método dessa rota é GET
-    [Route("buscar")] // define o caminho dessa rota como "buscar", caminho completo: https://localhost:5000/cliente/buscar
+    [Route("listar")] // define o caminho dessa rota como "listar", caminho completo: https://localhost:5000/cliente/buscar
     public async Task<ActionResult<IEnumerable<Cliente>>> ListarTodos()
     {   //                      ^
         // Task = uma ação que será executada de forma assíncrona
@@ -44,7 +44,7 @@ public class ClienteController : ControllerBase // nosso controller precisa herd
     }
 
     [HttpGet()]
-    [Route("buscar/{cpf}")]
+    [Route("listar/{cpf}")]
      // a variável "string cpf" será o {cpf} que foi mandado na url da rota, ex: https://localhost:5000/cpf/buscar/123456789-10
     public async Task<ActionResult<Cliente>> BuscarPorCPF(string cpf)
     {
@@ -76,7 +76,7 @@ public class ClienteController : ControllerBase // nosso controller precisa herd
     }
 
     [HttpDelete]
-    [Route("deletar/{cpf}")]
+    [Route("excluir/{cpf}")]
     public async Task<ActionResult> Deletar(string cpf)
     {
         var cliente = await _context.Cliente.FindAsync(cpf);

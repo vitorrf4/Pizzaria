@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "rirZUs7dCQAK0s/50OfR1YaEbFPVDuxbNuIRiZEtk0jjAFLXwZSbZXBw9QCefo20hPpbDBXCu4nt/Pk3afilLA==",
+  "dgSpecHash": "MZKu03sMwz7owDvkO0LbUa4c1/RRjF3dghzFSe11G9gaCktK+Mlb917UF5gbp4K/e4XAenmPJ2dV6oD+2JNgRA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Aluno\\Pizzaria\\Pizzaria.csproj",
+  "projectFilePath": "c:\\Users\\Aluno\\Pizzaria\\Pizzaria.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Aluno\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Aluno\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.10\\microsoft.aspnetcore.openapi.7.0.10.nupkg.sha512",
