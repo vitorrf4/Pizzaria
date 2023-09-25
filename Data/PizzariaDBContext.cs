@@ -5,6 +5,10 @@ namespace pizzaria;
 public class PizzariaDBContext : DbContext{
     public DbSet<Cliente> Cliente { get; set; }
     public DbSet<PedidoFinal> PedidoFinal { get; set; }
+    public DbSet<Acompanhamento> Acompanhamento { get; set; }
+    public DbSet<AcompanhamentoPedido> AcompanhamentoPedido { get; set; }
+    public DbSet<Sabor> Sabor { get; set; }
+    public DbSet<Tamanho> Tamanho { get; set; }
 
     public PizzariaDBContext() 
     {
