@@ -50,8 +50,7 @@ public class ClienteController : ControllerBase // nosso controller precisa herd
     {
         var cliente = await _context.Cliente.FindAsync(cpf);
 
-        if (cliente == null)
-            return NotFound("Nenhum cliente com esse CPF encontrado");
+        if (cliente == null) return NotFound("Nenhum cliente com esse CPF encontrado");
         
         return Ok(cliente);
     }
@@ -60,10 +59,9 @@ public class ClienteController : ControllerBase // nosso controller precisa herd
     [Route("cadastrar")]
     public async Task<ActionResult<Cliente>> Cadastrar(Cliente cliente) // Como é um tipo complexo, o objeto Cliente virá do corpo da requisiçao, não da url
     {
-        if (_context.Cliente.Contains(cliente))
-            return Conflict("Um cliente com esse CPF já está cadastrado");
+        if (_context.Cliente.Contains(cliente)) return Conflict("Um cliente com esse CPF já está cadastrado");
 
-        await _context.AddAsync(cliente); // adiciona o objeto Cliente mandado no corpo da requisição no banco
+        await _context.AddAsync(cliente); // adiciona o objeto Cliente, mandado no corpo da requisição, no banco
         await _context.SaveChangesAsync(); // salva as alterações no banco
         return Created("", cliente);
     }
@@ -90,7 +88,7 @@ public class ClienteController : ControllerBase // nosso controller precisa herd
     }
 
     [HttpPatch]
-    [Route("/mudar_telefone/{cpf}")]
+    [Route("mudar-telefone/{cpf}")]
     public async Task<ActionResult> MudarTelefone(string cpf, [FromBody] string telefone)
     {
         var cliente = await _context.Cliente.FindAsync(cpf);

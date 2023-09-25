@@ -8,19 +8,19 @@ public class PedidoFinal
     public int Id { get; set; }
     public Cliente Cliente { get; set; }
     public List<PizzaPedido> Pizzas { get; set; }
-    private List<AcompanhamentoPedido> Acompanhamentos { get; set; }
-    private double PrecoTotal { get; set; }
-    private DateTime HoraPedido { get; set; }
-    private Regiao Regiao { get; set; }
+    public List<AcompanhamentoPedido> Acompanhamentos { get; set; }
+    public DateTime HoraPedido { get; set; } = DateTime.Now;
+    public Regiao Regiao { get; set; }
+    public double PrecoTotal { get; private set; }
 
-    public PedidoFinal(){}
+    public PedidoFinal(){ }
 
-    public PedidoFinal(int id, Cliente cliente, List<PizzaPedido> pizzas, List<AcompanhamentoPedido> acompanhamentos, Regiao regiao){
+    public PedidoFinal(int id, Cliente cliente, List<PizzaPedido> pizzas, List<AcompanhamentoPedido> acompanhamentos, Regiao regiao)
+    {
         Id = id;
         Cliente = cliente;
         Pizzas = pizzas;
         Acompanhamentos = acompanhamentos;
-        HoraPedido = DateTime.Now;
         Regiao = regiao;
         CalcularPrecoTotal();
     }
