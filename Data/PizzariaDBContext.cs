@@ -13,10 +13,7 @@ public class PizzariaDBContext : DbContext{
     public DbSet<Regiao> Regiao { get; set; }
     public DbSet<AcompanhamentoPedido> AcompanhamentoPedido { get; set; }
 
-    public PizzariaDBContext() 
-    {
-
-    }
+    public PizzariaDBContext() { }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
     {
@@ -55,7 +52,6 @@ public class PizzariaDBContext : DbContext{
 
         //cria pizza pedido
         var sabores = new List<Sabor>() { frango };
-        
         var pizzaPedido = new PizzaPedido(sabores, media);
 
         //Adiciona no Banco
