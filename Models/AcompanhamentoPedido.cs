@@ -23,6 +23,11 @@ public class AcompanhamentoPedido
         PrecoTotal = acompanhamento.Preco * quantidade;
     }
 
+    public void calcularPreco()
+    {
+        PrecoTotal = Acompanhamento.Preco * Quantidade;
+    }
+
     public override string ToString()
     {
         Console.Write($"Acompanhamento: {Acompanhamento.Nome} | ");
