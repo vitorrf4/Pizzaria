@@ -61,7 +61,6 @@ public class PizzaPedidoController : ControllerBase
 
         if (pedido.Tamanho == null || saboresPedido.Any(sabor => sabor == null)) return BadRequest();
 
-
         pedido.Sabores = saboresPedido;
         pedido.CalcularPreco();
         await _context.AddAsync(pedido);
@@ -74,20 +73,7 @@ public class PizzaPedidoController : ControllerBase
     [Route("alterar")]
     public async Task<ActionResult> Alterar(PizzaPedido pedido)
     {
-        var pedidoNoBanco = await _context.PizzaPedido.FindAsync(pedido.Id);
-
-        pedido.Sabores.ForEach(sabor => sabor = _context.Sabor.Find(sabor.Id));
-
-        if (pedidoNoBanco == null) return NotFound();
-
-        Console.WriteLine($"Pedido novo: {pedido}"); 
-        Console.WriteLine($"Pedido no Banco: {pedidoNoBanco}");
-
-        pedidoNoBanco.Sabores.ForEach(s => s.Pedidos.Clear());
-        pedidoNoBanco.Sabores = pedido.Sabores;
-        Console.WriteLine($"pedido atualizado sabores: {pedidoNoBanco.Sabores}");
-
-        _context.PizzaPedido.Update(pedidoNoBanco);
+        _context.PizzaPedido.Update(pedido);
         await _context.SaveChangesAsync();
         return Ok();
     }

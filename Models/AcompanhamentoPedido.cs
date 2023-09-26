@@ -9,7 +9,7 @@ public class AcompanhamentoPedido
     public int Id { get; set; }
     public Acompanhamento Acompanhamento { get; set; }
     public int Quantidade { get; set; }
-    public double PrecoTotal { get; set; }
+    public double PrecoTotal { get; private set; }
     [JsonIgnore]
     public List<PedidoFinal>? PedidosFinais { get; set; }
 

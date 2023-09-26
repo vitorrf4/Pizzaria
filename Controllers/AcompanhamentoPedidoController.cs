@@ -23,14 +23,18 @@ public class AcompanhamentoPedidoController : ControllerBase
         if (_context.AcompanhamentoPedido is null)
             return NotFound();
         
-        return await _context.AcompanhamentoPedido.ToListAsync();
+        return await _context.AcompanhamentoPedido.Include("Acompanhamento").ToListAsync();
     }
 
     [HttpGet]
     [Route("listar/{id}")]
     public async Task<ActionResult<AcompanhamentoPedido>> Buscar([FromRoute] int id)   
     {
-        var AcompanhamentoPedido = await _context.AcompanhamentoPedido.FindAsync(id);
+        var AcompanhamentoPedido = await _context.AcompanhamentoPedido
+        .Where(acompanhamento => acompanhamento.Id == id)
+        .Include("Acompanhamento")
+        .FirstOrDefaultAsync();
+
         if (AcompanhamentoPedido == null)
             return NotFound();
         
@@ -41,6 +45,12 @@ public class AcompanhamentoPedidoController : ControllerBase
     [Route("cadastrar")]
     public async Task<IActionResult> Cadastrar(AcompanhamentoPedido acompanhamentoPedido)
     {
+        var acompanhamentoBanco = await _context.Acompanhamento.FindAsync(acompanhamentoPedido.Acompanhamento.Id);
+        if (acompanhamentoBanco == null) return NotFound();
+        
+        acompanhamentoPedido.Acompanhamento = acompanhamentoBanco;
+        acompanhamentoPedido.calcularPreco();
+
         await _context.AddAsync(acompanhamentoPedido);
         await _context.SaveChangesAsync();
         return Created("", acompanhamentoPedido);
@@ -50,6 +60,12 @@ public class AcompanhamentoPedidoController : ControllerBase
     [Route("alterar")]
     public async Task<IActionResult> Alterar (AcompanhamentoPedido acompanhamentoPedido)
     {
+        var acompanhamentoBanco = await _context.Acompanhamento.FindAsync(acompanhamentoPedido.Acompanhamento.Id);
+        if (acompanhamentoBanco == null) return NotFound();
+        
+        acompanhamentoPedido.Acompanhamento = acompanhamentoBanco;
+        acompanhamentoPedido.calcularPreco();
+
         _context.AcompanhamentoPedido.Update(acompanhamentoPedido);
         await _context.SaveChangesAsync();
         return Ok();
