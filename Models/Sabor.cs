@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace pizzaria;
 
@@ -8,6 +9,8 @@ public class Sabor
     public int Id { get; set; }
     public string Nome { get; set; }
     public double Preco { get; set; }
+    [JsonIgnore]
+    public List<PizzaPedido>? Pedidos { get; set; } = new();
 
     public Sabor() { }
 

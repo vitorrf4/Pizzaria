@@ -28,13 +28,13 @@ public class TamanhoController : ControllerBase
 
     [HttpGet]
     [Route("listar/{id}")]
-    public async Task<ActionResult<string>> Buscar([FromRoute] int id)   
+    public async Task<ActionResult<Tamanho>> Buscar([FromRoute] int id)   
     {
         var Tamanho = await _context.Tamanho.FindAsync(id);
         if (Tamanho == null)
             return NotFound();
         
-        return Tamanho.ToString();
+        return Ok(Tamanho);
     }
 
     [HttpPost]
@@ -61,6 +61,7 @@ public class TamanhoController : ControllerBase
     {
         var tamanho = await _context.Tamanho.FindAsync(id);
         if(tamanho is null) return NotFound();
+        
         _context.Tamanho.Remove(tamanho);
         await _context.SaveChangesAsync();
         return Ok();

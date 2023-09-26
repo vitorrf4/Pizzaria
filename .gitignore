@@ -1,4 +1,5 @@
-obj
 bin
 .db-wal
 .db-shm
+.vs
+obj

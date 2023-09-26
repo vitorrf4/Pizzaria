@@ -17,6 +17,91 @@ namespace API_Estacionamento.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.11");
 
+            modelBuilder.Entity("AcompanhamentoPedidoPedidoFinal", b =>
+                {
+                    b.Property<int>("AcompanhamentosId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("PedidosFinaisId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("AcompanhamentosId", "PedidosFinaisId");
+
+                    b.HasIndex("PedidosFinaisId");
+
+                    b.ToTable("AcompanhamentoPedidoPedidoFinal");
+                });
+
+            modelBuilder.Entity("PedidoFinalPizzaPedido", b =>
+                {
+                    b.Property<int>("PedidosFinaisId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("PizzasId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("PedidosFinaisId", "PizzasId");
+
+                    b.HasIndex("PizzasId");
+
+                    b.ToTable("PedidoFinalPizzaPedido");
+                });
+
+            modelBuilder.Entity("PizzaPedidoSabor", b =>
+                {
+                    b.Property<int>("PedidosId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("SaboresId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("PedidosId", "SaboresId");
+
+                    b.HasIndex("SaboresId");
+
+                    b.ToTable("PizzaPedidoSabor");
+                });
+
+            modelBuilder.Entity("pizzaria.Acompanhamento", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<double>("Preco")
+                        .HasColumnType("REAL");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Acompanhamento");
+                });
+
+            modelBuilder.Entity("pizzaria.AcompanhamentoPedido", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("AcompanhamentoId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<double>("PrecoTotal")
+                        .HasColumnType("REAL");
+
+                    b.Property<int>("Quantidade")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AcompanhamentoId");
+
+                    b.ToTable("AcompanhamentoPedido");
+                });
+
             modelBuilder.Entity("pizzaria.Cliente", b =>
                 {
                     b.Property<string>("Cpf")
@@ -44,9 +129,20 @@ namespace API_Estacionamento.Migrations
                     b.Property<string>("ClienteCpf")
                         .HasColumnType("TEXT");
 
+                    b.Property<DateTime>("HoraPedido")
+                        .HasColumnType("TEXT");
+
+                    b.Property<double>("PrecoTotal")
+                        .HasColumnType("REAL");
+
+                    b.Property<int>("RegiaoId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ClienteCpf");
+
+                    b.HasIndex("RegiaoId");
 
                     b.ToTable("PedidoFinal");
                 });
@@ -55,9 +151,6 @@ namespace API_Estacionamento.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("PedidoFinalId")
                         .HasColumnType("INTEGER");
 
                     b.Property<double>("Preco")
@@ -69,11 +162,27 @@ namespace API_Estacionamento.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PedidoFinalId");
-
                     b.HasIndex("TamanhoNome");
 
                     b.ToTable("PizzaPedido");
+                });
+
+            modelBuilder.Entity("pizzaria.Regiao", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<double>("Preco")
+                        .HasColumnType("REAL");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Regiao");
                 });
 
             modelBuilder.Entity("pizzaria.Sabor", b =>
@@ -86,15 +195,10 @@ namespace API_Estacionamento.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("PizzaPedidoId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<double>("Preco")
                         .HasColumnType("REAL");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PizzaPedidoId");
 
                     b.ToTable("Sabor");
                 });
@@ -115,21 +219,81 @@ namespace API_Estacionamento.Migrations
                     b.ToTable("Tamanho");
                 });
 
+            modelBuilder.Entity("AcompanhamentoPedidoPedidoFinal", b =>
+                {
+                    b.HasOne("pizzaria.AcompanhamentoPedido", null)
+                        .WithMany()
+                        .HasForeignKey("AcompanhamentosId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("pizzaria.PedidoFinal", null)
+                        .WithMany()
+                        .HasForeignKey("PedidosFinaisId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PedidoFinalPizzaPedido", b =>
+                {
+                    b.HasOne("pizzaria.PedidoFinal", null)
+                        .WithMany()
+                        .HasForeignKey("PedidosFinaisId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("pizzaria.PizzaPedido", null)
+                        .WithMany()
+                        .HasForeignKey("PizzasId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PizzaPedidoSabor", b =>
+                {
+                    b.HasOne("pizzaria.PizzaPedido", null)
+                        .WithMany()
+                        .HasForeignKey("PedidosId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("pizzaria.Sabor", null)
+                        .WithMany()
+                        .HasForeignKey("SaboresId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("pizzaria.AcompanhamentoPedido", b =>
+                {
+                    b.HasOne("pizzaria.Acompanhamento", "Acompanhamento")
+                        .WithMany()
+                        .HasForeignKey("AcompanhamentoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Acompanhamento");
+                });
+
             modelBuilder.Entity("pizzaria.PedidoFinal", b =>
                 {
                     b.HasOne("pizzaria.Cliente", "Cliente")
                         .WithMany()
                         .HasForeignKey("ClienteCpf");
 
+                    b.HasOne("pizzaria.Regiao", "Regiao")
+                        .WithMany()
+                        .HasForeignKey("RegiaoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Cliente");
+
+                    b.Navigation("Regiao");
                 });
 
             modelBuilder.Entity("pizzaria.PizzaPedido", b =>
                 {
-                    b.HasOne("pizzaria.PedidoFinal", null)
-                        .WithMany("Pizzas")
-                        .HasForeignKey("PedidoFinalId");
-
                     b.HasOne("pizzaria.Tamanho", "Tamanho")
                         .WithMany()
                         .HasForeignKey("TamanhoNome")
@@ -137,23 +301,6 @@ namespace API_Estacionamento.Migrations
                         .IsRequired();
 
                     b.Navigation("Tamanho");
-                });
-
-            modelBuilder.Entity("pizzaria.Sabor", b =>
-                {
-                    b.HasOne("pizzaria.PizzaPedido", null)
-                        .WithMany("Sabores")
-                        .HasForeignKey("PizzaPedidoId");
-                });
-
-            modelBuilder.Entity("pizzaria.PedidoFinal", b =>
-                {
-                    b.Navigation("Pizzas");
-                });
-
-            modelBuilder.Entity("pizzaria.PizzaPedido", b =>
-                {
-                    b.Navigation("Sabores");
                 });
 #pragma warning restore 612, 618
         }

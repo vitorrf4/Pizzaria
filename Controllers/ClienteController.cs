@@ -22,7 +22,7 @@ public class ClienteController : ControllerBase // nosso controller precisa herd
     }
 
     [HttpGet()] // define que o método dessa rota é GET
-    [Route("buscar")] // define o caminho dessa rota como "buscar", caminho completo: https://localhost:5000/cliente/buscar
+    [Route("listar")] // define o caminho dessa rota como "listar", caminho completo: https://localhost:5000/cliente/buscar
     public async Task<ActionResult<IEnumerable<Cliente>>> ListarTodos()
     {   //                      ^
         // Task = uma ação que será executada de forma assíncrona
@@ -44,14 +44,13 @@ public class ClienteController : ControllerBase // nosso controller precisa herd
     }
 
     [HttpGet()]
-    [Route("buscar/{cpf}")]
+    [Route("listar/{cpf}")]
      // a variável "string cpf" será o {cpf} que foi mandado na url da rota, ex: https://localhost:5000/cpf/buscar/123456789-10
     public async Task<ActionResult<Cliente>> BuscarPorCPF(string cpf)
     {
         var cliente = await _context.Cliente.FindAsync(cpf);
 
-        if (cliente == null)
-            return NotFound("Nenhum cliente com esse CPF encontrado");
+        if (cliente == null) return NotFound("Nenhum cliente com esse CPF encontrado");
         
         return Ok(cliente);
     }
@@ -60,10 +59,9 @@ public class ClienteController : ControllerBase // nosso controller precisa herd
     [Route("cadastrar")]
     public async Task<ActionResult<Cliente>> Cadastrar(Cliente cliente) // Como é um tipo complexo, o objeto Cliente virá do corpo da requisiçao, não da url
     {
-        if (_context.Cliente.Contains(cliente))
-            return Conflict("Um cliente com esse CPF já está cadastrado");
+        if (_context.Cliente.Contains(cliente)) return Conflict("Um cliente com esse CPF já está cadastrado");
 
-        await _context.AddAsync(cliente); // adiciona o objeto Cliente mandado no corpo da requisição no banco
+        await _context.AddAsync(cliente); // adiciona o objeto Cliente, mandado no corpo da requisição, no banco
         await _context.SaveChangesAsync(); // salva as alterações no banco
         return Created("", cliente);
     }
@@ -78,7 +76,7 @@ public class ClienteController : ControllerBase // nosso controller precisa herd
     }
 
     [HttpDelete]
-    [Route("deletar/{cpf}")]
+    [Route("excluir/{cpf}")]
     public async Task<ActionResult> Deletar(string cpf)
     {
         var cliente = await _context.Cliente.FindAsync(cpf);
@@ -90,7 +88,7 @@ public class ClienteController : ControllerBase // nosso controller precisa herd
     }
 
     [HttpPatch]
-    [Route("/mudar_telefone/{cpf}")]
+    [Route("mudar-telefone/{cpf}")]
     public async Task<ActionResult> MudarTelefone(string cpf, [FromBody] string telefone)
     {
         var cliente = await _context.Cliente.FindAsync(cpf);

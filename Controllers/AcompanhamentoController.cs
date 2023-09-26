@@ -28,13 +28,13 @@ public class AcompanhamentoController : ControllerBase
 
     [HttpGet]
     [Route("listar/{id}")]
-    public async Task<ActionResult<string>> Buscar([FromRoute] int id)   
+    public async Task<ActionResult<Acompanhamento>> Buscar([FromRoute] int id)   
     {
         var Acompanhamento = await _context.Acompanhamento.FindAsync(id);
         if (Acompanhamento == null)
             return NotFound();
         
-        return Acompanhamento.ToString();
+        return Ok(Acompanhamento);
     }
 
     [HttpPost]
@@ -61,6 +61,7 @@ public class AcompanhamentoController : ControllerBase
     {
         var acompanhamento = await _context.Acompanhamento.FindAsync(id);
         if(acompanhamento is null) return NotFound();
+        
         _context.Acompanhamento.Remove(acompanhamento);
         await _context.SaveChangesAsync();
         return Ok();

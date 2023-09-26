@@ -28,13 +28,13 @@ public class SaborController : ControllerBase
 
     [HttpGet]
     [Route("listar/{id}")]
-    public async Task<ActionResult<string>> Buscar([FromRoute] int id)   
+    public async Task<ActionResult<Sabor>> Buscar([FromRoute] int id)   
     {
         var Sabor = await _context.Sabor.FindAsync(id);
         if (Sabor == null)
             return NotFound();
         
-        return Sabor.ToString();
+        return Ok(Sabor);
     }
 
     [HttpPost]
@@ -61,6 +61,7 @@ public class SaborController : ControllerBase
     {
         var sabor = await _context.Sabor.FindAsync(id);
         if(sabor is null) return NotFound();
+        
         _context.Sabor.Remove(sabor);
         await _context.SaveChangesAsync();
         return Ok();

@@ -13,7 +13,7 @@ public class PedidoFinal
     public DateTime HoraPedido { get; set; }
     public Promocao Promocao { get; set; }
 
-    public PedidoFinal(){}
+    public PedidoFinal(){ }
 
     public PedidoFinal(int id, Cliente cliente, List<PizzaPedido> pizzas, List<AcompanhamentoPedido> acompanhamentos, Promocao promocao){
         Id = id;

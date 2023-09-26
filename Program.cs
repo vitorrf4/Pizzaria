@@ -7,7 +7,17 @@ builder.Services.AddControllers(); // adiciona as classes controllers
 builder.Services.AddSwaggerGen(); // adiciona o swagger
 builder.Services.AddDbContext<PizzariaDBContext>(); // adiciona a nossa classe de banco de dados
 
+builder.Services.AddTransient<PizzariaDBContext>();
+
 var app = builder.Build(); // constrói a aplicação com as configurações do builder
+
+using var scope = app.Services.CreateScope();
+
+var services = scope.ServiceProvider;
+
+var DbContext = services.GetRequiredService<PizzariaDBContext>();
+
+//DbContext.InicializaValoresTeste(); // Delete esta linha se quiser que o banco inicie vazio
 
 if (app.Environment.IsDevelopment()) // swagger só será usado se estivermos no ambiente de desenvolvimento(ambiente padrão) do site
 {

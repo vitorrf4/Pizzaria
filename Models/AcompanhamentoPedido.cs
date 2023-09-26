@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace pizzaria;
 
@@ -8,7 +9,9 @@ public class AcompanhamentoPedido
     public int Id { get; set; }
     public Acompanhamento Acompanhamento { get; set; }
     public int Quantidade { get; set; }
-    public double PrecoTotal { get; set; }
+    public double PrecoTotal { get; private set; }
+    [JsonIgnore]
+    public List<PedidoFinal>? PedidosFinais { get; set; }
 
     public AcompanhamentoPedido() { }
 
@@ -18,6 +21,11 @@ public class AcompanhamentoPedido
         Acompanhamento = acompanhamento;
         Quantidade = quantidade;
         PrecoTotal = acompanhamento.Preco * quantidade;
+    }
+
+    public void calcularPreco()
+    {
+        PrecoTotal = Acompanhamento.Preco * Quantidade;
     }
 
     public override string ToString()
