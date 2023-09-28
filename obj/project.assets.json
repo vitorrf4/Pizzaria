@@ -6030,25 +6030,26 @@
     ]
   },
   "packageFolders": {
-    "/Users/cleantoamorim/.nuget/packages/": {}
+    "C:\\Users\\Vitor\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/cleantoamorim/Developer/Study/Universidade_Positivo/desenvolvimento-de-software-visual/pizzaria/Pizzaria/Pizzaria.csproj",
+      "projectUniqueName": "C:\\Users\\Vitor\\source\\repos\\Pizzaria\\Pizzaria.csproj",
       "projectName": "Pizzaria",
-      "projectPath": "/Users/cleantoamorim/Developer/Study/Universidade_Positivo/desenvolvimento-de-software-visual/pizzaria/Pizzaria/Pizzaria.csproj",
-      "packagesPath": "/Users/cleantoamorim/.nuget/packages/",
-      "outputPath": "/Users/cleantoamorim/Developer/Study/Universidade_Positivo/desenvolvimento-de-software-visual/pizzaria/Pizzaria/obj/",
+      "projectPath": "C:\\Users\\Vitor\\source\\repos\\Pizzaria\\Pizzaria.csproj",
+      "packagesPath": "C:\\Users\\Vitor\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Vitor\\source\\repos\\Pizzaria\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/cleantoamorim/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\Vitor\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
-        "/usr/local/share/dotnet/sdk/7.0.306/Sdks/Microsoft.NET.Sdk.Web/library-packs": {},
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -6117,7 +6118,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.306/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
       }
     }
   }

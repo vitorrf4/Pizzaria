@@ -9,9 +9,9 @@ public class PedidoFinal
     public Cliente Cliente { get; set; }
     public List<PizzaPedido> Pizzas { get; set; }
     public List<AcompanhamentoPedido> Acompanhamentos { get; set; }
-    public double PrecoTotal { get; set; }
+    public double PrecoTotal { get; private set; }
     public DateTime HoraPedido { get; set; }
-    public Promocao Promocao { get; set; }
+    //public Promocao Promocao { get; set; }
 
     public PedidoFinal(){ }
 
@@ -21,11 +21,11 @@ public class PedidoFinal
         Pizzas = pizzas;
         Acompanhamentos = acompanhamentos;
         HoraPedido = DateTime.Now;
-        Promocao = promocao;
+        //Promocao = promocao;
         CalcularPrecoTotal();
     }
 
-    private double CalcularPrecoTotal(){
+    public double CalcularPrecoTotal(){
         double precoPedido = 0.0;
         double precoAcompanhamento = 0.0;
         double precoRegiao = Cliente.Endereco.Regiao.Preco;
@@ -44,9 +44,9 @@ public class PedidoFinal
 
         PrecoTotal = precoPedido + precoAcompanhamento + precoRegiao;
 
-        if (aniversario == dataPedido){
-            PrecoTotal = PrecoTotal * (Promocao.Desconto / 100.0);
-        }
+        //if (aniversario == dataPedido){
+        //    PrecoTotal = PrecoTotal * (Promocao.Desconto / 100.0);
+        //}
 
         return PrecoTotal;
     }

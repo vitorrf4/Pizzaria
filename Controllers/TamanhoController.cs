@@ -27,10 +27,12 @@ public class TamanhoController : ControllerBase
     }
 
     [HttpGet]
-    [Route("listar/{id}")]
-    public async Task<ActionResult<Tamanho>> Buscar([FromRoute] int id)   
+    [Route("listar/{nome}")]
+    public async Task<ActionResult<Tamanho>> Buscar([FromRoute] string nome)
     {
-        var Tamanho = await _context.Tamanho.FindAsync(id);
+        nome = nome.ToUpper();
+
+        var Tamanho = await _context.Tamanho.FindAsync(nome);
         if (Tamanho == null)
             return NotFound();
         
@@ -57,9 +59,10 @@ public class TamanhoController : ControllerBase
 
     [HttpDelete]
     [Route("excluir")]
-    public async Task<IActionResult> Excluir(int id)
+    public async Task<IActionResult> Excluir(string nome)
     {
-        var tamanho = await _context.Tamanho.FindAsync(id);
+        nome = nome.ToUpper();
+        var tamanho = await _context.Tamanho.FindAsync(nome);
         if(tamanho is null) return NotFound();
         
         _context.Tamanho.Remove(tamanho);

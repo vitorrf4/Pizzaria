@@ -17,7 +17,7 @@ var services = scope.ServiceProvider;
 
 var DbContext = services.GetRequiredService<PizzariaDBContext>();
 
-//DbContext.InicializaValoresTeste(); // Delete esta linha se quiser que o banco inicie vazio
+DbContext.InicializaValoresTeste(); // Delete esta linha se quiser que o banco inicie vazio
 
 if (app.Environment.IsDevelopment()) // swagger só será usado se estivermos no ambiente de desenvolvimento(ambiente padrão) do site
 {

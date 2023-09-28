@@ -12,7 +12,7 @@ public class PizzaPedido
     public Tamanho Tamanho { get; set; }
     public double Preco { get; private set; }
     [JsonIgnore]
-    public List<PedidoFinal>? PedidosFinais { get; set; }
+    public PedidoFinal? PedidoFinal { get; set; }
 
     public PizzaPedido() { }
 

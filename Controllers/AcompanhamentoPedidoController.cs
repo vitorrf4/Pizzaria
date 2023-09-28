@@ -7,13 +7,11 @@ namespace pizzaria;
 [Route("[controller]")]
 public class AcompanhamentoPedidoController : ControllerBase
 {
-    private readonly ILogger<AcompanhamentoPedidoController> _logger;
     private PizzariaDBContext _context;
 
-    public AcompanhamentoPedidoController(PizzariaDBContext context, ILogger<AcompanhamentoPedidoController> logger) 
+    public AcompanhamentoPedidoController(PizzariaDBContext context) 
     {
         _context = context;
-        _logger = logger;
     }
 
     [HttpGet()]

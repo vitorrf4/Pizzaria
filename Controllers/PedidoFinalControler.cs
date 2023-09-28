@@ -20,17 +20,28 @@ public class PedidoFinalController : ControllerBase
     [Route("listar")]
     public async Task<ActionResult<IEnumerable<PedidoFinal>>> Listar()
     {
-        if (_context.PedidoFinal is null)
-            return NotFound();
-        
-        return await _context.PedidoFinal.ToListAsync();
+        var PedidoFinal = await _context.PedidoFinal
+            .Include("Cliente")
+            .Include("Acompanhamentos.Acompanhamento")
+            .Include("Pizzas.Tamanho")
+            .Include("Pizzas.Sabores")
+            .ToListAsync();
+
+        return PedidoFinal;
     }
 
     [HttpGet]
     [Route("listar/{id}")]
     public async Task<ActionResult<PedidoFinal>> Buscar([FromRoute] int id)   
     {
-        var PedidoFinal = await _context.PedidoFinal.FindAsync(id);
+        var PedidoFinal = await _context.PedidoFinal
+            .Where(pedidoFinal => pedidoFinal.Id == id)
+            .Include("Cliente")
+            .Include("Acompanhamentos.Acompanhamento")
+            .Include("Pizzas.Tamanho")
+            .Include("Pizzas.Sabores")
+            .FirstOrDefaultAsync();
+            
         if (PedidoFinal == null)
             return NotFound();
         
@@ -41,6 +52,45 @@ public class PedidoFinalController : ControllerBase
     [Route("cadastrar")]
     public async Task<IActionResult> Cadastrar(PedidoFinal pedidoFinal)
     {
+        //Cliente
+        //Include() é necessario para o calculo final do pedido que leva em conta o preço da regiao
+        var clienteCompleto = await _context.Cliente
+            .Where(clienteNoBanco => clienteNoBanco.Cpf == pedidoFinal.Cliente.Cpf)
+            .Include("Endereco.Regiao")
+            .FirstOrDefaultAsync();
+
+        if (clienteCompleto == null) return BadRequest("O cliente não foi encontrado");
+
+        pedidoFinal.Cliente = clienteCompleto;
+
+        //Acompanhamentos
+        var acompanhamentosCompletos = new List<AcompanhamentoPedido>();
+
+        foreach (AcompanhamentoPedido pedido in pedidoFinal.Acompanhamentos)
+        {
+            var pedidoCompleto = await _context.AcompanhamentoPedido.FindAsync(pedido.Id);
+            if (pedidoCompleto == null) return BadRequest("O acompanhamento pedido não foi encontrado");
+
+            acompanhamentosCompletos.Add(pedidoCompleto);
+        }
+
+        pedidoFinal.Acompanhamentos = acompanhamentosCompletos;
+
+        //Pizzas
+        var pizzasCompletas = new List<PizzaPedido>();
+
+        foreach (PizzaPedido pizza in pedidoFinal.Pizzas)
+        {
+            var pizzaCompleta = await _context.PizzaPedido.FindAsync(pizza.Id);
+            if (pizzaCompleta == null) return BadRequest("O Pedido Pizza não foi encontrado");
+
+            pizzasCompletas.Add(pizzaCompleta);
+        }
+        pedidoFinal.Pizzas = pizzasCompletas;
+
+        
+        pedidoFinal.CalcularPrecoTotal();
+
         await _context.AddAsync(pedidoFinal);
         await _context.SaveChangesAsync();
         return Created("", pedidoFinal);

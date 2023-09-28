@@ -12,13 +12,11 @@ namespace pizzaria;
 public class ClienteController : ControllerBase // nosso controller precisa herdar da classe ControllerBase pra termos acesso as funcionalidades
                                                 // relacionadas ao controller como ActionResult, atributos [Route], [HttpGet] , etc
 {
-    private readonly ILogger<ClienteController> _logger; // classe usada para logar informações, debug, erros
     private PizzariaDBContext _context; // classe que acessa o banco de dados
 
-    public ClienteController(PizzariaDBContext context, ILogger<ClienteController> logger)
+    public ClienteController(PizzariaDBContext context)
     {
         _context = context;
-        _logger = logger;
     }
 
     [HttpGet()] // define que o método dessa rota é GET
@@ -35,7 +33,11 @@ public class ClienteController : ControllerBase // nosso controller precisa herd
         List<Cliente> clientes;
 
         try {
-            clientes = await _context.Cliente.ToListAsync(); // procura no banco(_context) todos os clientes  e transforma em uma lista
+            // procura no banco(_context) todos os clientes  e transforma em uma lista,
+            // propriedades que são objetos não são automaticamente mostrados no json, então o Include() é necessário
+            clientes = await _context.Cliente
+                .Include("Endereco").Include("Endereco.Regiao")
+                .ToListAsync(); 
             return Ok(clientes); // retorna um ActionResult do tipo Ok com a lista de clientes
         } catch (SqliteException) {
             // caso a tabela não exista será lançada a exceção SqLiteException e o metódo retornará um ActionResult do tipo NotFound
@@ -48,7 +50,7 @@ public class ClienteController : ControllerBase // nosso controller precisa herd
      // a variável "string cpf" será o {cpf} que foi mandado na url da rota, ex: https://localhost:5000/cpf/buscar/123456789-10
     public async Task<ActionResult<Cliente>> BuscarPorCPF(string cpf)
     {
-        var cliente = await _context.Cliente.FindAsync(cpf);
+        var cliente = await _context.Cliente.Where(c => c.Cpf == cpf).FirstOrDefaultAsync();
 
         if (cliente == null) return NotFound("Nenhum cliente com esse CPF encontrado");
         
@@ -60,7 +62,6 @@ public class ClienteController : ControllerBase // nosso controller precisa herd
     public async Task<ActionResult<Cliente>> Cadastrar(Cliente cliente) // Como é um tipo complexo, o objeto Cliente virá do corpo da requisiçao, não da url
     {
         if (_context.Cliente.Contains(cliente)) return Conflict("Um cliente com esse CPF já está cadastrado");
-
         await _context.AddAsync(cliente); // adiciona o objeto Cliente, mandado no corpo da requisição, no banco
         await _context.SaveChangesAsync(); // salva as alterações no banco
         return Created("", cliente);
