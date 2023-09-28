@@ -58,8 +58,12 @@ public class AcompanhamentoPedidoController : ControllerBase
     [Route("alterar")]
     public async Task<IActionResult> Alterar (AcompanhamentoPedido acompanhamentoPedido)
     {
+        if (await _context.AcompanhamentoPedido.FindAsync(acompanhamentoPedido.Id) == null)
+            return NotFound("Acompanhamento pedido não encontrado");
+
+
         var acompanhamentoBanco = await _context.Acompanhamento.FindAsync(acompanhamentoPedido.Acompanhamento.Id);
-        if (acompanhamentoBanco == null) return NotFound();
+        if (acompanhamentoBanco == null) return NotFound("Acompanhamento não encontrado");
         
         acompanhamentoPedido.Acompanhamento = acompanhamentoBanco;
         acompanhamentoPedido.calcularPreco();
