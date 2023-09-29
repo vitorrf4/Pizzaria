@@ -3,3 +3,5 @@ bin
 .db-shm
 .vs
 obj
+/obj/Debug/net7.0/Pizzaria.assets.cache
+/obj/Debug/net7.0/Pizzaria.csproj.FileListAbsolute.txt

@@ -15,13 +15,11 @@ public class PedidoFinal
 
     public PedidoFinal(){ }
 
-    public PedidoFinal(int id, Cliente cliente, List<PizzaPedido> pizzas, List<AcompanhamentoPedido> acompanhamentos, Promocao promocao){
-        Id = id;
+    public PedidoFinal(Cliente cliente, List<PizzaPedido> pizzas, List<AcompanhamentoPedido> acompanhamentos){
         Cliente = cliente;
         Pizzas = pizzas;
         Acompanhamentos = acompanhamentos;
         HoraPedido = DateTime.Now;
-        //Promocao = promocao;
         CalcularPrecoTotal();
     }
 
@@ -44,7 +42,8 @@ public class PedidoFinal
 
         PrecoTotal = precoPedido + precoAcompanhamento + precoRegiao;
 
-        //if (aniversario == dataPedido){
+        //if (aniversario == dataPedido)
+        //{
         //    PrecoTotal = PrecoTotal * (Promocao.Desconto / 100.0);
         //}
 

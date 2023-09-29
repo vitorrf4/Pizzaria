@@ -68,10 +68,16 @@ public class PizzariaDBContext : DbContext{
         var sabores = new List<Sabor>() { frango };
         var pizzaPedido = new PizzaPedido(sabores, media);
 
+
         // relaciona endereco e regiao
 
         endereco1.Regiao = centro;
         endereco2.Regiao = boqueirao;
+
+        //cria pedido final
+        var pedidoFinal = new PedidoFinal(cliente1,
+            new List<PizzaPedido>() { pizzaPedido },
+            new List<AcompanhamentoPedido>() { acompanhamentoPedido1 });
 
         //Adiciona no Banco
         Acompanhamento.AddRange(refrigerante, suco, paoDeAlho);
@@ -82,6 +88,7 @@ public class PizzariaDBContext : DbContext{
         Cliente.AddRange(cliente1, cliente2);
         PizzaPedido.Add(pizzaPedido);
         AcompanhamentoPedido.Add(acompanhamentoPedido1);
+        PedidoFinal.Add(pedidoFinal);
 
         SaveChanges();
     }
