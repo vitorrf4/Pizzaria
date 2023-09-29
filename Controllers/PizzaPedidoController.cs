@@ -57,7 +57,7 @@ public class PizzaPedidoController : ControllerBase
 
         // procura o sabor no banco e relaciona com o pedido
         pedido.Sabores.ForEach(sabor => saboresPedido.Add(_context.Sabor.Find(sabor.Id)));
-        pedido.Tamanho = _context.Tamanho.Find(pedido.Tamanho.Nome);
+        pedido.Tamanho = await _context.Tamanho.FindAsync(pedido.Tamanho.Nome);
 
         if (pedido.Tamanho == null || saboresPedido.Any(sabor => sabor == null)) return BadRequest();
 

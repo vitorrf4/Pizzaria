@@ -39,6 +39,7 @@ public class ClienteController : ControllerBase // todos os controllers precisam
             clientes = await _context.Cliente
                 .Include("Endereco.Regiao")
                 .ToListAsync(); 
+
             return Ok(clientes); // retorna um ActionResult do tipo Ok com a lista de clientes
         } catch (SqliteException) {
             // caso a tabela não exista será lançada a exceção SqLiteException e o metódo retornará um ActionResult do tipo NotFound
@@ -65,14 +66,18 @@ public class ClienteController : ControllerBase // todos os controllers precisam
     [Route("cadastrar")]
     public async Task<ActionResult<Cliente>> Cadastrar(Cliente cliente) // Como é um tipo complexo, o objeto Cliente virá do corpo da requisiçao, não da url
     {
-        // resposta acontece caso já exista um cliente com esse cpf no banco
+        // resposta caso já exista um cliente com esse cpf no banco
         if (_context.Cliente.Contains(cliente)) return Conflict("Um cliente com esse CPF já está cadastrado");
 
-        var endereco = await _context.Endereco.FindAsync(cliente.Endereco.Id);
-        
-        // resposta caso a requisicao venha com um id de um endereco invalido, se for 0 um novo endereco será criado
-        if (cliente.Endereco.Id > 0 && endereco == null) return BadRequest("Endereco invalido");
-        if (cliente.Endereco.Id > 0) cliente.Endereco = endereco;
+        // resposta caso a requisicao venha com um id de um endereco invalido,
+        // se o ID for 0, o if será ignorado e um novo endereco será criado
+        if (cliente.Endereco != null && cliente.Endereco.Id > 0)
+        {
+            var endereco = await _context.Endereco.FindAsync(cliente.Endereco.Id);
+            if (endereco == null) return BadRequest("Endereco invalido");
+
+            cliente.Endereco = endereco;
+        }
 
         await _context.AddAsync(cliente); // adiciona o objeto Cliente, mandado no corpo da requisição, no banco
         await _context.SaveChangesAsync(); // salva as alterações no banco
@@ -112,7 +117,7 @@ public class ClienteController : ControllerBase // todos os controllers precisam
     {
         var cliente = await _context.Cliente.FindAsync(cpf);
 
-        if (cliente == null) return NotFound();
+        if (cliente == null) return NotFound("Cliente não encontrado");
 
         cliente.Telefone = telefone;
         await _context.SaveChangesAsync();

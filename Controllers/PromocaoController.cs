@@ -39,6 +39,10 @@ public class PromocaoController : ControllerBase
     [Route("cadastrar")]
     public async Task<IActionResult> Cadastrar(Promocao promocao)
     {
+        var pedido = await _context.PedidoFinal.FindAsync(promocao.PedidoFinalId);
+        if (pedido == null) return BadRequest("Pedido final inválido");
+        promocao.PedidoFinalId = pedido.Id;
+
         await _context.AddAsync(promocao);
         await _context.SaveChangesAsync();
         return Created("", promocao);

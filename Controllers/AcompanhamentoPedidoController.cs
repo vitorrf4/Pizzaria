@@ -47,7 +47,7 @@ public class AcompanhamentoPedidoController : ControllerBase
         if (acompBanco == null) return NotFound("Acompanhamento inválido");
         
         acompanhamentoPedido.Acompanhamento = acompBanco;
-        acompanhamentoPedido.calcularPreco();
+        acompanhamentoPedido.CalcularPreco();
 
         await _context.AddAsync(acompanhamentoPedido);
         await _context.SaveChangesAsync();
@@ -66,7 +66,7 @@ public class AcompanhamentoPedidoController : ControllerBase
         if (acompanhamentoBanco == null) return NotFound("Acompanhamento não encontrado");
         
         acompanhamentoPedido.Acompanhamento = acompanhamentoBanco;
-        acompanhamentoPedido.calcularPreco();
+        acompanhamentoPedido.CalcularPreco();
 
         _context.AcompanhamentoPedido.Update(acompanhamentoPedido);
         await _context.SaveChangesAsync();

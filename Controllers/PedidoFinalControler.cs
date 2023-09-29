@@ -10,100 +10,52 @@ public class PedidoFinalController : ControllerBase
     private readonly ILogger<PedidoFinalController> _logger;
     private PizzariaDBContext _context;
 
-    public PedidoFinalController(PizzariaDBContext context, ILogger<PedidoFinalController> logger) 
+    public PedidoFinalController(PizzariaDBContext context, ILogger<PedidoFinalController> logger)
     {
         _context = context;
         _logger = logger;
     }
 
-    [HttpGet()]
+    [HttpGet]
     [Route("listar")]
     public async Task<ActionResult<IEnumerable<PedidoFinal>>> Listar()
     {
-        var PedidoFinal = await _context.PedidoFinal
-            .Include("Cliente.Endereco")
-            .Include("Acompanhamentos.Acompanhamento")
-            .Include("Pizzas.Tamanho")
-            .Include("Pizzas.Sabores")
-            .Include("Promocao")
-            .ToListAsync();
-
-        return PedidoFinal;
+        var pedidoFinal = await GetPedidosFinaisComTodasAsPropriedades().ToListAsync();
+        return pedidoFinal;
     }
 
     [HttpGet]
     [Route("listar/{id}")]
-    public async Task<ActionResult<PedidoFinal>> Buscar([FromRoute] int id)   
+    public async Task<ActionResult<PedidoFinal>> Buscar([FromRoute] int id)
     {
-        var PedidoFinal = await _context.PedidoFinal
-            .Where(pedidoFinal => pedidoFinal.Id == id)
-            .Include("Cliente.Endereco")
-            .Include("Acompanhamentos.Acompanhamento")
-            .Include("Pizzas.Tamanho")
-            .Include("Pizzas.Sabores")
-            .Include("Promocao")
-            .FirstOrDefaultAsync();
-            
-        if (PedidoFinal == null)
-            return NotFound();
-        
-        return Ok(PedidoFinal);
+        var pedidoFinal = await GetPedidoFinalComTodasAsPropriedades(id).FirstOrDefaultAsync();
+
+        if (pedidoFinal == null)
+            return NotFound("Pedido não encontrado");
+
+        return Ok(pedidoFinal);
     }
 
     [HttpPost]
     [Route("cadastrar")]
     public async Task<IActionResult> Cadastrar(PedidoFinal pedidoFinal)
     {
-        //Cliente
-        //Include() é necessario para o calculo final do pedido que leva em conta o preço da regiao
-        var clienteCompleto = await _context.Cliente
-            .Where(clienteNoBanco => clienteNoBanco.Cpf == pedidoFinal.Cliente.Cpf)
-            .Include("Endereco.Regiao")
-            .FirstOrDefaultAsync();
-
+        var clienteCompleto = await GetClienteComTodasAsPropriedades(pedidoFinal.Cliente.Cpf);
         if (clienteCompleto == null) return BadRequest("O cliente não foi encontrado");
 
         pedidoFinal.Cliente = clienteCompleto;
 
-        //Acompanhamentos
         if (pedidoFinal.Acompanhamentos != null)
         {
-            var acompanhamentosCompletos = new List<AcompanhamentoPedido>();
-            foreach (AcompanhamentoPedido acompanhamento in pedidoFinal.Acompanhamentos)
-            {
-                var acompanhamentoCompleto = await _context.AcompanhamentoPedido
-                    .Where(acompBanco => acompBanco.Id == acompanhamento.Id)
-                    .Include("PedidoFinal")
-                    .FirstOrDefaultAsync();
-
-                if (acompanhamentoCompleto == null) return BadRequest("O acompanhamento pedido não foi encontrado");
-                if (acompanhamentoCompleto.PedidoFinal != null)
-                    return BadRequest($"O acompanhamento {acompanhamentoCompleto.Id} já está associada à um pedido final");
-
-                acompanhamentosCompletos.Add(acompanhamentoCompleto);
-            }
+            var acompanhamentosCompletos = await GetAcompanhamentosCompletos(pedidoFinal.Acompanhamentos);
+            if (acompanhamentosCompletos == null) return BadRequest("O acompanhamento pedido não foi encontrado");
             pedidoFinal.Acompanhamentos = acompanhamentosCompletos;
         }
 
-
-        //Pizzas
-        var pizzasCompletas = new List<PizzaPedido>();
-
-        foreach (PizzaPedido pizza in pedidoFinal.Pizzas)
-        {
-            var pizzaCompleta = await _context.PizzaPedido
-                .Where(p => p.Id == pizza.Id)
-                .Include("PedidoFinal")
-                .FirstOrDefaultAsync();
-
-            if (pizzaCompleta == null) return BadRequest("O Pedido pizza não foi encontrado");
-            if (pizzaCompleta.PedidoFinal != null) 
-                return BadRequest($"A pizza {pizzaCompleta.Id} já está associada à um pedido final");
-
-            pizzasCompletas.Add(pizzaCompleta);
-        }
+        var pizzasCompletas = await GetPizzasCompletas(pedidoFinal.Pizzas);
+        if (pizzasCompletas == null) return BadRequest("Pizza pedido inválido");
         pedidoFinal.Pizzas = pizzasCompletas;
-        
+
         pedidoFinal.CalcularPrecoTotal();
 
         await _context.AddAsync(pedidoFinal);
@@ -113,60 +65,28 @@ public class PedidoFinalController : ControllerBase
 
     [HttpPut]
     [Route("alterar")]
-    public async Task<IActionResult> Alterar (PedidoFinal pedidoFinal)
+    public async Task<IActionResult> Alterar(PedidoFinal pedidoFinal)
     {
         var pedidoNoBanco = await _context.PedidoFinal.FindAsync(pedidoFinal.Id);
         if (pedidoNoBanco == null) return NotFound("Pedido não encontrado");
 
-        var clienteCompleto = await _context.Cliente
-           .Where(clienteNoBanco => clienteNoBanco.Cpf == pedidoFinal.Cliente.Cpf)
-           .Include("Endereco.Regiao")
-           .FirstOrDefaultAsync();
-
+        var clienteCompleto = await GetClienteComTodasAsPropriedades(pedidoFinal.Cliente.Cpf);
         if (clienteCompleto == null) return BadRequest("O cliente não foi encontrado");
 
         pedidoFinal.Cliente = clienteCompleto;
 
-        //Acompanhamentos
-        var acompanhamentosCompletos = new List<AcompanhamentoPedido>();
-
-        foreach (AcompanhamentoPedido acompanhamento in pedidoFinal.Acompanhamentos)
+        if (pedidoFinal.Acompanhamentos != null)
         {
-            var acompanhamentoCompleto = await _context.AcompanhamentoPedido
-                .Where(acompBanco => acompBanco.Id == acompanhamento.Id)
-                .Include("PedidoFinal")
-                .FirstOrDefaultAsync();
-
-            if (acompanhamentoCompleto == null) return BadRequest("O acompanhamento pedido não foi encontrado");
-            if (acompanhamentoCompleto.PedidoFinal != null && acompanhamentoCompleto.PedidoFinal.Id != pedidoNoBanco.Id)
-                return BadRequest($"O acompanhamento {acompanhamentoCompleto.Id} já está associada à um pedido final");
-
-            acompanhamentosCompletos.Add(acompanhamentoCompleto);
+            var acompanhamentosCompletos = await GetAcompanhamentosCompletos(pedidoFinal.Acompanhamentos);
+            if (acompanhamentosCompletos == null) return BadRequest("O acompanhamento pedido não foi encontrado");
+            pedidoFinal.Acompanhamentos = acompanhamentosCompletos;
         }
 
-        pedidoFinal.Acompanhamentos = acompanhamentosCompletos;
-
-        //Pizzas
-
-        var pizzasCompletas = new List<PizzaPedido>();
-
-        foreach (PizzaPedido pizza in pedidoFinal.Pizzas)
-        {
-            var pizzaCompleta = await _context.PizzaPedido
-                .Where(p => p.Id == pizza.Id)
-                .Include("PedidoFinal")
-                .FirstOrDefaultAsync();
-
-            if (pizzaCompleta == null) return BadRequest("O Pedido pizza não foi encontrado");
-            if (pizzaCompleta.PedidoFinal != null && pizzaCompleta.PedidoFinal.Id != pedidoNoBanco.Id)
-                return BadRequest($"A pizza {pizzaCompleta.Id} já está associada à um pedido final");
-
-            pizzasCompletas.Add(pizzaCompleta);
-        }
+        var pizzasCompletas = await GetPizzasCompletas(pedidoFinal.Pizzas);
+        if (pizzasCompletas == null) return BadRequest("Pizza pedido inválido");
         pedidoFinal.Pizzas = pizzasCompletas;
 
-
-        // sem essa linha o banco de dados da erro por ter duas variaveis com o mesmo ID no programa
+        // linha necessária para o _context não dar erro de conflito
         _context.Entry(pedidoNoBanco).State = EntityState.Detached;
 
         pedidoFinal.CalcularPrecoTotal();
@@ -179,31 +99,88 @@ public class PedidoFinalController : ControllerBase
     [Route("excluir")]
     public async Task<IActionResult> Excluir(int id)
     {
-        var pedidoFinal = await _context.PedidoFinal
-            .Where(pedido => pedido.Id == id)
-            .Include("Acompanhamentos")
-            .Include("Pizzas")
-            .FirstOrDefaultAsync();
+        var pedidoFinal = await GetPedidoFinalComTodasAsPropriedades(id).FirstOrDefaultAsync();
 
+        if (pedidoFinal == null) return NotFound("Pedido não encontrado");
 
-        if (pedidoFinal is null) return NotFound("Pedido não encontrado");
-        
         if (pedidoFinal.Acompanhamentos != null)
         {
             foreach (AcompanhamentoPedido acompanhamento in pedidoFinal.Acompanhamentos)
             {
                 _context.Remove(acompanhamento);
             }
-
         }
 
-        foreach (PizzaPedido pizza in pedidoFinal.Pizzas) 
-        { 
-            _context.Remove(pizza); 
+        foreach (PizzaPedido pizza in pedidoFinal.Pizzas)
+        {
+            _context.Remove(pizza);
         }
 
         _context.PedidoFinal.Remove(pedidoFinal);
         await _context.SaveChangesAsync();
         return Ok();
+    }
+
+    //
+
+    private IQueryable<PedidoFinal> GetPedidosFinaisComTodasAsPropriedades()
+    {
+        return _context.PedidoFinal
+            .Include(p => p.Cliente.Endereco)
+            .Include(p => p.Acompanhamentos).ThenInclude(a => a.Acompanhamento)
+            .Include(p => p.Pizzas).ThenInclude(p => p.Tamanho)
+            .Include(p => p.Pizzas).ThenInclude(p => p.Sabores)
+            .Include(p => p.Promocao);
+    }
+
+    private IQueryable<PedidoFinal> GetPedidoFinalComTodasAsPropriedades(int id)
+    {
+        return GetPedidosFinaisComTodasAsPropriedades()
+            .Where(pedidoFinal => pedidoFinal.Id == id);
+    }
+
+    private async Task<Cliente> GetClienteComTodasAsPropriedades(string cpf)
+    {
+        return await _context.Cliente
+            .Where(clienteNoBanco => clienteNoBanco.Cpf == cpf)
+            .Include(c => c.Endereco.Regiao)
+            .FirstOrDefaultAsync();
+    }
+
+    private async Task<List<AcompanhamentoPedido>> GetAcompanhamentosCompletos(List<AcompanhamentoPedido> acompanhamentos)
+    {
+        var acompanhamentosCompletos = new List<AcompanhamentoPedido>();
+        foreach (AcompanhamentoPedido acompanhamento in acompanhamentos)
+        {
+            var acompanhamentoCompleto = await _context.AcompanhamentoPedido
+                .Where(acompBanco => acompBanco.Id == acompanhamento.Id)
+                .Include(a => a.PedidoFinal)
+                .FirstOrDefaultAsync();
+
+            if (acompanhamentoCompleto == null) return null;
+            if (acompanhamentoCompleto.PedidoFinal != null)
+                return null;
+
+            acompanhamentosCompletos.Add(acompanhamentoCompleto);
+        }
+        return acompanhamentosCompletos;
+    }
+
+    private async Task<List<PizzaPedido>> GetPizzasCompletas(List<PizzaPedido> pizzas)
+    {
+        var pizzasCompletas = new List<PizzaPedido>();
+        foreach (PizzaPedido pizza in pizzas)
+        {
+            var pizzaCompleta = await _context.PizzaPedido
+                .Where(p => p.Id == pizza.Id)
+                .Include(p => p.PedidoFinal)
+                .FirstOrDefaultAsync();
+
+            if (pizzaCompleta == null) return null;
+            if (pizzaCompleta.PedidoFinal != null) return null;
+
+            pizzasCompletas.Add(pizzaCompleta);
+        }
+        return pizzasCompletas;
     }
 }

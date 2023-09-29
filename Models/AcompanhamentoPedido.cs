@@ -20,10 +20,10 @@ public class AcompanhamentoPedido
         Id = id;
         Acompanhamento = acompanhamento;
         Quantidade = quantidade;
-        PrecoTotal = acompanhamento.Preco * quantidade;
+        CalcularPreco();
     }
 
-    public void calcularPreco()
+    public void CalcularPreco()
     {
         PrecoTotal = Acompanhamento.Preco * Quantidade;
     }

@@ -11,7 +11,7 @@ public class Tamanho
 
     public Tamanho() { }
 
-    public Tamanho(string nome, int qntdFatias,double preco) 
+    public Tamanho(string nome, int qntdFatias, double preco) 
     { 
         Nome = nome;
         QntdFatias = qntdFatias;
