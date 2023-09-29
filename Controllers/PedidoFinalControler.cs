@@ -72,7 +72,7 @@ public class PedidoFinalController : ControllerBase
             foreach (AcompanhamentoPedido acompanhamento in pedidoFinal.Acompanhamentos)
             {
                 var acompanhamentoCompleto = await _context.AcompanhamentoPedido
-                    .Where(acomp => acomp.Id == acompanhamento.Id)
+                    .Where(acompBanco => acompBanco.Id == acompanhamento.Id)
                     .Include("PedidoFinal")
                     .FirstOrDefaultAsync();
 
@@ -87,7 +87,6 @@ public class PedidoFinalController : ControllerBase
 
 
         //Pizzas
-
         var pizzasCompletas = new List<PizzaPedido>();
 
         foreach (PizzaPedido pizza in pedidoFinal.Pizzas)
@@ -134,7 +133,7 @@ public class PedidoFinalController : ControllerBase
         foreach (AcompanhamentoPedido acompanhamento in pedidoFinal.Acompanhamentos)
         {
             var acompanhamentoCompleto = await _context.AcompanhamentoPedido
-                .Where(acomp => acomp.Id == acompanhamento.Id)
+                .Where(acompBanco => acompBanco.Id == acompanhamento.Id)
                 .Include("PedidoFinal")
                 .FirstOrDefaultAsync();
 
@@ -189,13 +188,18 @@ public class PedidoFinalController : ControllerBase
 
         if (pedidoFinal is null) return NotFound("Pedido não encontrado");
         
-        foreach (AcompanhamentoPedido acompanhamento in pedidoFinal.Acompanhamentos)
+        if (pedidoFinal.Acompanhamentos != null)
         {
-            _context.Remove(acompanhamento);
+            foreach (AcompanhamentoPedido acompanhamento in pedidoFinal.Acompanhamentos)
+            {
+                _context.Remove(acompanhamento);
+            }
+
         }
-        foreach (PizzaPedido pizza in pedidoFinal.Pizzas)
-        {
-            _context.Remove(pizza);
+
+        foreach (PizzaPedido pizza in pedidoFinal.Pizzas) 
+        { 
+            _context.Remove(pizza); 
         }
 
         _context.PedidoFinal.Remove(pedidoFinal);

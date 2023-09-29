@@ -29,7 +29,7 @@ public class AcompanhamentoPedidoController : ControllerBase
     public async Task<ActionResult<AcompanhamentoPedido>> Buscar([FromRoute] int id)   
     {
         var AcompanhamentoPedido = await _context.AcompanhamentoPedido
-            .Where(acompanhamento => acompanhamento.Id == id)
+            .Where(acompBanco => acompBanco.Id == id)
             .Include("Acompanhamento")
             .FirstOrDefaultAsync();
 
@@ -43,10 +43,10 @@ public class AcompanhamentoPedidoController : ControllerBase
     [Route("cadastrar")]
     public async Task<IActionResult> Cadastrar(AcompanhamentoPedido acompanhamentoPedido)
     {
-        var acompanhamentoBanco = await _context.Acompanhamento.FindAsync(acompanhamentoPedido.Acompanhamento.Id);
-        if (acompanhamentoBanco == null) return NotFound();
+        var acompBanco = await _context.Acompanhamento.FindAsync(acompanhamentoPedido.Acompanhamento.Id);
+        if (acompBanco == null) return NotFound("Acompanhamento inválido");
         
-        acompanhamentoPedido.Acompanhamento = acompanhamentoBanco;
+        acompanhamentoPedido.Acompanhamento = acompBanco;
         acompanhamentoPedido.calcularPreco();
 
         await _context.AddAsync(acompanhamentoPedido);
