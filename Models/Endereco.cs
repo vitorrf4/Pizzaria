@@ -23,7 +23,7 @@ public class Endereco
     
 
     public Endereco() { }
-
+     
     public Endereco(string rua, int numero, string cep, string complemento, string cidade, string estado)
     {
         Rua = rua;

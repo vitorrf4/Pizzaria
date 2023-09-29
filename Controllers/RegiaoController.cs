@@ -69,13 +69,11 @@ public class RegiaoController : ControllerBase
 
     [HttpDelete]
     [Route("deletar/{id}")]
-    public async Task<ActionResult> Deletar(string id)
+    public async Task<ActionResult> Deletar(int id)
     {
-        if (!int.TryParse(id, out int idInt)) return BadRequest();
-
         var regiao = await _context.Regiao.FindAsync(id);
 
-        if (regiao == null) return NotFound($"Nenhuma região com o ID {idInt} encontrado");
+        if (regiao == null) return NotFound($"Nenhuma região com o ID {id} encontrado");
 
         _context.Regiao.Remove(regiao);
         await _context.SaveChangesAsync();

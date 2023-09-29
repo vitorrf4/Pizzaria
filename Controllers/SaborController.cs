@@ -20,7 +20,7 @@ public class SaborController : ControllerBase
     [Route("listar")]
     public async Task<ActionResult<IEnumerable<Sabor>>> Listar()
     {
-        if (_context.Sabor is null)
+        if (_context.Endereco is null)
             return NotFound();
         
         return await _context.Sabor.ToListAsync();
@@ -34,7 +34,7 @@ public class SaborController : ControllerBase
         if (Sabor == null)
             return NotFound();
         
-        return Ok(Sabor);
+        return base.Ok((object)Sabor);
     }
 
     [HttpPost]

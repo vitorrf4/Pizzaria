@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace pizzaria;
 
@@ -6,20 +7,15 @@ public class Promocao
 {
     [Key]
     public int Id { get; set; }
-    public string Nome { get; set; }
-    public double Desconto { get; set; }
+    [ForeignKey("Promocao")]
+    public int PedidoFinalId { get; set; }
+    public int Desconto { get; set; }
 
     public Promocao() { }
 
-    public Promocao(int id, string nome, double desconto)
+    public Promocao(int pedidoFinalId, int desconto)
     {
-        Id = id;
-        Nome = nome;
+        PedidoFinalId = pedidoFinalId;
         Desconto = desconto;
-    }
-
-    public override string ToString()
-    {
-        return $"Nome da Promoção: {Nome} | Porcentagem de Desconto: {Desconto}%";
-    }
+    } 
 }

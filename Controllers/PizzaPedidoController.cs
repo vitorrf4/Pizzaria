@@ -82,11 +82,9 @@ public class PizzaPedidoController : ControllerBase
     [Route("deletar/{id}")]
     public async Task<ActionResult> Deletar(string id)
     {
-        if (!int.TryParse(id, out int idInt)) return BadRequest();
+        var pedido = await _context.PizzaPedido.FindAsync(id);
 
-        var pedido = await _context.PizzaPedido.FindAsync(idInt);
-
-        if (pedido == null) return NotFound($"Nenhum pedido com o ID {idInt} encontrado");
+        if (pedido == null) return NotFound($"Nenhum pedido com o ID {id} encontrado");
 
         _context.PizzaPedido.Remove(pedido);
         await _context.SaveChangesAsync();

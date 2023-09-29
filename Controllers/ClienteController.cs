@@ -9,7 +9,7 @@ namespace pizzaria;
 // inferir se um parametro vem da rota ou do corpo, mensagens de erros detalhadas, entre outros
 [ApiController] 
 [Route("cliente/")] // todos os métodos dessa classe estarão no caminho /cliente/... , ex: /cliente/buscar, /cliente/cadastrar
-public class ClienteController : ControllerBase // nosso controller precisa herdar da classe ControllerBase pra termos acesso as funcionalidades
+public class ClienteController : ControllerBase // todos os controllers precisam herdar da classe ControllerBase pra ter acesso as funcionalidades
                                                 // relacionadas ao controller como ActionResult, atributos [Route], [HttpGet] , etc
 {
     private PizzariaDBContext _context; // classe que acessa o banco de dados
@@ -33,10 +33,11 @@ public class ClienteController : ControllerBase // nosso controller precisa herd
         List<Cliente> clientes;
 
         try {
-            // procura no banco(_context) todos os clientes  e transforma em uma lista,
-            // propriedades que são objetos não são automaticamente mostrados no json, então o Include() é necessário
+            // procura no banco(_context) todos os clientes  e transforma em uma lista
+            // propriedades que são objetos não são automaticamente buscadas no banco -
+            // - o Include() faz com que elas sejam adicionadas ao objeto
             clientes = await _context.Cliente
-                .Include("Endereco").Include("Endereco.Regiao")
+                .Include("Endereco.Regiao")
                 .ToListAsync(); 
             return Ok(clientes); // retorna um ActionResult do tipo Ok com a lista de clientes
         } catch (SqliteException) {
@@ -50,9 +51,12 @@ public class ClienteController : ControllerBase // nosso controller precisa herd
      // a variável "string cpf" será o {cpf} que foi mandado na url da rota, ex: https://localhost:5000/cpf/buscar/123456789-10
     public async Task<ActionResult<Cliente>> BuscarPorCPF(string cpf)
     {
-        var cliente = await _context.Cliente.Where(c => c.Cpf == cpf).FirstOrDefaultAsync();
+        var cliente = await _context.Cliente
+            .Where(c => c.Cpf == cpf)
+            .Include("Endereco.Regiao")
+            .FirstOrDefaultAsync();
 
-        if (cliente == null) return NotFound("Nenhum cliente com esse CPF encontrado");
+        if (cliente == null) return NotFound("Nenhum cliente encontrado");
         
         return Ok(cliente);
     }
@@ -61,7 +65,15 @@ public class ClienteController : ControllerBase // nosso controller precisa herd
     [Route("cadastrar")]
     public async Task<ActionResult<Cliente>> Cadastrar(Cliente cliente) // Como é um tipo complexo, o objeto Cliente virá do corpo da requisiçao, não da url
     {
+        // resposta acontece caso já exista um cliente com esse cpf no banco
         if (_context.Cliente.Contains(cliente)) return Conflict("Um cliente com esse CPF já está cadastrado");
+
+        var endereco = await _context.Endereco.FindAsync(cliente.Endereco.Id);
+        
+        // resposta caso a requisicao venha com um id de um endereco invalido, se for 0 um novo endereco será criado
+        if (cliente.Endereco.Id > 0 && endereco == null) return BadRequest("Endereco invalido");
+        if (cliente.Endereco.Id > 0) cliente.Endereco = endereco;
+
         await _context.AddAsync(cliente); // adiciona o objeto Cliente, mandado no corpo da requisição, no banco
         await _context.SaveChangesAsync(); // salva as alterações no banco
         return Created("", cliente);
@@ -80,8 +92,14 @@ public class ClienteController : ControllerBase // nosso controller precisa herd
     [Route("excluir/{cpf}")]
     public async Task<ActionResult> Deletar(string cpf)
     {
-        var cliente = await _context.Cliente.FindAsync(cpf);
-        if (cliente == null) return NotFound();
+        var cliente = await _context.Cliente
+            .Where(cliente => cliente.Cpf == cpf)
+            .Include("Endereco")
+            .FirstOrDefaultAsync();
+
+        if (cliente == null) return NotFound("Cliente não encontrado");
+
+        if (cliente.Endereco != null) _context.Endereco.Remove(cliente.Endereco);
 
         _context.Cliente.Remove(cliente);
         await _context.SaveChangesAsync();
@@ -93,6 +111,7 @@ public class ClienteController : ControllerBase // nosso controller precisa herd
     public async Task<ActionResult> MudarTelefone(string cpf, [FromBody] string telefone)
     {
         var cliente = await _context.Cliente.FindAsync(cpf);
+
         if (cliente == null) return NotFound();
 
         cliente.Telefone = telefone;

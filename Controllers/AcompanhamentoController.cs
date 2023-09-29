@@ -60,7 +60,7 @@ public class AcompanhamentoController : ControllerBase
     public async Task<IActionResult> Excluir(int id)
     {
         var acompanhamento = await _context.Acompanhamento.FindAsync(id);
-        if(acompanhamento is null) return NotFound();
+        if (acompanhamento is null) return NotFound();
         
         _context.Acompanhamento.Remove(acompanhamento);
         await _context.SaveChangesAsync();

@@ -29,9 +29,9 @@ public class AcompanhamentoPedidoController : ControllerBase
     public async Task<ActionResult<AcompanhamentoPedido>> Buscar([FromRoute] int id)   
     {
         var AcompanhamentoPedido = await _context.AcompanhamentoPedido
-        .Where(acompanhamento => acompanhamento.Id == id)
-        .Include("Acompanhamento")
-        .FirstOrDefaultAsync();
+            .Where(acompanhamento => acompanhamento.Id == id)
+            .Include("Acompanhamento")
+            .FirstOrDefaultAsync();
 
         if (AcompanhamentoPedido == null)
             return NotFound();

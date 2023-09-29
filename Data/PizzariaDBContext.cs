@@ -23,6 +23,8 @@ public class PizzariaDBContext : DbContext{
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
     {
         optionsBuilder.UseSqlite(connectionString: "DataSource=pizzaria.db;Cache=shared");
+        optionsBuilder.EnableSensitiveDataLogging();
+        
     }
 
     public void InicializaValoresTeste()
@@ -35,12 +37,12 @@ public class PizzariaDBContext : DbContext{
         var endereco2 = new Endereco("Rua 2", 2, "11111-11", "casa 5", "cidade 2", "estado 2");
 
         //clientes
-        var cliente1 = new Cliente("12345", "joao", "1111-1111" ,DateOnly.Parse("09/08/2002"), endereco1);
-        var cliente2 = new Cliente("67890", "maria", "2222-2222", DateOnly.Parse("01/10/1973"), endereco2);
+        var cliente1 = new Cliente("12345", "joao", "1111-1111" ,DateOnly.Parse("29/09/1973"), endereco1);
+        var cliente2 = new Cliente("67890", "maria", "2222-2222", DateOnly.Parse("12/05/2000"), endereco2);
         endereco1.Cliente = cliente1;
         endereco2.Cliente = cliente2;
 
-        // criar sabores => Sabor(string nome, double preco)
+        // criar sabores => Sabor(int id, string nome, double preco)
         var frango = new Sabor(1, "Frango", 15.0);
         var calabresa = new Sabor(2, "Calabresa", 17.0);
         var quatroQueijos = new Sabor(3, "Quatro Queijos", 19.0);
@@ -63,22 +65,23 @@ public class PizzariaDBContext : DbContext{
 
         //cria acompanhamentoPedido
         var acompanhamentoPedido1 = new AcompanhamentoPedido(1, refrigerante, 3);
+        var acompanhamentoPedido2 = new AcompanhamentoPedido(2, refrigerante, 3);
 
         //cria pizza pedido
         var sabores = new List<Sabor>() { frango };
         var pizzaPedido = new PizzaPedido(sabores, media);
-
+        var pizzaPedido2 = new PizzaPedido(sabores, grande);
 
         // relaciona endereco e regiao
-
         endereco1.Regiao = centro;
         endereco2.Regiao = boqueirao;
 
         //cria pedido final
-        var pedidoFinal = new PedidoFinal(cliente1,
+        var pedidoFinal = new PedidoFinal(
+            cliente1,
             new List<PizzaPedido>() { pizzaPedido },
             new List<AcompanhamentoPedido>() { acompanhamentoPedido1 });
-
+         
         //Adiciona no Banco
         Acompanhamento.AddRange(refrigerante, suco, paoDeAlho);
         Tamanho.AddRange(broto, pequena, media, grande);
@@ -86,8 +89,8 @@ public class PizzariaDBContext : DbContext{
         Regiao.AddRange(boqueirao, aguaVerde, centro);
         Endereco.AddRange(endereco1, endereco2);
         Cliente.AddRange(cliente1, cliente2);
-        PizzaPedido.Add(pizzaPedido);
-        AcompanhamentoPedido.Add(acompanhamentoPedido1);
+        AcompanhamentoPedido.AddRange(acompanhamentoPedido1, acompanhamentoPedido2);
+        PizzaPedido.AddRange(pizzaPedido, pizzaPedido2);
         PedidoFinal.Add(pedidoFinal);
 
         SaveChanges();
