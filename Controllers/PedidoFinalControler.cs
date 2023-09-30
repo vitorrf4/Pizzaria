@@ -125,6 +125,8 @@ public class PedidoFinalController : ControllerBase
 
     private IQueryable<PedidoFinal> GetPedidosFinaisComTodasAsPropriedades()
     {
+        // Campos que são objetos não são retornados automaticamente do banco,
+        // precisamos do Include() para que eles sejam incluidos
         return _context.PedidoFinal
             .Include(p => p.Cliente.Endereco)
             .Include(p => p.Acompanhamentos).ThenInclude(a => a.Acompanhamento)
@@ -150,6 +152,7 @@ public class PedidoFinalController : ControllerBase
     private async Task<List<AcompanhamentoPedido>> GetAcompanhamentosCompletos(List<AcompanhamentoPedido> acompanhamentos)
     {
         var acompanhamentosCompletos = new List<AcompanhamentoPedido>();
+        // procura no banco e retorna nulo caso não exista ou já esteja associado a outro acompanhamento
         foreach (AcompanhamentoPedido acompanhamento in acompanhamentos)
         {
             var acompanhamentoCompleto = await _context.AcompanhamentoPedido
@@ -169,6 +172,7 @@ public class PedidoFinalController : ControllerBase
     private async Task<List<PizzaPedido>> GetPizzasCompletas(List<PizzaPedido> pizzas)
     {
         var pizzasCompletas = new List<PizzaPedido>();
+        // procura no banco e retorna nulo caso não exista ou já esteja associado a outro acompanhamento
         foreach (PizzaPedido pizza in pizzas)
         {
             var pizzaCompleta = await _context.PizzaPedido
