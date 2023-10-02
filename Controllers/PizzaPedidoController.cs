@@ -80,7 +80,7 @@ public class PizzaPedidoController : ControllerBase
 
     [HttpDelete]
     [Route("deletar/{id}")]
-    public async Task<ActionResult> Deletar(string id)
+    public async Task<ActionResult> Deletar(int id)
     {
         var pedido = await _context.PizzaPedido.FindAsync(id);
 

@@ -128,7 +128,7 @@ public class PedidoFinalController : ControllerBase
         // Campos que são objetos não são retornados automaticamente do banco,
         // precisamos do Include() para que eles sejam incluidos
         return _context.PedidoFinal
-            .Include(p => p.Cliente.Endereco)
+            .Include(p => p.Cliente.Endereco).ThenInclude(endereco => endereco.Regiao)
             .Include(p => p.Acompanhamentos).ThenInclude(a => a.Acompanhamento)
             .Include(p => p.Pizzas).ThenInclude(p => p.Tamanho)
             .Include(p => p.Pizzas).ThenInclude(p => p.Sabores)
