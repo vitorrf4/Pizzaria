@@ -5,3 +5,6 @@ bin
 obj
 /obj/Debug/net7.0/Pizzaria.assets.cache
 /obj/Debug/net7.0/Pizzaria.csproj.FileListAbsolute.txt
+/pizzaria.db-shm
+/Pizzaria.csproj.user
+/pizzaria.db-wal
