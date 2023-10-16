@@ -1,13 +1,13 @@
-./Backend/bin
-./Backend/.db-wal
-./Backend/.db-shm
-./Backend/.vs
-./Backend/obj
-./Backend//obj/Debug/net7.0/Pizzaria.assets.cache
-./Backend//obj/Debug/net7.0/Pizzaria.csproj.FileListAbsolute.txt
-./Backend//pizzaria.db-shm
-./Backend//Pizzaria.csproj.user
-./Backend//pizzaria.db-wal
+/Backend/bin/
+Backend/.db-wal
+/Backend/.db-shm
+/Backend/.vs
+/Backend/obj
+/Backend/obj/Debug/net7.0/Pizzaria.assets.cache
+/Backend/obj/Debug/net7.0/Pizzaria.csproj.FileListAbsolute.txt
+/Backend/pizzaria.db-shm
+/Backend/Pizzaria.csproj.user
+/Backend/pizzaria.db-wal
 
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
