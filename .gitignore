@@ -1,10 +1,51 @@
-bin
-.db-wal
-.db-shm
-.vs
-obj
-/obj/Debug/net7.0/Pizzaria.assets.cache
-/obj/Debug/net7.0/Pizzaria.csproj.FileListAbsolute.txt
-/pizzaria.db-shm
-/Pizzaria.csproj.user
-/pizzaria.db-wal
+/Backend/bin/
+/Backend/pizzaria.db-wal
+/Backend/pizzaria.db-shm
+/Backend/.vs
+/Backend/obj
+/Backend/obj/Debug/net7.0/Pizzaria.assets.cache
+/Backend/obj/Debug/net7.0/Pizzaria.csproj.FileListAbsolute.txt
+/Backend/Pizzaria.csproj.user
+/Frontend/.angular
+
+# Compiled output
+/dist
+/tmp
+/out-tsc
+/bazel-out
+
+# Node
+/Frontend/node_modules/
+/Frontend/.vscode
+npm-debug.log
+yarn-error.log
+
+# IDEs and editors
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# Miscellaneous
+/.angular/cache
+.sass-cache/
+/connect.lock
+/coverage
+/libpeerconnection.log
+testem.log
+/typings
+
+# System files
+.DS_Store
+Thumbs.db
