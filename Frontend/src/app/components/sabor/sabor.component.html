@@ -1,1 +1,3 @@
-<p>sabor works!</p>
+<ul *ngFor="let sabor of sabores">
+  <li>Sabor: {{sabor.nome}} | Preço: R${{sabor.preco}}</li>
+</ul>

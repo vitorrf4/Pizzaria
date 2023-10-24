@@ -1,1 +1,3 @@
-<p>acompanhamento works!</p>
+<ul *ngFor="let acompanhamento of acompanhamentos">
+  <li>Acompanhamento: {{acompanhamento.nome}} | Preço: R${{acompanhamento.preco}}</li>
+</ul>

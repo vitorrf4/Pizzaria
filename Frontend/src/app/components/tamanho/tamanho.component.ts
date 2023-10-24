@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {TamanhoService} from "../../services/tamanho.service";
+import {Tamanho} from "../../models/Tamanho";
 
 @Component({
   selector: 'app-tamanho',
@@ -6,5 +8,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./tamanho.component.css']
 })
 export class TamanhoComponent {
+  tamanhos: Tamanho[] = []
 
+  constructor(private service: TamanhoService) {
+    this.service.listar().subscribe(resposta => {
+      this.tamanhos = resposta
+    })
+  }
 }
