@@ -1,15 +1,11 @@
 /Backend/bin/
-Backend/.db-wal
-/Backend/.db-shm
+/Backend/pizzaria.db-wal
+/Backend/pizzaria.db-shm
 /Backend/.vs
 /Backend/obj
 /Backend/obj/Debug/net7.0/Pizzaria.assets.cache
 /Backend/obj/Debug/net7.0/Pizzaria.csproj.FileListAbsolute.txt
-/Backend/pizzaria.db-shm
 /Backend/Pizzaria.csproj.user
-/Backend/pizzaria.db-wal
-
-# See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # Compiled output
 /dist
@@ -18,7 +14,8 @@ Backend/.db-wal
 /bazel-out
 
 # Node
-/Frontend/node_modules/*
+/Frontend/node_modules/
+/Frontend/.vscode
 npm-debug.log
 yarn-error.log
 
