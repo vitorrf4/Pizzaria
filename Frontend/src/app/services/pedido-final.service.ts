@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { enviroment } from 'src/enviroments/enviroments';
-import { PedidoFinal } from 'src/models/PedidoFinal';
+import { PedidoFinal } from 'src/app/models/PedidoFinal';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,7 @@ export class PedidoFinalService {
 
   listarId(id: number): Observable<PedidoFinal[]> {
     return this.http.get<PedidoFinal[]>(`${this.apiUrl}/PedidoFinal/listar/` + id)
-  } 
+  }
 
   cadastrar(pedidoFinal: PedidoFinal): Observable<PedidoFinal[]>{
     return this.http.post<PedidoFinal[]>(`${this.apiUrl}/PedidoFinal/cadastrar/`, pedidoFinal)

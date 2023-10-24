@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { enviroment } from 'src/enviroments/enviroments';
-import { Acompanhamento } from 'src/models/Acompanhamento';
+import { Acompanhamento } from 'src/app/models/Acompanhamento';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,7 @@ export class AcompanhamentoService {
 
   listarId(id: number): Observable<Acompanhamento[]> {
     return this.http.get<Acompanhamento[]>(`${this.apiUrl}/Acompanhamento/listar/` + id)
-  } 
+  }
 
   cadastrar(acompanhamento: Acompanhamento): Observable<Acompanhamento[]>{
     return this.http.post<Acompanhamento[]>(`${this.apiUrl}/Acompanhamento/cadastrar/`, acompanhamento)

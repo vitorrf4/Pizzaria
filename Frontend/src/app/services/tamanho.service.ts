@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { enviroment } from 'src/enviroments/enviroments';
-import { Tamanho } from 'src/models/Tamanho';
+import { Tamanho } from 'src/app/models/Tamanho';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,7 @@ export class TamanhoService {
 
   listarId(nome: string): Observable<Tamanho[]> {
     return this.http.get<Tamanho[]>(`${this.apiUrl}/Tamanho/listar/` + nome)
-  } 
+  }
 
   cadastrar(tamanho: Tamanho): Observable<Tamanho[]>{
     return this.http.post<Tamanho[]>(`${this.apiUrl}/Tamanho/cadastrar/`, tamanho)
