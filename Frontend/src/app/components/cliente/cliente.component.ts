@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import {ClienteService} from "../../services/cliente.service";
 import {Cliente} from "../../models/Cliente";
 import { FormControl, FormGroup } from '@angular/forms';
+import { RegiaoService } from 'src/app/services/regiao.service';
+import { Regiao } from 'src/app/models/Regiao';
 
 @Component({
   selector: 'app-cliente',
@@ -11,11 +13,14 @@ import { FormControl, FormGroup } from '@angular/forms';
 export class ClienteComponent {
   formulario: any;
   clientes: Cliente[] = [];
+  regioes: Regiao[] = [];
 
-  constructor(private service: ClienteService) {
-    this.service.listar().subscribe(resposta => {
+  constructor(private clienteService: ClienteService, private regiaoService: RegiaoService) {
+
+    this.clienteService.listar().subscribe(resposta => {
       this.clientes = resposta
     });
+
     this.formulario = new FormGroup({
       cpf: new FormControl(null),
       nome: new FormControl(null),
@@ -24,12 +29,21 @@ export class ClienteComponent {
     })
   }
 
+  ngOnInit() {
+    this.regiaoService.listar().subscribe(resposta => {
+      this.regioes = resposta;
+    });
+    
+    console.log(this.regioes);
+
+  }
+
   cadastrarCliente() {
     const cliente = this.formulario.value;
 
-    this.service.cadastrar(cliente).subscribe({
-      next: () => { alert("Cliente cadastrado com sucesso")},
-      error: err => {console.log("erro: " + err.message)}
+    this.clienteService.cadastrar(cliente).subscribe({
+      next: () =>  alert("Cliente cadastrado com sucesso"),
+      error: err =>  console.log("erro: " + err.message) 
     });
   }
 }

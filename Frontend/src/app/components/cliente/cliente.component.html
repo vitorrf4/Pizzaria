@@ -1,20 +1,60 @@
 <form [formGroup]="formulario" (ngSubmit)="cadastrarCliente()" >
-  <div class="form-group">
-    <label>Nome</label>
-    <input type="text" formControlName="nome"> 
-  </div>
-  <div class="form-group">
-    <label>Cpf</label>
-    <input type="text" formControlName="cpf"> 
-  </div>
-  <div class="form-group">
-    <label>Telefone:</label>
-    <input type="text" formControlName="telefone"> 
-  </div>
-  <div class="form-group">
-    <label>Data de Nascimento:</label>
-    <input type="date" formControlName="dataAniversario"> 
-  </div>
+  <fieldset>
+    <legend>Cliente</legend>
+    <div class="form-group">
+      <label>Nome</label>
+      <input type="text" formControlName="nome"> 
+    </div>
+    <div class="form-group">
+      <label>Cpf</label>
+      <input type="text" formControlName="cpf"> 
+    </div>
+    <div class="form-group">
+      <label>Telefone:</label>
+      <input type="text" formControlName="telefone"> 
+    </div>
+    <div class="form-group">
+      <label>Data de Nascimento:</label>
+      <input type="date" formControlName="dataAniversario"> 
+    </div>
+  </fieldset>
+
+  <fieldset>
+      <legend>Endereço</legend>
+      <div class="form-group">
+        <label>Rua:</label>
+        <input type="text" formControlName="rua"> 
+      </div>
+      <div class="form-group">
+        <label>Numero:</label>
+        <input type="number" formControlName="numero"> 
+      </div>
+      <div class="form-group">
+        <label>CEP:</label>
+        <input type="number" formControlName="cep"> 
+      </div>
+      <div class="form-group">
+        <label>Complemento:</label>
+        <input type="text" formControlName="complemento"> 
+      </div>
+      <div class="form-group">
+        <label>Cidade:</label>
+        <input type="text" formControlName="cidade"> 
+      </div>
+      <div class="form-group">
+        <label>Estado:</label>
+        <input type="text" formControlName="estado"> 
+      </div>
+      <div class="form-group">
+        <label>Regiao:</label>
+        <select>
+          <option *ngFor="let regiao of regioes">
+            {{regiao.nome}}
+          </option>
+        </select>
+      </div>
+  </fieldset>
+
   <div class="form-group">
     <button type="submit">Cadastrar</button>
   </div>
