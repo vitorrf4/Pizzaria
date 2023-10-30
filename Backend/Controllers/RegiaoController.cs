@@ -17,7 +17,7 @@ public class RegiaoController : ControllerBase
     }
 
     [HttpGet()]
-    [Route("buscar")]
+    [Route("listar")]
     public async Task<ActionResult<IEnumerable<Regiao>>> ListarTodos()
     {   
         try
@@ -32,7 +32,7 @@ public class RegiaoController : ControllerBase
     }
 
     [HttpGet()]
-    [Route("buscar/{id}")]
+    [Route("listar/{id}")]
     public async Task<ActionResult<Regiao>> BuscarPorId(string id)
     {
         if (!int.TryParse(id, out int idInt)) return BadRequest();
