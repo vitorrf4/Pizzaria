@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import {HttpClientModule} from "@angular/common/http";
+import { FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './components/app/app.component';
 import { ClienteComponent } from './components/cliente/cliente.component';
@@ -13,7 +14,6 @@ import { PizzaPedidoComponent } from './components/pizza-pedido/pizza-pedido.com
 import { PromocaoComponent } from './components/promocao/promocao.component';
 import { SaborComponent } from './components/sabor/sabor.component';
 import { TamanhoComponent } from './components/tamanho/tamanho.component';
-import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -32,7 +32,9 @@ import {HttpClientModule} from "@angular/common/http";
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
