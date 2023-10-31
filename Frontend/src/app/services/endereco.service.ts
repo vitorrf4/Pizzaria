@@ -14,18 +14,18 @@ export class EnderecoService {
   constructor(private http: HttpClient) { }
 
   listar(): Observable<Endereco[]>{
-    return this.http.get<Endereco[]>(`${this.apiUrl}/Endereco/listar`)
+    return this.http.get<Endereco[]>(`${this.apiUrl}/endereco/listar`)
   }
 
-  listarId(id: number): Observable<Endereco[]>{
-    return this.http.get<Endereco[]>(`${this.apiUrl}/Endereco/listar/` + id)
+  listarId(id: number) {
+    return this.http.get<Endereco>(`${this.apiUrl}/endereco/listar/` + id)
   }
 
-  cadastrar(endereco: Endereco): Observable<Endereco[]>{
-    return this.http.post<Endereco[]>(`${this.apiUrl}/Endereco/cadastrar/`, endereco)
+  cadastrar(endereco: Endereco) {
+    return this.http.post<Endereco>(`${this.apiUrl}/endereco/cadastrar/`, endereco)
   }
 
-  alterar(endereco: Endereco): Observable<Endereco[]>{
-    return this.http.put<Endereco[]>(`${this.apiUrl}/Endereco/alterar/`, endereco)
+  alterar(endereco: Endereco) {
+    return this.http.put(`${this.apiUrl}/endereco/alterar/`, endereco)
   }
 }

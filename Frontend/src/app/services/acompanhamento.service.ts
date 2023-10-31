@@ -13,18 +13,18 @@ export class AcompanhamentoService {
   constructor(private http: HttpClient) { }
 
   listar(): Observable<Acompanhamento[]> {
-    return this.http.get<Acompanhamento[]>(`${this.apiUrl}/Acompanhamento/listar`)
+    return this.http.get<Acompanhamento[]>(`${this.apiUrl}/acompanhamento/listar`)
   }
 
-  listarId(id: number): Observable<Acompanhamento[]> {
-    return this.http.get<Acompanhamento[]>(`${this.apiUrl}/Acompanhamento/listar/` + id)
+  listarId(id: number) {
+    return this.http.get<Acompanhamento>(`${this.apiUrl}/acompanhamento/listar/` + id)
   }
 
-  cadastrar(acompanhamento: Acompanhamento): Observable<Acompanhamento[]>{
-    return this.http.post<Acompanhamento[]>(`${this.apiUrl}/Acompanhamento/cadastrar/`, acompanhamento)
+  cadastrar(acompanhamento: Acompanhamento) {
+    return this.http.post<Acompanhamento>(`${this.apiUrl}/acompanhamento/cadastrar/`, acompanhamento)
   }
 
-  alterar(acompanhamento: Acompanhamento): Observable<Acompanhamento[]>{
-    return this.http.put<Acompanhamento[]>(`${this.apiUrl}/Acompanhamento/alterar/`, acompanhamento)
+  alterar(acompanhamento: Acompanhamento) {
+    return this.http.put(`${this.apiUrl}/acompanhamento/alterar/`, acompanhamento)
   }
 }

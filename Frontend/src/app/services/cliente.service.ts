@@ -14,24 +14,23 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class ClienteService {
-
   apiUrl = enviroment.apiUrl
 
   constructor(private http: HttpClient) { }
 
   listar(): Observable<Cliente[]> {
-    return this.http.get<Cliente[]>(`${this.apiUrl}/Cliente/listar`);
+    return this.http.get<Cliente[]>(`${this.apiUrl}/cliente/listar`);
   }
 
-  listarCpf(cpf: string): Observable<Cliente[]> {
-    return this.http.get<Cliente[]>(`${this.apiUrl}/Cliente/listar/` + cpf);
+  listarCpf(cpf: string) {
+    return this.http.get<Cliente>(`${this.apiUrl}/cliente/listar/` + cpf);
   }
 
-  cadastrar(cliente: Cliente): Observable<Cliente[]> {
-    return this.http.post<Cliente[]>(`${this.apiUrl}/Cliente/cadastrar/`, cliente);
+  cadastrar(cliente: Cliente) {
+    return this.http.post<Cliente[]>(`${this.apiUrl}/cliente/cadastrar/`, cliente);
   }
 
-  alterar(cliente: Cliente): Observable<Cliente[]> {
-    return this.http.put<Cliente[]>(`${this.apiUrl}/Cliente/alterar/`, cliente);
+  alterar(cliente: Cliente) {
+    return this.http.put(`${this.apiUrl}/cliente/alterar/`, cliente);
   }
 }

@@ -13,18 +13,18 @@ export class PromocaoService {
   constructor(private http: HttpClient) { }
 
   listar(): Observable<Promocao[]> {
-    return this.http.get<Promocao[]>(`${this.apiUrl}/Promocao/listar`)
+    return this.http.get<Promocao[]>(`${this.apiUrl}/promocao/listar`)
   }
 
   listarId(id: number): Observable<Promocao[]> {
-    return this.http.get<Promocao[]>(`${this.apiUrl}/Promocao/listar/` + id)
+    return this.http.get<Promocao[]>(`${this.apiUrl}/promocao/listar/` + id)
   }
 
   cadastrar(promocao: Promocao): Observable<Promocao[]>{
-    return this.http.post<Promocao[]>(`${this.apiUrl}/Promocao/cadastrar/`, promocao)
+    return this.http.post<Promocao[]>(`${this.apiUrl}/promocao/cadastrar/`, promocao)
   }
 
   alterar(promocao: Promocao): Observable<Promocao[]>{
-    return this.http.put<Promocao[]>(`${this.apiUrl}/Promocao/alterar/`, promocao)
+    return this.http.put<Promocao[]>(`${this.apiUrl}/promocao/alterar/`, promocao)
   }
 }

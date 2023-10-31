@@ -13,18 +13,18 @@ export class SaborService {
   constructor(private http: HttpClient) { }
 
   listar(): Observable<Sabor[]> {
-    return this.http.get<Sabor[]>(`${this.apiUrl}/Sabor/listar`)
+    return this.http.get<Sabor[]>(`${this.apiUrl}/sabor/listar`)
   }
 
   listarId(id: number): Observable<Sabor[]> {
-    return this.http.get<Sabor[]>(`${this.apiUrl}/Sabor/listar/` + id)
+    return this.http.get<Sabor[]>(`${this.apiUrl}/sabor/listar/` + id)
   }
 
   cadastrar(sabor: Sabor): Observable<Sabor[]>{
-    return this.http.post<Sabor[]>(`${this.apiUrl}/Sabor/cadastrar/`, sabor)
+    return this.http.post<Sabor[]>(`${this.apiUrl}/sabor/cadastrar/`, sabor)
   }
 
   alterar(sabor: Sabor): Observable<Sabor[]>{
-    return this.http.put<Sabor[]>(`${this.apiUrl}/Sabor/alterar/`, sabor)
+    return this.http.put<Sabor[]>(`${this.apiUrl}/sabor/alterar/`, sabor)
   }
 }

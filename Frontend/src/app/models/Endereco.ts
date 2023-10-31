@@ -7,8 +7,4 @@ export class Endereco {
     numero: number = 0;
     cep: string = "";
     complemento: string = "";
-    cidade: string = "";
-    estado: string = "";
-    regiao: Regiao = new Regiao();
-    cliente: Cliente = new Cliente();
 }

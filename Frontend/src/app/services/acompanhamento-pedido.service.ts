@@ -13,18 +13,18 @@ export class AcompanhamentoPedidoService {
   constructor(private http: HttpClient) { }
 
   listar(): Observable<AcompanhamentoPedido[]> {
-    return this.http.get<AcompanhamentoPedido[]>(`${this.apiUrl}/AcompanhamentoPedido/listar`)
+    return this.http.get<AcompanhamentoPedido[]>(`${this.apiUrl}/acompanhamentoPedido/listar`)
   }
 
-  listarId(id: number): Observable<AcompanhamentoPedido[]> {
-    return this.http.get<AcompanhamentoPedido[]>(`${this.apiUrl}/AcompanhamentoPedido/listar/` + id)
+  listarId(id: number) {
+    return this.http.get<AcompanhamentoPedido>(`${this.apiUrl}/acompanhamentoPedido/listar/` + id)
   }
 
-  cadastrar(acompanhamentoPedido: AcompanhamentoPedido): Observable<AcompanhamentoPedido[]>{
-    return this.http.post<AcompanhamentoPedido[]>(`${this.apiUrl}/AcompanhamentoPedido/cadastrar/`, acompanhamentoPedido)
+  cadastrar(acompanhamentoPedido: AcompanhamentoPedido) {
+    return this.http.post<AcompanhamentoPedido>(`${this.apiUrl}/acompanhamentoPedido/cadastrar/`, acompanhamentoPedido)
   }
 
-  alterar(acompanhamentoPedido: AcompanhamentoPedido): Observable<AcompanhamentoPedido[]>{
-    return this.http.put<AcompanhamentoPedido[]>(`${this.apiUrl}/AcompanhamentoPedido/alterar/`, acompanhamentoPedido)
+  alterar(acompanhamentoPedido: AcompanhamentoPedido) {
+    return this.http.put(`${this.apiUrl}/acompanhamentoPedido/alterar/`, acompanhamentoPedido)
   }
 }

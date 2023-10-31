@@ -13,18 +13,18 @@ export class TamanhoService {
   constructor(private http: HttpClient) { }
 
   listar(): Observable<Tamanho[]> {
-    return this.http.get<Tamanho[]>(`${this.apiUrl}/Tamanho/listar`)
+    return this.http.get<Tamanho[]>(`${this.apiUrl}/tamanho/listar`)
   }
 
   listarId(nome: string): Observable<Tamanho[]> {
-    return this.http.get<Tamanho[]>(`${this.apiUrl}/Tamanho/listar/` + nome)
+    return this.http.get<Tamanho[]>(`${this.apiUrl}/tamanho/listar/` + nome)
   }
 
   cadastrar(tamanho: Tamanho): Observable<Tamanho[]>{
-    return this.http.post<Tamanho[]>(`${this.apiUrl}/Tamanho/cadastrar/`, tamanho)
+    return this.http.post<Tamanho[]>(`${this.apiUrl}/tamanho/cadastrar/`, tamanho)
   }
 
   alterar(tamanho: Tamanho): Observable<Tamanho[]>{
-    return this.http.put<Tamanho[]>(`${this.apiUrl}/Tamanho/alterar/`, tamanho)
+    return this.http.put<Tamanho[]>(`${this.apiUrl}/tamanho/alterar/`, tamanho)
   }
 }
