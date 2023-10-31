@@ -14,8 +14,6 @@ public class Endereco
     public int Numero { get; set; }
     public string Cep { get; set; }
     public string ?Complemento { get; set; }
-    public string Cidade { get; set; }
-    public string Estado { get; set; }
     public Regiao Regiao { get; set; }
     [JsonIgnore]
     [ForeignKey("Cliente.Endereco")]
@@ -24,14 +22,12 @@ public class Endereco
 
     public Endereco() { }
      
-    public Endereco(string rua, int numero, string cep, string complemento, string cidade, string estado)
+    public Endereco(string rua, int numero, string cep, string complemento = null)
     {
         Rua = rua;
         Numero = numero;
         Cep = cep;
         Complemento = complemento;
-        Cidade = cidade;
-        Estado = estado;
     }
 
     public override string ToString()
@@ -40,8 +36,6 @@ public class Endereco
                 $"Numero: {Numero} \n" +
                 $"Complemento: {Complemento} \n" +
                 $"CEP: {Cep} \n" +
-                $"Cidade: {Cidade} \n" +
-                $"Estado: {Estado} \n" +
                 $"Regiao: {Regiao} \n";
     }
 
