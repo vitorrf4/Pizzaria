@@ -8,6 +8,7 @@
 /Backend/Pizzaria.csproj.user
 /Backend/pizzaria.db
 /Frontend/.angular
+/Frontend/dist
 
 # Compiled output
 /dist
