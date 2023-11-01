@@ -5,6 +5,7 @@ import {ClienteService} from "../../services/cliente.service";
 import {RegiaoService} from "../../services/regiao.service";
 import {FormControl, FormGroup} from "@angular/forms";
 import {Router} from "@angular/router";
+import {LoginService} from "../../services/login.service";
 
 @Component({
   selector: 'app-cadastro',
@@ -16,8 +17,10 @@ export class CadastroComponent implements OnInit {
   formularioEndereco: any;
   regioes: Regiao[] = [];
 
-  constructor(private clienteService: ClienteService, private regiaoService: RegiaoService,
-              private router: Router) {
+  constructor(private clienteService: ClienteService,
+              private regiaoService: RegiaoService,
+              private router: Router,
+              private loginService: LoginService) {
     this.formularioCliente = new FormGroup({
       cpf: new FormControl(null),
       nome: new FormControl(null),
@@ -45,8 +48,9 @@ export class CadastroComponent implements OnInit {
     cliente.endereco = this.formularioEndereco.value;
 
     this.clienteService.cadastrar(cliente).subscribe({
-      next: () => {
+      next: clienteCriado => {
         alert("Cliente cadastrado com sucesso");
+        this.loginService.salvarClienteLogado(clienteCriado)
         this.router.navigateByUrl("/home").then();
       },
       error: err => console.log(err)

@@ -9,16 +9,8 @@ import { enviroment } from 'src/enviroments/enviroments';
 })
 export class ClienteService {
   apiUrl = enviroment.apiUrl;
-  clienteLogado: Cliente;
 
-  constructor(private http: HttpClient) {
-    // Quando o programa é iniciado, ele pega o valor "cliente" salvo na sessão do browser, transforma
-    // para um JSON e o atribue para a variavel clienteLogado que pode ser usado
-    // pelos outros componentes.
-    // O "!" indica para o angular que o valor não será null ou undefined, sem ele
-    // o compilador reclama dessa atribuição
-    this.clienteLogado = JSON.parse(sessionStorage.getItem("cliente")!);
-  }
+  constructor(private http: HttpClient) { }
 
   listar(): Observable<Cliente[]> {
     return this.http.get<Cliente[]>(`${this.apiUrl}/cliente/listar`);
@@ -29,24 +21,10 @@ export class ClienteService {
   }
 
   cadastrar(cliente: Cliente) {
-    return this.http.post<Cliente[]>(`${this.apiUrl}/cliente/cadastrar/`, cliente);
+    return this.http.post<Cliente>(`${this.apiUrl}/cliente/cadastrar/`, cliente);
   }
 
   alterar(cliente: Cliente) {
     return this.http.put(`${this.apiUrl}/cliente/alterar/`, cliente);
-  }
-
-  getClienteLogado(): Cliente {
-    return this.clienteLogado;
-  }
-
-  salvarClienteLogado(cliente: Cliente) {
-    this.clienteLogado = cliente;
-    sessionStorage.setItem("cliente", JSON.stringify(cliente));
-  }
-
-  deslogarCliente() {
-    this.clienteLogado = new Cliente();
-    sessionStorage.removeItem("cliente");
   }
 }

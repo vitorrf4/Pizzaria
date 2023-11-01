@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import {ClienteService} from "../../services/cliente.service";
 import {Cliente} from "../../models/Cliente";
 import {Router} from "@angular/router";
+import {LoginService} from "../../services/login.service";
 
 @Component({
   selector: 'app-home',
@@ -11,12 +11,12 @@ import {Router} from "@angular/router";
 export class HomeComponent {
   cliente : Cliente;
 
-  constructor(private clienteService: ClienteService, private router: Router) {
-    this.cliente =  this.clienteService.getClienteLogado();
+  constructor(private loginService: LoginService, private router: Router) {
+    this.cliente =  this.loginService.getClienteLogado();
   }
 
   deslogar() {
-    this.clienteService.deslogarCliente();
+    this.loginService.deslogarCliente();
     this.router.navigateByUrl("login").then();
   }
 }

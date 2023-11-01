@@ -3,6 +3,7 @@ import {ClienteService} from "../../services/cliente.service";
 import {Router} from "@angular/router";
 import {FormControl, FormGroup} from "@angular/forms";
 import {Cliente} from "../../models/Cliente";
+import {LoginService} from "../../services/login.service";
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,8 @@ import {Cliente} from "../../models/Cliente";
 export class LoginComponent {
   formularioCliente: any;
 
-  constructor(private clienteService: ClienteService, private router: Router) {
+  constructor(private clienteService: ClienteService, private router: Router,
+              private loginService: LoginService) {
     this.formularioCliente = new FormGroup({
       cpf: new FormControl(null),
     });
@@ -23,7 +25,7 @@ export class LoginComponent {
 
     this.clienteService.listarCpf(cpf).subscribe({
       next: cliente => {
-        this.clienteService.salvarClienteLogado(cliente);
+        this.loginService.salvarClienteLogado(cliente);
         this.router.navigateByUrl("/home").then();
       },
       error: err => console.log(err)
