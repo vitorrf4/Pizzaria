@@ -5,4 +5,11 @@
   </tr>
 </table>
 
-<p>login works!</p>
+<form [formGroup]="formularioCliente" (ngSubmit)="logarCliente()">
+    <legend>Cliente</legend>
+    <div class="form-group">
+      <label>Cpf:</label>
+      <input type="text" formControlName="cpf">
+    </div>
+  <button type="submit">Entrar</button>
+</form>

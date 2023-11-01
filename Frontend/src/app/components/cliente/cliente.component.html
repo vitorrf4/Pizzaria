@@ -3,7 +3,8 @@
   <li>Cpf: {{cliente.cpf}} | Nome: {{cliente.nome}}
     <ul>
       <li>CEP: {{cliente.endereco.cep}} |
-        {{cliente.endereco.rua}} N° {{cliente.endereco.numero}}</li>
+        {{cliente.endereco.rua}} N° {{cliente.endereco.numero}}
+      | Região: {{cliente.endereco.regiao.nome}}</li>
       <!-- Mostra o complemento do endereco caso exista -->
       <p *ngIf="cliente.endereco.complemento"> Complemento: {{cliente.endereco.complemento}}</p>
     </ul>

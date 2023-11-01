@@ -7,4 +7,5 @@ export class Endereco {
     numero: number = 0;
     cep: string = "";
     complemento: string = "";
+    regiao: Regiao = new Regiao();
 }
