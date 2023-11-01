@@ -1,0 +1,65 @@
+<table>
+  <tr>
+    <td><button routerLink="/cadastro">Cadastro</button></td>
+    <td><button routerLink="/login">Login</button></td>
+  </tr>
+</table>
+
+<hr>
+
+<form [formGroup]="formularioCliente">
+  <fieldset>
+    <legend>Cliente</legend>
+    <div class="form-group">
+      <label>Cpf:</label>
+      <input type="text" formControlName="cpf">
+    </div>
+    <div class="form-group">
+      <label>Nome:</label>
+      <input type="text" formControlName="nome">
+    </div>
+    <div class="form-group">
+      <label>Telefone:</label>
+      <input type="text" formControlName="telefone">
+    </div>
+    <div class="form-group">
+      <label>Data de Nascimento:</label>
+      <input type="date" formControlName="dataAniversario">
+    </div>
+  </fieldset>
+</form>
+
+<form [formGroup]="formularioEndereco">
+<fieldset>
+  <legend>Endereço</legend>
+  <div class="form-group">
+    <label>Rua:</label>
+    <input type="text" formControlName="rua">
+  </div>
+  <div class="form-group">
+    <label>Numero:</label>
+    <input type="number" formControlName="numero">
+  </div>
+  <div class="form-group">
+    <label>CEP:</label>
+    <input type="text" formControlName="cep">
+  </div>
+  <div class="form-group">
+    <label>Complemento:</label>
+    <input type="text" formControlName="complemento">
+  </div>
+  <div class="form-group">
+    <label>Regiao:</label>
+    <select formControlName="regiao">
+      <option [ngValue]="null" disabled>Selecione uma Regiao</option>
+      <option *ngFor="let regiao of regioes" [ngValue]="regiao">
+        {{regiao.nome}}
+      </option>
+    </select>
+  </div>
+</fieldset>
+</form>
+
+<div class="form-group">
+  <button type="submit" (click)="cadastrarCliente()">Cadastrar</button>
+</div>

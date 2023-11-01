@@ -14,6 +14,9 @@ import { PizzaPedidoComponent } from './components/pizza-pedido/pizza-pedido.com
 import { PromocaoComponent } from './components/promocao/promocao.component';
 import { SaborComponent } from './components/sabor/sabor.component';
 import { TamanhoComponent } from './components/tamanho/tamanho.component';
+import { CadastroComponent } from './components/cadastro/cadastro.component';
+import { LoginComponent } from './components/login/login.component';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +30,10 @@ import { TamanhoComponent } from './components/tamanho/tamanho.component';
     PizzaPedidoComponent,
     PromocaoComponent,
     SaborComponent,
-    TamanhoComponent
+    TamanhoComponent,
+    CadastroComponent,
+    LoginComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
