@@ -19,7 +19,7 @@ const routes: Routes = [
       {path: "sabores", component: SaborComponent},
       {path: "tamanhos", component: TamanhoComponent},
     ]},
-  {path: "", component: LoginComponent}
+  {path: "**", component: LoginComponent}
 ];
 
 @NgModule({
