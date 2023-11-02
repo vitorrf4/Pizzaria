@@ -4,10 +4,10 @@ import {SaborService} from "../../services/sabor.service";
 
 @Component({
   selector: 'app-sabor',
-  templateUrl: './sabor.component.html',
-  styleUrls: ['./sabor.component.css']
+  templateUrl: './pizzas.component.html',
+  styleUrls: ['./pizzas.component.css']
 })
-export class SaborComponent {
+export class PizzasComponent {
   sabores: Sabor[] = []
 
   constructor(private service: SaborService) {
