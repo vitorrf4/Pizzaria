@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import {Acompanhamento} from "../../models/Acompanhamento";
 import {AcompanhamentoService} from "../../services/acompanhamento.service";
+import {AcompanhamentoPedido} from "../../models/AcompanhamentoPedido";
+import {CarrinhoService} from "../../services/carrinho.service";
 
 @Component({
   selector: 'app-acompanhamento',
@@ -9,10 +11,18 @@ import {AcompanhamentoService} from "../../services/acompanhamento.service";
 })
 export class AcompanhamentoComponent {
   acompanhamentos: Acompanhamento[] = []
+  @ViewChild("quantidadeInput") quantidadeInput! : ElementRef;
 
-  constructor(private service: AcompanhamentoService) {
+  constructor(private service: AcompanhamentoService, private carrinhoService: CarrinhoService) {
     this.service.listar().subscribe(resposta => {
-      this.acompanhamentos = resposta
+      this.acompanhamentos = resposta;
     })
+  }
+
+  adicionarAcompanhamentoAoCarrinho(acompanhamento : Acompanhamento) {
+    const quantidade = this.quantidadeInput.nativeElement.value;
+    const acompanhamentoPedido = new AcompanhamentoPedido(acompanhamento, quantidade);
+
+    this.carrinhoService.adicionarNoCarrinho(acompanhamentoPedido)
   }
 }

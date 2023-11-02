@@ -7,7 +7,7 @@ export class PedidoFinal {
     id: number = 0;
     cliente: Cliente = new Cliente();
     pizzas: PizzaPedido = new PizzaPedido();
-    acompanhamentos: AcompanhamentoPedido = new AcompanhamentoPedido();
+    acompanhamentos: AcompanhamentoPedido | undefined;
     precoTotal: number = 0;
     horaPedido: string = "";
     promocao: Promocao = new Promocao();

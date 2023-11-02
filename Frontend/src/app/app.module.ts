@@ -11,6 +11,7 @@ import { TamanhoComponent } from './components/tamanho/tamanho.component';
 import { CadastroComponent } from './components/cadastro/cadastro.component';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
+import { CarrinhoComponent } from './components/carrinho/carrinho.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { HomeComponent } from './components/home/home.component';
     TamanhoComponent,
     CadastroComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    CarrinhoComponent
   ],
   imports: [
     BrowserModule,

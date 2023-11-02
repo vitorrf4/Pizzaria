@@ -1,0 +1,6 @@
+<ul *ngFor="let item of itensCarrinho;let i = index;">
+  <li>
+    {{item.getNome()}} | Quantidade: {{item.getQuantidade()}} | Total: R${{item.getPreco()}}
+    <button (click)="removerDoCarrinho(i)">Remover</button>
+  </li>
+</ul>

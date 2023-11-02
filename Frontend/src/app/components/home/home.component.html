@@ -7,9 +7,17 @@
     <td><button routerLink="/home/acompanhamentos">Acompanhamentos</button></td>
     <td><button routerLink="/home/sabores">Sabores</button></td>
     <td><button routerLink="/home/tamanhos">Tamanhos</button></td>
+    <td>
+        <button routerLink="/home/carrinho">Carrinho
+          <span *ngIf="quantidadeItensCarrinho.value > 0" class="d-inline">
+            ({{quantidadeItensCarrinho.value}})
+          </span>
+        </button>
+    </td>
     <td><button (click)="deslogar()">SAIR</button></td>
   </tr>
 </table>
 
 <hr>
+
 <router-outlet></router-outlet>
