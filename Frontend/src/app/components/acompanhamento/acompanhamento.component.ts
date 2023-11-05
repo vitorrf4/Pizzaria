@@ -11,7 +11,9 @@ import {CarrinhoService} from "../../services/carrinho.service";
 })
 export class AcompanhamentoComponent {
   acompanhamentos: Acompanhamento[] = []
-  @ViewChild("quantidadeInput") quantidadeInput! : ElementRef;
+  // ViewChild é o equivalente do getElementById em JavaScript, só que selecionara o elemento
+  // definido com uma "#"
+  @ViewChild("quantidade") quantidadeInput! : ElementRef;
 
   constructor(private service: AcompanhamentoService, private carrinhoService: CarrinhoService) {
     this.service.listar().subscribe(resposta => {

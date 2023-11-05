@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import {ClienteService} from "../../services/cliente.service";
 import {Router} from "@angular/router";
 import {FormControl, FormGroup} from "@angular/forms";
-import {Cliente} from "../../models/Cliente";
 import {LoginService} from "../../services/login.service";
 
 @Component({
@@ -23,6 +22,8 @@ export class LoginComponent {
   logarCliente() {
     const cpf = this.formularioCliente.value.cpf;
 
+    // Busca o cpf no banco de dados e caso exista, salva o cliente
+    // na sessão, e navega para a página "home"
     this.clienteService.listarCpf(cpf).subscribe({
       next: cliente => {
         this.loginService.salvarClienteLogado(cliente);

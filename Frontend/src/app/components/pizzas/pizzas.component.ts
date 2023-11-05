@@ -12,7 +12,7 @@ export class PizzasComponent {
 
   constructor(private service: SaborService) {
     this.service.listar().subscribe(resposta => {
-      this.sabores = resposta
+      this.sabores = resposta;
     })
   }
 }

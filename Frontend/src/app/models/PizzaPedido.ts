@@ -1,4 +1,3 @@
-import { PedidoFinal } from "./PedidoFinal";
 import { Sabor } from "./Sabor";
 import { Tamanho } from "./Tamanho";
 import {Pedido} from "./Pedido";

@@ -1,5 +1,4 @@
 import { Acompanhamento } from "./Acompanhamento";
-import { PedidoFinal } from "./PedidoFinal";
 import {Pedido} from "./Pedido";
 
 export class AcompanhamentoPedido implements Pedido {
