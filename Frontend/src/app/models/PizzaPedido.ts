@@ -7,6 +7,19 @@ export class PizzaPedido implements Pedido {
   sabores: Sabor[] = [];
   tamanho: Tamanho = new Tamanho();
   preco: number = 0;
+  quantidade: number = 0;
+
+  constructor(sabores: Sabor[], tamanho: Tamanho, quantidade: number) {
+    this.sabores = sabores;
+    this.tamanho = tamanho;
+    this.quantidade = quantidade;
+    this.calcularPreco();
+  }
+
+  calcularPreco() {
+    this.sabores.forEach(sabor => this.preco += sabor.preco);
+    this.preco *= this.quantidade;
+  }
 
   getNome(): string {
     let nomesSabores = "";
@@ -27,6 +40,6 @@ export class PizzaPedido implements Pedido {
   }
 
   getQuantidade(): number {
-    return 0;
+    return this.quantidade;
   }
 }

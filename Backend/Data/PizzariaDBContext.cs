@@ -48,10 +48,12 @@ public class PizzariaDBContext : DbContext{
         var quatroQueijos = new Sabor(3, "Quatro Queijos", 19.0);
 
         //criar tamanhos => Tamanho(string nome, int qntdFatias,double preco) 
-        var broto = new Tamanho("BROTO", 4, 0.0);
-        var pequena = new Tamanho("PEQUENA", 6, 50.0);
-        var media = new Tamanho("MEDIA", 8, 100.0);
-        var grande = new Tamanho("GRANDE", 10, 150.0);
+        var broto = new Tamanho("BROTO", 4, 1, 0.0);
+        var pequena = new Tamanho("PEQUENA", 6, 1, 50.0);
+        var media = new Tamanho("MEDIA", 8, 2, 100.0);
+        var grande = new Tamanho("GRANDE", 10, 2, 150.0);
+        var familia = new Tamanho("FAMILIA", 12, 3, 200.0);
+        var gigante = new Tamanho("GIGANTE", 16, 4, 300.0);
 
         //criar regioes => Regiao(string nome, double preco)
         var centro = new Regiao(1, "Centro", 5.0);
@@ -69,8 +71,8 @@ public class PizzariaDBContext : DbContext{
 
         //cria pizza pedido
         var sabores = new List<Sabor>() { frango };
-        var pizzaPedido = new PizzaPedido(sabores, media);
-        var pizzaPedido2 = new PizzaPedido(sabores, grande);
+        var pizzaPedido = new PizzaPedido(sabores, media, 3);
+        var pizzaPedido2 = new PizzaPedido(sabores, grande, 1);
 
         // relaciona endereco e regiao
         endereco1.Regiao = centro;
@@ -84,7 +86,7 @@ public class PizzariaDBContext : DbContext{
          
         //Adiciona no Banco
         Acompanhamento.AddRange(refrigerante, suco, paoDeAlho);
-        Tamanho.AddRange(broto, pequena, media, grande);
+        Tamanho.AddRange(broto, pequena, media, grande, familia, gigante);
         Sabor.AddRange(frango, calabresa, quatroQueijos);
         Regiao.AddRange(boqueirao, aguaVerde, centro);
         Endereco.AddRange(endereco1, endereco2);

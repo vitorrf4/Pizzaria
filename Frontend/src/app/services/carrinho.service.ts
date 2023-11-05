@@ -14,6 +14,7 @@ export class CarrinhoService {
   }
 
   adicionarNoCarrinho(pedido: Pedido) {
+    console.log(pedido);
     this.itensCarrinho.push(pedido);
     this.quantidadeItensCarrinho.next(this.quantidadeItensCarrinho.value + 1);
   }

@@ -10,15 +10,17 @@ public class PizzaPedido
     public List<Sabor> Sabores { get; set; } = new();
     public Tamanho Tamanho { get; set; }
     public double Preco { get; private set; }
+    public int Quantidade { get; set;}
     [JsonIgnore]
     public PedidoFinal? PedidoFinal { get; set; }
 
     public PizzaPedido() { }
 
-    public PizzaPedido(List<Sabor> sabores, Tamanho tamanho)
+    public PizzaPedido(List<Sabor> sabores, Tamanho tamanho, int quantidade)
     {
         Sabores = sabores;
         Tamanho = tamanho;
+        Quantidade = quantidade;
         CalcularPreco();
     }
 
@@ -40,7 +42,7 @@ public class PizzaPedido
 
         precoTotal += precoTotal * (Tamanho.MultiplicadorPreco / 100.0);
 
-        Preco = precoTotal;
+        Preco = precoTotal * Quantidade;
         return Preco;
     }
 

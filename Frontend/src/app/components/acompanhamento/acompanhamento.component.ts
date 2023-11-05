@@ -21,7 +21,7 @@ export class AcompanhamentoComponent {
     })
   }
 
-  adicionarAcompanhamentoAoCarrinho(acompanhamento : Acompanhamento) {
+  adicionarAoCarrinho(acompanhamento : Acompanhamento) {
     const quantidade = this.quantidadeInput.nativeElement.value;
     const acompanhamentoPedido = new AcompanhamentoPedido(acompanhamento, quantidade);
 

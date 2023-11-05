@@ -8,13 +8,15 @@ public class Tamanho
     public string Nome { get; set; }
     public int QntdFatias { get; set; }
     public double MultiplicadorPreco { get; set; }
+    public int MaxSabores { get; set; }
 
     public Tamanho() { }
 
-    public Tamanho(string nome, int qntdFatias, double preco) 
+    public Tamanho(string nome, int qntdFatias, int maxSabores, double preco)
     { 
         Nome = nome;
         QntdFatias = qntdFatias;
+        MaxSabores = maxSabores;
         MultiplicadorPreco = preco;
     }
 
