@@ -21,7 +21,8 @@ export class PizzaPedido implements Pedido {
     this.preco *= this.quantidade;
   }
 
-  getNome(): string {
+  getDescricao(): string {
+    const tamanho = `Pizza ${this.tamanho.nome} de `;
     let nomesSabores = "";
 
     for (let i = 0; i < this.sabores.length; i++) {
@@ -32,7 +33,7 @@ export class PizzaPedido implements Pedido {
       nomesSabores = nomesSabores + this.sabores[i].nome + ", ";
     }
 
-    return nomesSabores;
+    return tamanho + nomesSabores;
   }
 
   getPreco(): number {

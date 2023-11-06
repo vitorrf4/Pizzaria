@@ -69,6 +69,7 @@ export class PizzasComponent {
       return;
     }
 
+    this.pizza.calcularPreco();
     this.carrinhoService.adicionarNoCarrinho(this.pizza);
   }
 

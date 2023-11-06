@@ -1,5 +1,5 @@
 export interface Pedido {
-  getNome() : string;
+  getDescricao() : string;
   getQuantidade() : number;
   getPreco() : number;
 }

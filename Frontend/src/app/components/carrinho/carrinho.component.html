@@ -1,6 +1,12 @@
-<ul *ngFor="let item of itensCarrinho;let i = index;">
-  <li>
-    {{item.getNome()}} | Quantidade: {{item.getQuantidade()}} | Total: R${{item.getPreco()}}
-    <button (click)="removerDoCarrinho(i)">Remover</button>
-  </li>
-</ul>
+<h3 *ngIf="itensCarrinho.length == 0; else items">Carrinho vazio</h3>
+
+<ng-template #items>
+  <ul *ngFor="let item of itensCarrinho;let i = index;">
+    <li>
+      {{item.getDescricao()}} | Quantidade: {{item.getQuantidade()}} | Total: R${{item.getPreco()}}
+      <button (click)="removerDoCarrinho(i)">Remover</button>
+    </li>
+  </ul>
+
+  <button (click)="finalizarPedido()">Finalizar Pedido</button>
+</ng-template>

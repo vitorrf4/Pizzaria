@@ -13,7 +13,7 @@ export class AcompanhamentoPedido implements Pedido {
     this.calcularPreco();
   }
 
-  getNome(): string {
+  getDescricao(): string {
     return this.acompanhamento.nome;
   }
 

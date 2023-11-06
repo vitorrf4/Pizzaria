@@ -1,4 +1,3 @@
-import { Cliente } from "./Cliente";
 import { Regiao } from "./Regiao";
 
 export class Endereco {
