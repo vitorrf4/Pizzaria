@@ -27,4 +27,8 @@ export class PedidoFinalService {
   alterar(pedidoFinal: PedidoFinal) {
     return this.http.put(`${this.apiUrl}/pedidoFinal/alterar/`, pedidoFinal)
   }
+
+  listarPedidosPorCliente(cpf: string) {
+    return this.http.get<PedidoFinal[]>(`${this.apiUrl}/pedidoFinal/cliente/${cpf}`);
+  }
 }

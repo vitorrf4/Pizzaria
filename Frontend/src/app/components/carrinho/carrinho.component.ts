@@ -3,7 +3,6 @@ import {Pedido} from "../../models/Pedido";
 import {CarrinhoService} from "../../services/carrinho.service";
 import {AcompanhamentoPedido} from "../../models/AcompanhamentoPedido";
 import {PedidoFinal} from "../../models/PedidoFinal";
-import {ClienteService} from "../../services/cliente.service";
 import {LoginService} from "../../services/login.service";
 import {PedidoFinalService} from "../../services/pedido-final.service";
 import {PizzaPedido} from "../../models/PizzaPedido";
@@ -25,6 +24,10 @@ export class CarrinhoComponent{
               private pizzaPedidoService: PizzaPedidoService,
               private acompanhamentoPedidoService : AcompanhamentoPedidoService) {
     this.itensCarrinho = this.carrinhoService.itensCarrinho;
+    
+    this.filtrarPedidos();
+    this.cadastrarAcompanhamento();
+    this.cadastrarPizza();
   }
 
   removerDoCarrinho(index: number) {
@@ -35,14 +38,33 @@ export class CarrinhoComponent{
     this.pedidoFinal = new PedidoFinal();
     this.pedidoFinal.cliente = this.clienteService.clienteLogado;
 
-    this.filtrarPedidos();
+    this.pedidoFinalService.cadastrar(this.pedidoFinal).subscribe({
+      next: () => alert("Pedido finalizado"),
+      error: err => console.log(err)
+    });
+  }
 
+  cadastrarFinal() {
     console.log("final:");
     console.log(this.pedidoFinal);
 
-    this.pedidoFinalService.cadastrar(this.pedidoFinal).subscribe({
-      next: res => alert("Pedido finalizado"),
-      error: err => console.log(err)
+  }
+
+  cadastrarPizza() {
+    console.log("pizzas:");
+    this.pedidoFinal.pizzas.forEach(pizza => {
+      this.pizzaPedidoService.cadastrar(pizza).subscribe(res => {
+        pizza = res;
+      });
+    });
+  }
+
+  cadastrarAcompanhamento() {
+    console.log("acompanhamentos");
+    this.pedidoFinal.acompanhamentos.forEach(acomp => {
+      this.acompanhamentoPedidoService.cadastrar(acomp).subscribe(res => {
+        acomp = res;
+      });
     });
 
   }

@@ -45,16 +45,16 @@ public class PedidoFinalController : ControllerBase
 
         pedidoFinal.Cliente = clienteCompleto;
 
-//        if (pedidoFinal.Acompanhamentos != null)
-//        {
-//            var acompanhamentosCompletos = await GetAcompanhamentosCompletos(pedidoFinal.Acompanhamentos);
-//            if (acompanhamentosCompletos == null) return BadRequest("O acompanhamento pedido n�o foi encontrado");
-//            pedidoFinal.Acompanhamentos = acompanhamentosCompletos;
-//        }
-//
-//        var pizzasCompletas = await GetPizzasCompletas(pedidoFinal.Pizzas);
-//        if (pizzasCompletas == null) return BadRequest("Pizza pedido inv�lido");
-//        pedidoFinal.Pizzas = pizzasCompletas;
+       if (pedidoFinal.Acompanhamentos != null)
+       {
+           var acompanhamentosCompletos = await GetAcompanhamentosCompletos(pedidoFinal.Acompanhamentos);
+           if (acompanhamentosCompletos == null) return BadRequest("O acompanhamento pedido n�o foi encontrado");
+           pedidoFinal.Acompanhamentos = acompanhamentosCompletos;
+       }
+
+       var pizzasCompletas = await GetPizzasCompletas(pedidoFinal.Pizzas);
+       if (pizzasCompletas == null) return BadRequest("Pizza pedido inv�lido");
+       pedidoFinal.Pizzas = pizzasCompletas;
 
         pedidoFinal.CalcularPrecoTotal();
 
@@ -121,6 +121,16 @@ public class PedidoFinalController : ControllerBase
         return Ok();
     }
 
+    [HttpGet]
+    [Route("cliente/{cpf}")]
+    public async Task<IActionResult> ListarPedidosPorCliente([FromRoute] string cpf) {
+        var pedidos = await GetPedidosFinaisComTodasAsPropriedadesCpf(cpf);
+
+        if (pedidos.Count == 0) return NotFound("Nenhum pedido encontrado");
+
+        return Ok(pedidos);
+    }
+
     //
 
     private IQueryable<PedidoFinal> GetPedidosFinaisComTodasAsPropriedades()
@@ -133,6 +143,20 @@ public class PedidoFinalController : ControllerBase
             .Include(p => p.Pizzas).ThenInclude(p => p.Tamanho)
             .Include(p => p.Pizzas).ThenInclude(p => p.Sabores)
             .Include(p => p.Promocao);
+    }
+
+    private Task<List<PedidoFinal>> GetPedidosFinaisComTodasAsPropriedadesCpf(string cpf)
+    {
+        // Campos que s�o objetos n�o s�o retornados automaticamente do banco,
+        // precisamos do Include() para que eles sejam incluidos
+        return _context.PedidoFinal
+            .Include(p => p.Cliente.Endereco).ThenInclude(endereco => endereco.Regiao)
+            .Include(p => p.Acompanhamentos).ThenInclude(a => a.Acompanhamento)
+            .Include(p => p.Pizzas).ThenInclude(p => p.Tamanho)
+            .Include(p => p.Pizzas).ThenInclude(p => p.Sabores)
+            .Include(p => p.Promocao)
+            .Where(p => p.Cliente.Cpf == cpf)
+            .ToListAsync();
     }
 
     private IQueryable<PedidoFinal> GetPedidoFinalComTodasAsPropriedades(int id)
