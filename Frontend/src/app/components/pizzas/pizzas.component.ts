@@ -17,7 +17,6 @@ export class PizzasComponent {
   tamanhos : Tamanho[] = [];
   tamanho  = new Tamanho();
   saboresSelecionados : Sabor[] = [];
-  @ViewChild("saboresCheckbox") checkboxes! : ElementRef;
 
   constructor(private saborService: SaborService,
               private tamanhoService: TamanhoService,

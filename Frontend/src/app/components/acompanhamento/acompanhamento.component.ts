@@ -11,9 +11,8 @@ import {CarrinhoService} from "../../services/carrinho.service";
 })
 export class AcompanhamentoComponent {
   acompanhamentos: Acompanhamento[] = []
-  // ViewChild é o equivalente do getElementById em JavaScript, só que selecionara o elemento
-  // definido com uma "#"
-  @ViewChild("quantidade") quantidade! : ElementRef;
+  // Array que guarda a quantidade colocada no input de cada acompanhamento
+  quantidadeArray: number[] = [];
 
   constructor(private service: AcompanhamentoService, private carrinhoService: CarrinhoService) {
     this.service.listar().subscribe(resposta => {
@@ -21,8 +20,7 @@ export class AcompanhamentoComponent {
     })
   }
 
-  adicionarAoCarrinho(acompanhamento : Acompanhamento) {
-    const quantidade = this.quantidade.nativeElement.value;
+  adicionarAoCarrinho(acompanhamento : Acompanhamento, quantidade: number) {
     const acompanhamentoPedido = new AcompanhamentoPedido(acompanhamento, quantidade);
 
     this.carrinhoService.adicionarNoCarrinho(acompanhamentoPedido)

@@ -1,6 +1,6 @@
-<ul *ngFor="let acompanhamento of acompanhamentos">
+<ul *ngFor="let acompanhamento of acompanhamentos;let i = index">
   <li>{{acompanhamento.nome}} | Preço: R${{acompanhamento.preco}}</li>
   <label>Quantidade:</label>
-  <input type="number" #quantidade>
-  <button (click)="adicionarAoCarrinho(acompanhamento)">Adicionar</button>
+  <input type="number" [(ngModel)]="quantidadeArray[i]">
+  <button (click)="adicionarAoCarrinho(acompanhamento, quantidadeArray[i])">Adicionar</button>
 </ul>

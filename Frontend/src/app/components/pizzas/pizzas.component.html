@@ -8,7 +8,7 @@
 <div *ngIf="tamanho.qntdFatias > 0">
   <p [(ngModel)]="tamanho" ngDefaultControl>Fatias:{{tamanho.qntdFatias}} | Sabores: {{tamanho.maxSabores}}</p>
 
-  <div *ngFor="let sabor of sabores" #saboresCheckbox>
+  <div *ngFor="let sabor of sabores">
     <input type="checkbox" [value]="sabor" (change)="adicionarSabor(sabor)" >{{sabor.nome}} | Preço: R${{sabor.preco}}
   </div>
 
