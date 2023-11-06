@@ -6,6 +6,7 @@ import {RegiaoService} from "../../services/regiao.service";
 import {FormControl, FormGroup} from "@angular/forms";
 import {Router} from "@angular/router";
 import {LoginService} from "../../services/login.service";
+import {CepService} from "../../services/cep.service";
 
 @Component({
   selector: 'app-cadastro',
@@ -17,16 +18,22 @@ export class CadastroComponent implements OnInit {
   formularioEndereco: any;
   regioes: Regiao[] = [];
 
+
   constructor(private clienteService: ClienteService,
               private regiaoService: RegiaoService,
+              private loginService: LoginService,
               private router: Router,
-              private loginService: LoginService) {
+              private cep: CepService) {
+    this.iniciaFormularios();
+  }
+
+  iniciaFormularios() {
     this.formularioCliente = new FormGroup({
       cpf: new FormControl(null),
       nome: new FormControl(null),
       telefone: new FormControl(null),
       dataAniversario: new FormControl(null)
-    })
+    });
 
     this.formularioEndereco = new FormGroup({
       rua: new FormControl(null),
@@ -34,7 +41,8 @@ export class CadastroComponent implements OnInit {
       cep: new FormControl(null),
       complemento: new FormControl(null),
       regiao: new FormControl(null)
-    })
+    });
+
   }
 
   ngOnInit() {
@@ -43,9 +51,23 @@ export class CadastroComponent implements OnInit {
     });
   }
 
+  buscarCEP() {
+    const cep = this.formularioEndereco.value.cep;
+
+    this.cep.buscarCep(cep).subscribe(res => {
+      this.formularioEndereco.get("rua").setValue(res.logradouro);
+      this.formularioEndereco.get("regiao").setValue(res.bairro);
+    });
+
+  }
+
   cadastrarCliente() {
     const cliente : Cliente = this.formularioCliente.value;
+    let regiao : Regiao = new Regiao();
+    regiao.nome = this.formularioEndereco.value.regiao;
+
     cliente.endereco = this.formularioEndereco.value;
+    cliente.endereco.regiao = regiao;
 
     this.clienteService.cadastrar(cliente).subscribe({
       next: clienteCriado => {

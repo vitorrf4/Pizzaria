@@ -47,8 +47,8 @@ public class EnderecoController : ControllerBase
     public async Task<IActionResult> Cadastrar(Endereco endereco)
     {
         var regiaoNoBanco = await _context.Regiao.FindAsync(endereco.Regiao.Id);
-        if (regiaoNoBanco == null) return BadRequest("Regiao invalida");
-        endereco.Regiao = regiaoNoBanco;
+//        if (regiaoNoBanco == null) return BadRequest("Regiao invalida");
+//        endereco.Regiao = regiaoNoBanco;
 
         await _context.AddRangeAsync(endereco);
         await _context.SaveChangesAsync();

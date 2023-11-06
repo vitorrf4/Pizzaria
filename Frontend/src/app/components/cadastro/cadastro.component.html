@@ -33,29 +33,25 @@
 <fieldset>
   <legend>Endereço</legend>
   <div class="form-group">
+    <label>CEP:</label>
+    <input type="text" formControlName="cep">
+    <button (click)="buscarCEP()">Buscar CEP</button>
+  </div>
+  <div class="form-group">
     <label>Rua:</label>
     <input type="text" formControlName="rua">
+  </div>
+  <div class="form-group">
+    <label>Regiao:</label>
+    <input type="text" formControlName="regiao" readonly>
   </div>
   <div class="form-group">
     <label>Numero:</label>
     <input type="number" formControlName="numero">
   </div>
   <div class="form-group">
-    <label>CEP:</label>
-    <input type="text" formControlName="cep">
-  </div>
-  <div class="form-group">
     <label>Complemento:</label>
     <input type="text" formControlName="complemento">
-  </div>
-  <div class="form-group">
-    <label>Regiao:</label>
-    <select formControlName="regiao">
-      <option [ngValue]="null" disabled>Selecione uma Regiao</option>
-      <option *ngFor="let regiao of regioes" [ngValue]="regiao">
-        {{regiao.nome}}
-      </option>
-    </select>
   </div>
 </fieldset>
 </form>

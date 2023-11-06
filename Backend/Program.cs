@@ -18,14 +18,14 @@ var services = scope.ServiceProvider;
 
 var DbContext = services.GetRequiredService<PizzariaDBContext>();
 
-DbContext.InicializaValoresTeste(); // Delete esta linha se quiser que o banco inicie vazio
+DbContext.InicializaValores(); // Delete esta linha se quiser que o banco inicie vazio
 
 if (app.Environment.IsDevelopment()) // swagger só será usado se estivermos no ambiente de desenvolvimento(ambiente padrão) do site
 {
     app.UseSwagger(); // habilita o swagger padrão descrito em json, | http://localhost:5000/swagger/v1/swagger.json 
     app.UseSwaggerUI(); // habilita a versão visual do swagger | http://localhost:5000/swagger/index.html
 }
-app.UseHttpsRedirection();
+
 app.UseCors(opcoes => opcoes.AllowAnyOrigin().AllowAnyHeader());
 app.UseAuthorization();
 app.MapControllers();

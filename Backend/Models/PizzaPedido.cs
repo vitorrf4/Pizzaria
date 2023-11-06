@@ -1,11 +1,13 @@
 namespace pizzaria;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 public class PizzaPedido 
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int  Id { get; set; }
     public List<Sabor> Sabores { get; set; } = new();
     public Tamanho Tamanho { get; set; }
@@ -26,16 +28,16 @@ public class PizzaPedido
 
     public double CalcularPreco()
     {
-        // preco = ((sabor1 + sabor2...saborN) / quantidade de sabores) + (preco * tamanho)
+        // Fórmula do preco = ((sabor1 + sabor2...saborN) / quantidade de sabores) + (preco * (preco do tamanho / 100))
 
         double precoTotal = 0.0;
 
-        foreach(Sabor sabor in Sabores)
+        foreach (Sabor sabor in Sabores)
         {
             precoTotal += sabor.Preco;
         }
 
-        if (Sabores.Count > 0)
+        if (Sabores.Count > 1)
         {
             precoTotal = precoTotal / Sabores.Count;
         }

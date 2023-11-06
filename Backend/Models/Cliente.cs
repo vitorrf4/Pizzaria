@@ -1,16 +1,17 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace pizzaria;
 
 public class Cliente 
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public string Cpf { get; set; }
     public string Nome { get; set; }
     public string Telefone { get; set; }
     public DateOnly DataAniversario { get; set; }
-    public Endereco? Endereco { get; set; }
-
+    public Endereco Endereco { get; set; }
 
     public Cliente() { }
 

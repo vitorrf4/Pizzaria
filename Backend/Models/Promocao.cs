@@ -6,6 +6,7 @@ namespace pizzaria;
 public class Promocao
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
     [ForeignKey("Promocao")]
     public int PedidoFinalId { get; set; }

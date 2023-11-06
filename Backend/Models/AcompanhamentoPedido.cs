@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace pizzaria;
@@ -6,6 +7,7 @@ namespace pizzaria;
 public class AcompanhamentoPedido
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
     public Acompanhamento Acompanhamento { get; set; }
     public int Quantidade { get; set; }
@@ -15,9 +17,8 @@ public class AcompanhamentoPedido
 
     public AcompanhamentoPedido() { }
 
-    public AcompanhamentoPedido(int id, Acompanhamento acompanhamento, int quantidade)
+    public AcompanhamentoPedido(Acompanhamento acompanhamento, int quantidade)
     {
-        Id = id;
         Acompanhamento = acompanhamento;
         Quantidade = quantidade;
         CalcularPreco();

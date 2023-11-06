@@ -1,10 +1,12 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace pizzaria;
 
 public class PedidoFinal 
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
     public Cliente Cliente { get; set; }
     public List<PizzaPedido> Pizzas { get; set; }
@@ -13,9 +15,10 @@ public class PedidoFinal
     public DateTime HoraPedido { get; set; }
     public Promocao ?Promocao { get; private set; }
 
-    public PedidoFinal(){ }
+    public PedidoFinal() { }
 
-    public PedidoFinal(Cliente cliente, List<PizzaPedido> pizzas, List<AcompanhamentoPedido> acompanhamentos){
+    public PedidoFinal(Cliente cliente, List<PizzaPedido> pizzas, List<AcompanhamentoPedido> ?acompanhamentos)
+    {
         Cliente = cliente;
         Pizzas = pizzas;
         Acompanhamentos = acompanhamentos;
@@ -25,26 +28,23 @@ public class PedidoFinal
 
     public double CalcularPrecoTotal()
     {
-        double precoPedido = 0.0;
-        double precoAcompanhamento = 0.0;
-        double precoRegiao = Cliente.Endereco.Regiao.Preco;
-        int aniversarioCliente = Cliente.DataAniversario.DayOfYear;
-        int dataPedido = DateOnly.FromDateTime(HoraPedido).DayOfYear;
+        double precoTotal = 0;
 
         foreach (PizzaPedido pizza in Pizzas)
         {
-            precoPedido += pizza.Preco;
+            precoTotal += pizza.Preco;
         }
 
         if (Acompanhamentos != null)
         {
             foreach (AcompanhamentoPedido acompanhamento in Acompanhamentos)
             {
-                precoAcompanhamento += acompanhamento.PrecoTotal;
+                precoTotal += acompanhamento.PrecoTotal;
             }
         }
 
-        PrecoTotal = precoPedido + precoAcompanhamento + precoRegiao;
+        int aniversarioCliente = Cliente.DataAniversario.DayOfYear;
+        int dataPedido = DateOnly.FromDateTime(HoraPedido).DayOfYear;
 
         if (aniversarioCliente == dataPedido)
         {
@@ -52,6 +52,7 @@ public class PedidoFinal
             PrecoTotal = PrecoTotal - (PrecoTotal * (Promocao.Desconto / 100));
         }
 
+        PrecoTotal = precoTotal;
         return PrecoTotal;
     }
 
@@ -68,7 +69,7 @@ public class PedidoFinal
             Console.WriteLine(pizza);
             index++;
         });
-        Acompanhamentos.ForEach(Console.WriteLine);
+        Acompanhamentos?.ForEach(Console.WriteLine);
         Console.Write(Cliente.Endereco.Regiao + " \n");
         Console.Write($"Hora do Pedido: {HoraPedido} | ");
         Console.Write($"Preço Total do Pedido: R${PrecoTotal}");

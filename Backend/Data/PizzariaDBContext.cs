@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using System.Collections;
 
 namespace pizzaria;
 
@@ -27,27 +26,32 @@ public class PizzariaDBContext : DbContext{
         
     }
 
-    public void InicializaValoresTeste()
+    public void InicializaValores()
     {
         Database.EnsureDeleted();
         Database.EnsureCreated();
 
-        //endereços
-        var endereco1 = new Endereco("Rua 1", 1, "11111-11");
-        var endereco2 = new Endereco("Rua 2", 2, "11111-11", "casa 5");
+        // Regiao
+        var centro = new Regiao("Centro");
+        var aguaVerde = new Regiao("Água Verde");
+        var boqueirao = new Regiao("Boqueirão");
 
-        //clientes
+        // Endereco
+        var endereco1 = new Endereco("Rua 1", 1, "11111-11", centro);
+        var endereco2 = new Endereco("Rua 2", 2, "11111-11", boqueirao, "casa 5");
+
+        // Cliente
         var cliente1 = new Cliente("12345", "joao", "1111-1111" ,DateOnly.Parse("29/09/1973"), endereco1);
         var cliente2 = new Cliente("67890", "maria", "2222-2222", DateOnly.Parse("12/05/2000"), endereco2);
-        endereco1.Cliente = cliente1;
-        endereco2.Cliente = cliente2;
 
-        // criar sabores => Sabor(int id, string nome, double preco)
-        var frango = new Sabor(1, "Frango", 15.0);
-        var calabresa = new Sabor(2, "Calabresa", 17.0);
-        var quatroQueijos = new Sabor(3, "Quatro Queijos", 19.0);
+        // Sabor
+        var frango = new Sabor("Frango", 15.0);
+        var calabresa = new Sabor("Calabresa", 17.0);
+        var quatroQueijos = new Sabor("Quatro Queijos", 19.0);
+        var portuguesa = new Sabor("Portuguesa", 15.0);
+        var camarao = new Sabor("Camarão", 19.0);
 
-        //criar tamanhos => Tamanho(string nome, int qntdFatias,double preco) 
+        // Tamanho 
         var broto = new Tamanho("BROTO", 4, 1, 0.0);
         var pequena = new Tamanho("PEQUENA", 6, 1, 50.0);
         var media = new Tamanho("MEDIA", 8, 2, 100.0);
@@ -55,30 +59,21 @@ public class PizzariaDBContext : DbContext{
         var familia = new Tamanho("FAMILIA", 12, 3, 200.0);
         var gigante = new Tamanho("GIGANTE", 16, 4, 300.0);
 
-        //criar regioes => Regiao(string nome, double preco)
-        var centro = new Regiao(1, "Centro", 5.0);
-        var aguaVerde = new Regiao(2, "Água Verde", 10.0);
-        var boqueirao = new Regiao(3, "Boqueirão", 30.0);
+        // Acompanhamento
+        var refrigerante = new Acompanhamento("Refrigerante", 12.0);
+        var suco = new Acompanhamento("Suco", 10.0);
+        var paoDeAlho = new Acompanhamento("Pão de Alho", 25.0);
 
-        //criar acompanhamentos => Acompanhamento(string nome, double preco)
-        var refrigerante = new Acompanhamento(1, "Refrigerante", 12.0);
-        var suco = new Acompanhamento(2, "Suco", 10.0);
-        var paoDeAlho = new Acompanhamento(3, "Pão de Alho", 25.0);
+        // AcompanhamentoPedido
+        var acompanhamentoPedido1 = new AcompanhamentoPedido(refrigerante, 3);
+        var acompanhamentoPedido2 = new AcompanhamentoPedido(suco, 1);
 
-        //cria acompanhamentoPedido
-        var acompanhamentoPedido1 = new AcompanhamentoPedido(1, refrigerante, 3);
-        var acompanhamentoPedido2 = new AcompanhamentoPedido(2, refrigerante, 3);
-
-        //cria pizza pedido
+        // PizzaPedido
         var sabores = new List<Sabor>() { frango };
         var pizzaPedido = new PizzaPedido(sabores, media, 3);
         var pizzaPedido2 = new PizzaPedido(sabores, grande, 1);
 
-        // relaciona endereco e regiao
-        endereco1.Regiao = centro;
-        endereco2.Regiao = boqueirao;
-
-        //cria pedido final
+        // PedidoFinal
         var pedidoFinal = new PedidoFinal(
             cliente1,
             new List<PizzaPedido>() { pizzaPedido },
@@ -87,7 +82,7 @@ public class PizzariaDBContext : DbContext{
         //Adiciona no Banco
         Acompanhamento.AddRange(refrigerante, suco, paoDeAlho);
         Tamanho.AddRange(broto, pequena, media, grande, familia, gigante);
-        Sabor.AddRange(frango, calabresa, quatroQueijos);
+        Sabor.AddRange(frango, calabresa, quatroQueijos, portuguesa, camarao);
         Regiao.AddRange(boqueirao, aguaVerde, centro);
         Endereco.AddRange(endereco1, endereco2);
         Cliente.AddRange(cliente1, cliente2);

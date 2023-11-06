@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace pizzaria;
@@ -6,24 +7,22 @@ namespace pizzaria;
 public class Regiao
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
     public string Nome { get; set; }
-    public double Preco { get; set; }
     [JsonIgnore]
     public List<Endereco> ?Enderecos { get; set; }
      
     public Regiao() { }
 
-    public Regiao(int id, string nome, double preco)
+    public Regiao(string nome)
     {
-        Id = id;
         Nome = nome;
-        Preco = preco;
     }
 
     public override string ToString()
     {
-        return $"Região: {Nome} | Preço Frete: R${Preco}";
+        return $"Região: {Nome}";
     }
 
 }

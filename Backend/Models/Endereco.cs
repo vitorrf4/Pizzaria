@@ -1,4 +1,3 @@
-using System.CodeDom.Compiler;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
@@ -13,21 +12,21 @@ public class Endereco
     public string Rua { get; set; }
     public int Numero { get; set; }
     public string Cep { get; set; }
-    public string ?Complemento { get; set; }
     public Regiao Regiao { get; set; }
+    public string ?Complemento { get; set; }
     [JsonIgnore]
     [ForeignKey("Cliente.Endereco")]
     public Cliente ?Cliente { get; set; }
     
+    public Endereco() { } 
 
-    public Endereco() { }
-     
-    public Endereco(string rua, int numero, string cep, string complemento = null)
+    public Endereco(string rua, int numero, string cep, Regiao regiao, string ?complemento = null)
     {
         Rua = rua;
         Numero = numero;
         Cep = cep;
         Complemento = complemento;
+        Regiao = regiao;
     }
 
     public override string ToString()

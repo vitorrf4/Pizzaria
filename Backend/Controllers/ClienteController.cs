@@ -73,12 +73,12 @@ public class ClienteController : ControllerBase // todos os controllers precisam
         // se o ID for 0, o if será ignorado e um novo endereco será criado
         if (cliente.Endereco == null) return BadRequest("Endereço inválido");
 
-        var regiao = await _context.Regiao.FindAsync(cliente.Endereco.Regiao.Id);
-        if (regiao == null) return BadRequest("Região inválida");
+//        var regiao = await _context.Regiao.FindAsync(cliente.Endereco.Regiao.Id);
+//        if (regiao == null) return BadRequest("Região inválida");
 
-        cliente.Endereco.Regiao = regiao;
+//        cliente.Endereco.Regiao = regiao;
 
-        await _context.AddAsync(cliente); // adiciona o objeto Cliente, mandado no corpo da requisição, no banco
+        await _context.AddRangeAsync(cliente); // adiciona o objeto Cliente, mandado no corpo da requisição, no banco
         await _context.SaveChangesAsync(); // salva as alterações no banco
         return Created("", cliente);
     }
