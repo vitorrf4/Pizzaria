@@ -45,11 +45,9 @@ public class PedidoFinalController : ControllerBase
 
         pedidoFinal.Cliente = clienteCompleto;
 
-        AttachSabores(pedidoFinal.Pizzas);
-
-        var acompanhamentos = pedidoFinal.Acompanhamentos;
-        if (acompanhamentos != null && acompanhamentos.Count > 0) 
-            AttachAcompanhamentos(acompanhamentos);
+        // A função Attach comunica que um campo já está no banco de dados e não é para ser inserida novamente
+        // sem ela, o entity framework tenta adicionar um campo com um ID existente e da erro
+        AttachCampos(pedidoFinal);
 
         pedidoFinal.CalcularPrecoTotal();
 
@@ -58,23 +56,22 @@ public class PedidoFinalController : ControllerBase
         return Created("", pedidoFinal);
     }
 
-    public void AttachSabores(List<PizzaPedido> pedidos)
+    public void AttachCampos(PedidoFinal pedidoFinal)
     {
-        pedidos.ForEach(p =>
+
+        pedidoFinal.Pizzas.ForEach(p =>
         {
-            // Attach comunica que esse campo já está no banco de dados e não é para ser adicionado
             _context.Tamanho.Attach(p.Tamanho);
             _context.Sabor.AttachRange(p.Sabores);
         });
-    }
 
-    public void AttachAcompanhamentos(List<AcompanhamentoPedido> pedidos)
-    {
-
-        pedidos.ForEach(p =>
+        if (pedidoFinal.Acompanhamentos != null)
         {
-            _context.Acompanhamento.Attach(p.Acompanhamento);
-        });
+            pedidoFinal.Acompanhamentos.ForEach(p =>
+            {
+                _context.Acompanhamento.Attach(p.Acompanhamento);
+            });
+        }
 
     }
 
