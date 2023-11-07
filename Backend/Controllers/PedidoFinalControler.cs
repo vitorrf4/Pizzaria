@@ -45,22 +45,37 @@ public class PedidoFinalController : ControllerBase
 
         pedidoFinal.Cliente = clienteCompleto;
 
-       if (pedidoFinal.Acompanhamentos != null)
-       {
-           var acompanhamentosCompletos = await GetAcompanhamentosCompletos(pedidoFinal.Acompanhamentos);
-           if (acompanhamentosCompletos == null) return BadRequest("O acompanhamento pedido n�o foi encontrado");
-           pedidoFinal.Acompanhamentos = acompanhamentosCompletos;
-       }
+        AttachSabores(pedidoFinal.Pizzas);
 
-       var pizzasCompletas = await GetPizzasCompletas(pedidoFinal.Pizzas);
-       if (pizzasCompletas == null) return BadRequest("Pizza pedido inv�lido");
-       pedidoFinal.Pizzas = pizzasCompletas;
+        var acompanhamentos = pedidoFinal.Acompanhamentos;
+        if (acompanhamentos != null && acompanhamentos.Count > 0) 
+            AttachAcompanhamentos(acompanhamentos);
 
         pedidoFinal.CalcularPrecoTotal();
 
         await _context.AddAsync(pedidoFinal);
         await _context.SaveChangesAsync();
         return Created("", pedidoFinal);
+    }
+
+    public void AttachSabores(List<PizzaPedido> pedidos)
+    {
+        pedidos.ForEach(p =>
+        {
+            // Attach comunica que esse campo já está no banco de dados e não é para ser adicionado
+            _context.Tamanho.Attach(p.Tamanho);
+            _context.Sabor.AttachRange(p.Sabores);
+        });
+    }
+
+    public void AttachAcompanhamentos(List<AcompanhamentoPedido> pedidos)
+    {
+
+        pedidos.ForEach(p =>
+        {
+            _context.Acompanhamento.Attach(p.Acompanhamento);
+        });
+
     }
 
     [HttpPut]
@@ -124,9 +139,12 @@ public class PedidoFinalController : ControllerBase
     [HttpGet]
     [Route("cliente/{cpf}")]
     public async Task<IActionResult> ListarPedidosPorCliente([FromRoute] string cpf) {
-        var pedidos = await GetPedidosFinaisComTodasAsPropriedadesCpf(cpf);
+        var pedidos = await GetPedidosFinaisComTodasAsPropriedades()
+            .Where(p => p.Cliente.Cpf == cpf)
+            .ToListAsync();
 
         if (pedidos.Count == 0) return NotFound("Nenhum pedido encontrado");
+        pedidos.ForEach(Console.WriteLine);
 
         return Ok(pedidos);
     }

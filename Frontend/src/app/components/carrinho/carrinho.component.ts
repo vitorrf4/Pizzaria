@@ -20,53 +20,10 @@ export class CarrinhoComponent{
 
   constructor(private carrinhoService: CarrinhoService,
               private clienteService: LoginService,
-              private pedidoFinalService: PedidoFinalService,
-              private pizzaPedidoService: PizzaPedidoService,
-              private acompanhamentoPedidoService : AcompanhamentoPedidoService) {
+              private pedidoFinalService: PedidoFinalService) {
     this.itensCarrinho = this.carrinhoService.itensCarrinho;
-    
+
     this.filtrarPedidos();
-    this.cadastrarAcompanhamento();
-    this.cadastrarPizza();
-  }
-
-  removerDoCarrinho(index: number) {
-    this.carrinhoService.removerDoCarrinho(index);
-  }
-
-  finalizarPedido() {
-    this.pedidoFinal = new PedidoFinal();
-    this.pedidoFinal.cliente = this.clienteService.clienteLogado;
-
-    this.pedidoFinalService.cadastrar(this.pedidoFinal).subscribe({
-      next: () => alert("Pedido finalizado"),
-      error: err => console.log(err)
-    });
-  }
-
-  cadastrarFinal() {
-    console.log("final:");
-    console.log(this.pedidoFinal);
-
-  }
-
-  cadastrarPizza() {
-    console.log("pizzas:");
-    this.pedidoFinal.pizzas.forEach(pizza => {
-      this.pizzaPedidoService.cadastrar(pizza).subscribe(res => {
-        pizza = res;
-      });
-    });
-  }
-
-  cadastrarAcompanhamento() {
-    console.log("acompanhamentos");
-    this.pedidoFinal.acompanhamentos.forEach(acomp => {
-      this.acompanhamentoPedidoService.cadastrar(acomp).subscribe(res => {
-        acomp = res;
-      });
-    });
-
   }
 
   filtrarPedidos() {
@@ -78,5 +35,28 @@ export class CarrinhoComponent{
         this.pedidoFinal.acompanhamentos.push(pedido);
       }
     });
+  }
+
+  // fix: item é removido do carrinho mas não do pedidoFinal
+  removerDoCarrinho(index: number) {
+    this.carrinhoService.removerDoCarrinho(index);
+    this.itensCarrinho.splice(index, 1);
+  }
+
+  finalizarPedido() {
+    this.pedidoFinal.cliente = this.clienteService.clienteLogado;
+    console.log(this.pedidoFinal);
+
+    this.pedidoFinalService.cadastrar(this.pedidoFinal).subscribe({
+      next: res => {
+        alert("Pedido finalizado");
+        this.limparCarrinho();
+      },
+      error: err => console.log(err)
+    });
+  }
+
+  limparCarrinho() {
+    this.carrinhoService.limparCarrinho();
   }
 }

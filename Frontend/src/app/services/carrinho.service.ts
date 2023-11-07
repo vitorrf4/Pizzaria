@@ -22,4 +22,9 @@ export class CarrinhoService {
     this.itensCarrinho.splice(index, 1);
     this.quantidadeItensCarrinho.next(this.quantidadeItensCarrinho.value - 1);
   }
+
+  limparCarrinho() {
+    this.itensCarrinho = [];
+    this.quantidadeItensCarrinho.next(0);
+  }
 }
