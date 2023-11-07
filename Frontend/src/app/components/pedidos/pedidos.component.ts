@@ -9,7 +9,7 @@ import { PedidoFinalService } from 'src/app/services/pedido-final.service';
   styleUrls: ['./pedidos.component.css']
 })
 export class PedidosComponent {
-  meusPedidos : PedidoFinal[] = [];
+  pedidos : PedidoFinal[] = [];
 
   constructor(private pedidoFinalService: PedidoFinalService, private loginService: LoginService) {
     this.consultarMeusPedidos();
@@ -19,7 +19,7 @@ export class PedidosComponent {
     const cliente = this.loginService.clienteLogado;
 
     this.pedidoFinalService.listarPedidosPorCliente(cliente.cpf).subscribe(resposta => {
-      this.meusPedidos = resposta;
+      this.pedidos = resposta;
     });
   }
 

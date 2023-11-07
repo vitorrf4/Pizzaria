@@ -40,9 +40,7 @@ public class PedidoFinalController : ControllerBase
     [Route("cadastrar")]
     public async Task<IActionResult> Cadastrar(PedidoFinal pedidoFinal)
     {
-        Console.WriteLine("post /cadastrar:");
-        Console.WriteLine(pedidoFinal);
-
+        pedidoFinal.HoraPedido = DateTime.Now;
         // A função Attach comunica que um campo já está no banco de dados e não precisa ser inserido novamente
         // sem ela, o entity framework tenta adicionar um campo com um ID existente e da erro
         AttachCampos(pedidoFinal);

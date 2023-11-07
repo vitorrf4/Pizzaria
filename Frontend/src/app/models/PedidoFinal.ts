@@ -2,7 +2,6 @@ import { AcompanhamentoPedido } from "./AcompanhamentoPedido";
 import { Cliente } from "./Cliente";
 import { PizzaPedido } from "./PizzaPedido";
 import { Promocao } from "./Promocao";
-import {Pedido} from "./Pedido";
 
 export class PedidoFinal {
     id: number = 0;
@@ -17,8 +16,10 @@ export class PedidoFinal {
       this.cliente = cliente;
       this.pizzas = pizzas;
       this.acompanhamentos = acompanhamentos || [];
-      this.horaPedido = new Date();
       this.calcularPreco();
+
+      const date = new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo"});
+      this.horaPedido = new Date(date);
     }
 
     calcularPreco() {
