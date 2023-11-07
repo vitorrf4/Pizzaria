@@ -7,7 +7,7 @@ export class PizzaPedido implements Pedido {
   sabores: Sabor[] = [];
   tamanho: Tamanho = new Tamanho();
   preco: number = 0;
-  quantidade: number = 0;
+  quantidade: number;
 
   constructor(sabores: Sabor[], tamanho: Tamanho, quantidade: number) {
     this.sabores = sabores;

@@ -40,12 +40,10 @@ public class PedidoFinalController : ControllerBase
     [Route("cadastrar")]
     public async Task<IActionResult> Cadastrar(PedidoFinal pedidoFinal)
     {
-        var clienteCompleto = await GetClienteComTodasAsPropriedades(pedidoFinal.Cliente.Cpf);
-        if (clienteCompleto == null) return BadRequest("O cliente n�o foi encontrado");
+        Console.WriteLine("post /cadastrar:");
+        Console.WriteLine(pedidoFinal);
 
-        pedidoFinal.Cliente = clienteCompleto;
-
-        // A função Attach comunica que um campo já está no banco de dados e não é para ser inserida novamente
+        // A função Attach comunica que um campo já está no banco de dados e não precisa ser inserido novamente
         // sem ela, o entity framework tenta adicionar um campo com um ID existente e da erro
         AttachCampos(pedidoFinal);
 
@@ -56,22 +54,24 @@ public class PedidoFinalController : ControllerBase
         return Created("", pedidoFinal);
     }
 
-    public void AttachCampos(PedidoFinal pedidoFinal)
+    private void AttachCampos(PedidoFinal pedidoFinal)
     {
+        // Attach cliente
+        _context.Cliente.Attach(pedidoFinal.Cliente);
 
+        // Attach tamanho e sabores
         pedidoFinal.Pizzas.ForEach(p =>
         {
             _context.Tamanho.Attach(p.Tamanho);
             _context.Sabor.AttachRange(p.Sabores);
         });
 
-        if (pedidoFinal.Acompanhamentos != null)
+        // Attach acompanhamentos
+        pedidoFinal.Acompanhamentos?.ForEach(a =>
         {
-            pedidoFinal.Acompanhamentos.ForEach(p =>
-            {
-                _context.Acompanhamento.Attach(p.Acompanhamento);
-            });
-        }
+            
+            _context.Acompanhamento.Attach(a.Acompanhamento);
+        });
 
     }
 
@@ -141,12 +141,11 @@ public class PedidoFinalController : ControllerBase
             .ToListAsync();
 
         if (pedidos.Count == 0) return NotFound("Nenhum pedido encontrado");
-        pedidos.ForEach(Console.WriteLine);
 
         return Ok(pedidos);
     }
 
-    //
+    // Helpers
 
     private IQueryable<PedidoFinal> GetPedidosFinaisComTodasAsPropriedades()
     {
@@ -158,20 +157,6 @@ public class PedidoFinalController : ControllerBase
             .Include(p => p.Pizzas).ThenInclude(p => p.Tamanho)
             .Include(p => p.Pizzas).ThenInclude(p => p.Sabores)
             .Include(p => p.Promocao);
-    }
-
-    private Task<List<PedidoFinal>> GetPedidosFinaisComTodasAsPropriedadesCpf(string cpf)
-    {
-        // Campos que s�o objetos n�o s�o retornados automaticamente do banco,
-        // precisamos do Include() para que eles sejam incluidos
-        return _context.PedidoFinal
-            .Include(p => p.Cliente.Endereco).ThenInclude(endereco => endereco.Regiao)
-            .Include(p => p.Acompanhamentos).ThenInclude(a => a.Acompanhamento)
-            .Include(p => p.Pizzas).ThenInclude(p => p.Tamanho)
-            .Include(p => p.Pizzas).ThenInclude(p => p.Sabores)
-            .Include(p => p.Promocao)
-            .Where(p => p.Cliente.Cpf == cpf)
-            .ToListAsync();
     }
 
     private IQueryable<PedidoFinal> GetPedidoFinalComTodasAsPropriedades(int id)
@@ -225,5 +210,12 @@ public class PedidoFinalController : ControllerBase
             pizzasCompletas.Add(pizzaCompleta);
         }
         return pizzasCompletas;
+    }
+
+    [HttpGet("teste/{numero}")]
+    public ActionResult teste([FromRoute] double numero)
+    {
+        Console.WriteLine("numero: " + numero);
+        return Ok(numero);
     }
 }

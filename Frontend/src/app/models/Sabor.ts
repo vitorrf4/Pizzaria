@@ -1,5 +1,3 @@
-import { PizzaPedido } from "./PizzaPedido";
-
 export class Sabor {
     id: number = 0;
     nome: string = "";

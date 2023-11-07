@@ -11,7 +11,7 @@ public class PizzaPedido
     public int  Id { get; set; }
     public List<Sabor> Sabores { get; set; } = new();
     public Tamanho Tamanho { get; set; }
-    public double Preco { get; private set; }
+    public double Preco { get; set; }
     public int Quantidade { get; set;}
     [JsonIgnore]
     public PedidoFinal? PedidoFinal { get; set; }

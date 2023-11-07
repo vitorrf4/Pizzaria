@@ -11,7 +11,7 @@ public class AcompanhamentoPedido
     public int Id { get; set; }
     public Acompanhamento Acompanhamento { get; set; }
     public int Quantidade { get; set; }
-    public double PrecoTotal { get; private set; }
+    public double Preco { get; set; }
     [JsonIgnore]
     public PedidoFinal? PedidoFinal { get; set; }
 
@@ -26,7 +26,7 @@ public class AcompanhamentoPedido
 
     public void CalcularPreco()
     {
-        PrecoTotal = Acompanhamento.Preco * Quantidade;
+        Preco = Acompanhamento.Preco * Quantidade;
     }
 
     public override string ToString()
@@ -34,7 +34,7 @@ public class AcompanhamentoPedido
         Console.Write($"Acompanhamento: {Acompanhamento.Nome} | ");
         Console.Write($"Preço Unitário: R${Acompanhamento.Preco} | ");
         Console.Write($"Quantidade: {Quantidade} | ");
-        Console.Write($"Preço Total do Acompanhamento: R${PrecoTotal}");
+        Console.Write($"Preço Total do Acompanhamento: R${Preco}");
         return "";
     }
 }

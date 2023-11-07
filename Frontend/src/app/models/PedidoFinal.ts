@@ -10,14 +10,22 @@ export class PedidoFinal {
     pizzas: PizzaPedido[] = [];
     acompanhamentos: AcompanhamentoPedido[] = [];
     precoTotal: number = 0;
-    horaPedido = new Date();
-    promocao: Promocao = new Promocao();
+    horaPedido : Date;
+    promocao: Promocao | undefined;
+
+    constructor(cliente: Cliente, pizzas: PizzaPedido[], acompanhamentos?: AcompanhamentoPedido[]) {
+      this.cliente = cliente;
+      this.pizzas = pizzas;
+      this.acompanhamentos = acompanhamentos || [];
+      this.horaPedido = new Date();
+      this.calcularPreco();
+    }
 
     calcularPreco() {
       this.pizzas.forEach(pizza => this.precoTotal += pizza.preco);
 
       if (this.acompanhamentos) {
-        this.acompanhamentos.forEach(acomp => this.precoTotal += acomp.precoTotal);
+        this.acompanhamentos.forEach(acomp => this.precoTotal += acomp.preco);
       }
     }
 }

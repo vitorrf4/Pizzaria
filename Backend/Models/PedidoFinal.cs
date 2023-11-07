@@ -30,26 +30,17 @@ public class PedidoFinal
     {
         double precoTotal = 0;
 
-        foreach (PizzaPedido pizza in Pizzas)
-        {
-            precoTotal += pizza.Preco;
-        }
-
-        if (Acompanhamentos != null)
-        {
-            foreach (AcompanhamentoPedido acompanhamento in Acompanhamentos)
-            {
-                precoTotal += acompanhamento.PrecoTotal;
-            }
-        }
-
+        Pizzas.ForEach(pizza => precoTotal += pizza.Preco);
+        
+        Acompanhamentos?.ForEach(acomp =>  precoTotal += acomp.Preco);
+            
         int aniversarioCliente = Cliente.DataAniversario.DayOfYear;
         int dataPedido = DateOnly.FromDateTime(HoraPedido).DayOfYear;
 
         if (aniversarioCliente == dataPedido)
         {
             Promocao = new Promocao(Id, 10);
-            PrecoTotal = PrecoTotal - (PrecoTotal * (Promocao.Desconto / 100));
+            precoTotal = precoTotal - (precoTotal * (Promocao.Desconto / 100));
         }
 
         PrecoTotal = precoTotal;

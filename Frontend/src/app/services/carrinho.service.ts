@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import {Pedido} from "../models/Pedido";
 import {BehaviorSubject} from "rxjs";
+import {PizzaPedido} from "../models/PizzaPedido";
+import {AcompanhamentoPedido} from "../models/AcompanhamentoPedido";
+import {Acompanhamento} from "../models/Acompanhamento";
 
 @Injectable({
   providedIn: 'root'
@@ -26,5 +29,28 @@ export class CarrinhoService {
   limparCarrinho() {
     this.itensCarrinho = [];
     this.quantidadeItensCarrinho.next(0);
+  }
+
+  filtrarPizzasNoCarrinho() {
+    const pizzas : PizzaPedido[] = [];
+
+    this.itensCarrinho.forEach(pedido => {
+      if (pedido instanceof PizzaPedido) {
+        pizzas.push(pedido);
+      }
+    });
+
+    return pizzas;
+  }
+
+  filtrarAcompanhamentosNoCarrinho() {
+    const acompanhamentos : AcompanhamentoPedido[] = [];
+
+    this.itensCarrinho.forEach(pedido => {
+      if (pedido instanceof  AcompanhamentoPedido) {
+        acompanhamentos.push(pedido);
+      }
+    });
+    return acompanhamentos;
   }
 }
