@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs';
 import { Cliente } from 'src/app/models/Cliente';
 import { enviroment } from 'src/enviroments/enviroments';
+import {PedidoFinal} from "../models/PedidoFinal";
 
 @Injectable({
   providedIn: 'root'
@@ -26,5 +27,9 @@ export class ClienteService {
 
   alterar(cliente: Cliente) {
     return this.http.put(`${this.apiUrl}/cliente/alterar/`, cliente);
+  }
+
+  listarPedidosPorCliente(cpf: string) {
+    return this.http.get<PedidoFinal[]>(`${this.apiUrl}/cliente/${cpf}/pedidos`);
   }
 }

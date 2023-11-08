@@ -18,9 +18,9 @@ export class PedidosComponent {
   consultarMeusPedidos() {
     const cliente = this.loginService.clienteLogado;
 
-    this.pedidoFinalService.listarPedidosPorCliente(cliente.cpf).subscribe(resposta => {
-      this.pedidos = resposta;
-    });
+    // this.pedidoFinalService.listarPedidosPorCliente(cliente.cpf).subscribe(resposta => {
+    //   this.pedidos = resposta;
+    // });
   }
 
 }

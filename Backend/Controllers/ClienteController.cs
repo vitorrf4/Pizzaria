@@ -62,6 +62,20 @@ public class ClienteController : ControllerBase // todos os controllers precisam
         return Ok(cliente);
     }
 
+
+    [HttpGet]
+    [Route("{cpf}/pedidos")]
+    public async Task<IActionResult> ListarPedidosPorCliente([FromRoute] string cpf)
+    {
+        var pedidos = await GetPedidosFinaisComTodasAsPropriedades()
+            .Where(p => p.Cliente.Cpf == cpf)
+            .ToListAsync();
+
+        if (pedidos.Count == 0) return NotFound("Nenhum pedido encontrado");
+
+        return Ok(pedidos);
+    }
+
     [HttpPost]
     [Route("cadastrar")]
     public async Task<ActionResult<Cliente>> Cadastrar(Cliente cliente) // Como é um tipo complexo, o objeto Cliente virá do corpo da requisiçao, não da url
@@ -121,5 +135,18 @@ public class ClienteController : ControllerBase // todos os controllers precisam
         cliente.Telefone = telefone;
         await _context.SaveChangesAsync();
         return Ok(cliente);
+    }
+
+
+    private IQueryable<PedidoFinal> GetPedidosFinaisComTodasAsPropriedades()
+    {
+        // Campos que s�o objetos n�o s�o retornados automaticamente do banco,
+        // precisamos do Include() para que eles sejam incluidos
+        return _context.PedidoFinal
+            .Include(p => p.Cliente.Endereco).ThenInclude(endereco => endereco.Regiao)
+            .Include(p => p.Acompanhamentos).ThenInclude(a => a.Acompanhamento)
+            .Include(p => p.Pizzas).ThenInclude(p => p.Tamanho)
+            .Include(p => p.Pizzas).ThenInclude(p => p.Sabores)
+            .Include(p => p.Promocao);
     }
 }
