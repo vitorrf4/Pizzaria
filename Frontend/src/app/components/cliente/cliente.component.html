@@ -1,24 +1,24 @@
 <h2>Meus Dados</h2>
-<p>Cpf: {{cliente.cpf}} </p>
-<p>Nome: {{cliente.nome}}</p>
-<p>Telefone: {{cliente.telefone}}</p>
-<p>Data de Nascimento: {{cliente.dataAniversario | date : "dd/MM/yyyy"}}</p>
+  <p>Cpf: {{cliente.cpf}} </p>
+  <p>Nome: {{cliente.nome}}</p>
+  <p>Telefone: {{cliente.telefone}}</p>
+  <p>Data de Nascimento: {{cliente.dataAniversario | date : "dd/MM/yyyy"}}</p>
 <h3>Endereço</h3>
-<p>CEP: {{cliente.endereco.cep}}</p>
-<p>{{cliente.endereco.rua}} N° {{cliente.endereco.numero}}</p>
-<p>Bairro: {{cliente.endereco.regiao.nome}}</p>
-<!-- Mostra o complemento do endereco caso exista -->
-<p *ngIf="cliente.endereco.complemento"> Complemento: {{cliente.endereco.complemento}}</p>
+  <p>CEP: {{cliente.endereco.cep}}</p>
+  <p>{{cliente.endereco.rua}} N° {{cliente.endereco.numero}}</p>
+  <p>Bairro: {{cliente.endereco.regiao.nome}}</p>
+  <!-- Mostra o complemento do endereco caso exista -->
+  <p *ngIf="cliente.endereco.complemento"> Complemento: {{cliente.endereco.complemento}}</p>
 
-<h3>Meus Pedidos</h3>
-<ul *ngFor="let pedido of pedidos">
-  <li *ngFor="let pizza of pedido.pizzas">
-    <p> Pedido {{pedido.id}} </p>
-    <p> Quantidade: {{pizza.quantidade}}</p>
-    <p> Pizza {{pizza.tamanho.nome}} | Sabores {{pizza.sabores | json}}</p>
-    <p *ngIf="pedido.acompanhamentos.length > 0">Acompanhamentos: {{pedido.acompanhamentos | json}}</p>
-    <p>Data: {{pedido.horaPedido | date : "dd/MM/yyyy HH:mm"}}</p>
-    Preço: R${{pedido.precoTotal}}
-  </li>
-</ul>
+<h2>Meus Pedidos</h2>
+  <ul *ngFor="let pedido of pedidos">
+    <li *ngFor="let pizza of pedido.pizzas">
+      <p> Pedido {{pedido.id}} </p>
+      <p> Quantidade: {{pizza.quantidade}}</p>
+      <p> Pizza {{pizza.tamanho.nome}} | Sabores {{pizza.sabores | json}}</p>
+      <p *ngIf="pedido.acompanhamentos.length > 0">Acompanhamentos: {{pedido.acompanhamentos | json}}</p>
+      <p>Data: {{pedido.horaPedido | date : "dd/MM/yyyy HH:mm"}}</p>
+      Preço: R${{pedido.precoTotal}}
+    </li>
+  </ul>
 
