@@ -15,7 +15,11 @@ public class PedidoFinal
     public DateTime HoraPedido { get; set; }
     public Promocao ?Promocao { get; private set; }
 
-    public PedidoFinal() { }
+    public PedidoFinal() 
+    {
+        Cliente = new Cliente();
+        Pizzas = new List<PizzaPedido>();
+    }
 
     public PedidoFinal(Cliente cliente, List<PizzaPedido> pizzas, List<AcompanhamentoPedido> ?acompanhamentos)
     {

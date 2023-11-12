@@ -27,7 +27,8 @@ public class PedidoFinalController : ControllerBase
     [Route("listar/{id}")]
     public async Task<ActionResult<PedidoFinal>> Buscar([FromRoute] int id)
     {
-        var pedidoFinal = await GetPedidoFinalComTodasAsPropriedades(id)
+        var pedidoFinal = await GetPedidosFinaisComTodasAsPropriedades()
+                                .Where(p => p.Id == id)
                                 .FirstOrDefaultAsync();
 
         if (pedidoFinal == null)
@@ -57,7 +58,7 @@ public class PedidoFinalController : ControllerBase
     {
         // Attach cliente
         _context.Cliente.Attach(pedidoFinal.Cliente);
-
+        
         // Attach tamanho e sabores
         pedidoFinal.Pizzas.ForEach(p =>
         {
@@ -77,105 +78,30 @@ public class PedidoFinalController : ControllerBase
     [Route("excluir/{id}")]
     public async Task<IActionResult> Excluir([FromRoute] int id)
     {
-        var pedidoFinal = await GetPedidoFinalComTodasAsPropriedades(id)
+        var pedidoFinal = await GetPedidosFinaisComTodasAsPropriedades()
+                                .Where(p => p.Id == id)
                                 .FirstOrDefaultAsync();
-        if (pedidoFinal == null) return NotFound("Pedido nao encontrado");
+        if (pedidoFinal == null) 
+            return NotFound("Pedido nao encontrado");
 
-        if (pedidoFinal.Acompanhamentos != null)
-        {
-            foreach (AcompanhamentoPedido acompanhamento in pedidoFinal.Acompanhamentos)
-            {
-                _context.Remove(acompanhamento);
-            }
-        }
+        pedidoFinal.Pizzas.ForEach(p => _context.PizzaPedido.RemoveRange(p));
+        pedidoFinal.Acompanhamentos?.ForEach(a => _context.AcompanhamentoPedido.RemoveRange(a));
 
-        foreach (PizzaPedido pizza in pedidoFinal.Pizzas)
-        {
-            _context.Remove(pizza);
-        }
-
-        _context.PedidoFinal.Remove(pedidoFinal);
+        _context.Remove(pedidoFinal);
         await _context.SaveChangesAsync();
 
         return NoContent();
     }
-
-    [HttpGet]
-    [Route("cliente/{cpf}")]
-    public async Task<IActionResult> ListarPedidosPorCliente([FromRoute] string cpf) {
-        var pedidos = await GetPedidosFinaisComTodasAsPropriedades()
-            .Where(p => p.Cliente.Cpf == cpf)
-            .ToListAsync();
-
-        if (pedidos.Count == 0) return NotFound("Nenhum pedido encontrado");
-
-        return Ok(pedidos);
-    }
-
-    // Helpers
 
     private IQueryable<PedidoFinal> GetPedidosFinaisComTodasAsPropriedades()
     {
         // Campos que s�o objetos n�o s�o retornados automaticamente do banco,
         // precisamos do Include() para que eles sejam incluidos
         return _context.PedidoFinal
-            .Include(p => p.Cliente.Endereco).ThenInclude(endereco => endereco.Regiao)
+            .Include(p => p.Cliente.Endereco.Regiao)
             .Include(p => p.Acompanhamentos).ThenInclude(a => a.Acompanhamento)
             .Include(p => p.Pizzas).ThenInclude(p => p.Tamanho)
             .Include(p => p.Pizzas).ThenInclude(p => p.Sabores)
             .Include(p => p.Promocao);
-    }
-
-    private IQueryable<PedidoFinal> GetPedidoFinalComTodasAsPropriedades(int id)
-    {
-        return GetPedidosFinaisComTodasAsPropriedades()
-            .Where(pedidoFinal => pedidoFinal.Id == id);
-    }
-
-    private async Task<Cliente> GetClienteComTodasAsPropriedades(string cpf)
-    {
-        return await _context.Cliente
-            .Where(clienteNoBanco => clienteNoBanco.Cpf == cpf)
-            .Include(c => c.Endereco.Regiao)
-            .FirstOrDefaultAsync();
-    }
-
-    private async Task<List<AcompanhamentoPedido>> GetAcompanhamentosCompletos(List<AcompanhamentoPedido> acompanhamentos)
-    {
-        var acompanhamentosCompletos = new List<AcompanhamentoPedido>();
-        // procura no banco e retorna nulo caso n�o exista ou j� esteja associado a outro acompanhamento
-        foreach (AcompanhamentoPedido acompanhamento in acompanhamentos)
-        {
-            var acompanhamentoCompleto = await _context.AcompanhamentoPedido
-                .Where(acompBanco => acompBanco.Id == acompanhamento.Id)
-                .Include(a => a.PedidoFinal)
-                .FirstOrDefaultAsync();
-
-            if (acompanhamentoCompleto == null) return null;
-            if (acompanhamentoCompleto.PedidoFinal != null)
-                return null;
-
-            acompanhamentosCompletos.Add(acompanhamentoCompleto);
-        }
-        return acompanhamentosCompletos;
-    }
-
-    private async Task<List<PizzaPedido>> GetPizzasCompletas(List<PizzaPedido> pizzas)
-    {
-        var pizzasCompletas = new List<PizzaPedido>();
-        // procura no banco e retorna nulo caso n�o exista ou j� esteja associado a outro acompanhamento
-        foreach (PizzaPedido pizza in pizzas)
-        {
-            var pizzaCompleta = await _context.PizzaPedido
-                .Where(p => p.Id == pizza.Id)
-                .Include(p => p.PedidoFinal)
-                .FirstOrDefaultAsync();
-
-            if (pizzaCompleta == null) return null;
-            if (pizzaCompleta.PedidoFinal != null) return null;
-
-            pizzasCompletas.Add(pizzaCompleta);
-        }
-        return pizzasCompletas;
     }
 }
