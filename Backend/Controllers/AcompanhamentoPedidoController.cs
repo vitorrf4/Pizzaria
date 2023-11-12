@@ -49,6 +49,7 @@ public class AcompanhamentoPedidoController : ControllerBase
 
         await _context.AddAsync(acompanhamentoPedido);
         await _context.SaveChangesAsync();
+
         return Created("", acompanhamentoPedido);
     }
 
@@ -65,6 +66,7 @@ public class AcompanhamentoPedidoController : ControllerBase
 
         _context.AcompanhamentoPedido.Update(acompanhamentoPedido);
         await _context.SaveChangesAsync();
+        
         return Ok();
     }
 

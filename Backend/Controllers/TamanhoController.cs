@@ -4,34 +4,29 @@ using Microsoft.EntityFrameworkCore;
 namespace pizzaria;
 
 [ApiController]
-[Route("[controller]")]
+[Route("tamanho/")]
 public class TamanhoController : ControllerBase
 {
-    private readonly ILogger<TamanhoController> _logger;
     private PizzariaDBContext _context;
 
-    public TamanhoController(PizzariaDBContext context, ILogger<TamanhoController> logger) 
+    public TamanhoController(PizzariaDBContext context) 
     {
         _context = context;
-        _logger = logger;
     }
 
-    [HttpGet()]
+    [HttpGet]
     [Route("listar")]
     public async Task<ActionResult<IEnumerable<Tamanho>>> Listar()
     {
-        if (_context.Tamanho is null)
-            return NotFound();
+        var tamanhos = await _context.Tamanho.ToListAsync();
         
-        return await _context.Tamanho.ToListAsync();
+        return tamanhos;
     }
 
     [HttpGet]
     [Route("listar/{nome}")]
     public async Task<ActionResult<Tamanho>> Buscar([FromRoute] string nome)
     {
-        nome = nome.ToUpper();
-
         var Tamanho = await _context.Tamanho.FindAsync(nome);
         if (Tamanho == null)
             return NotFound();
@@ -45,6 +40,7 @@ public class TamanhoController : ControllerBase
     {
         await _context.AddAsync(tamanho);
         await _context.SaveChangesAsync();
+
         return Created("", tamanho);
     }
 
@@ -54,19 +50,21 @@ public class TamanhoController : ControllerBase
     {
         _context.Tamanho.Update(tamanho);
         await _context.SaveChangesAsync();
+
         return Ok();
     }
 
     [HttpDelete]
-    [Route("excluir")]
+    [Route("excluir/{nome}")]
     public async Task<IActionResult> Excluir(string nome)
     {
-        nome = nome.ToUpper();
         var tamanho = await _context.Tamanho.FindAsync(nome);
-        if(tamanho is null) return NotFound();
+        if(tamanho == null) 
+            return NotFound();
         
         _context.Tamanho.Remove(tamanho);
         await _context.SaveChangesAsync();
-        return Ok();
+        
+        return NoContent();
     }
 }

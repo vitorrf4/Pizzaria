@@ -19,6 +19,7 @@ public class PedidoFinalController : ControllerBase
     public async Task<ActionResult<IEnumerable<PedidoFinal>>> Listar()
     {
         var pedidoFinal = await GetPedidosFinaisComTodasAsPropriedades().ToListAsync();
+
         return pedidoFinal;
     }
 
@@ -26,10 +27,11 @@ public class PedidoFinalController : ControllerBase
     [Route("listar/{id}")]
     public async Task<ActionResult<PedidoFinal>> Buscar([FromRoute] int id)
     {
-        var pedidoFinal = await GetPedidoFinalComTodasAsPropriedades(id).FirstOrDefaultAsync();
+        var pedidoFinal = await GetPedidoFinalComTodasAsPropriedades(id)
+                                .FirstOrDefaultAsync();
 
         if (pedidoFinal == null)
-            return NotFound("Pedido nao encontrado");
+            return NotFound();
 
         return Ok(pedidoFinal);
     }

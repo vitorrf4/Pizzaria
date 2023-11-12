@@ -4,37 +4,34 @@ using Microsoft.EntityFrameworkCore;
 namespace pizzaria;
 
 [ApiController]
-[Route("[controller]")]
+[Route("sabor/")]
 public class SaborController : ControllerBase
 {
-    private readonly ILogger<SaborController> _logger;
     private PizzariaDBContext _context;
 
-    public SaborController(PizzariaDBContext context, ILogger<SaborController> logger) 
+    public SaborController(PizzariaDBContext context) 
     {
         _context = context;
-        _logger = logger;
     }
 
     [HttpGet()]
     [Route("listar")]
     public async Task<ActionResult<IEnumerable<Sabor>>> Listar()
     {
-        if (_context.Endereco is null)
-            return NotFound();
+        var sabores = await _context.Sabor.ToListAsync();
         
-        return await _context.Sabor.ToListAsync();
+        return sabores;
     }
 
     [HttpGet]
     [Route("listar/{id}")]
     public async Task<ActionResult<Sabor>> Buscar([FromRoute] int id)   
     {
-        var Sabor = await _context.Sabor.FindAsync(id);
-        if (Sabor == null)
+        var sabor = await _context.Sabor.FindAsync(id);
+        if (sabor == null)
             return NotFound();
         
-        return base.Ok((object)Sabor);
+        return Ok(sabor);
     }
 
     [HttpPost]
@@ -43,27 +40,31 @@ public class SaborController : ControllerBase
     {
         await _context.AddAsync(sabor);
         await _context.SaveChangesAsync();
+
         return Created("", sabor);
     }
 
     [HttpPut]
     [Route("alterar")]
-    public async Task<IActionResult> Alterar (Sabor sabor)
+    public async Task<IActionResult> Alterar(Sabor sabor)
     {
         _context.Sabor.Update(sabor);
         await _context.SaveChangesAsync();
+
         return Ok();
     }
 
     [HttpDelete]
-    [Route("excluir")]
+    [Route("excluir/{id}")]
     public async Task<IActionResult> Excluir(int id)
     {
         var sabor = await _context.Sabor.FindAsync(id);
-        if(sabor is null) return NotFound();
+        if(sabor == null)
+            return NotFound();
         
         _context.Sabor.Remove(sabor);
         await _context.SaveChangesAsync();
-        return Ok();
+
+        return NoContent();
     }
 }

@@ -32,7 +32,7 @@ public class RegiaoController : ControllerBase
         var regiao = await _context.Regiao.FindAsync(id);
 
         if (regiao == null) 
-            return NotFound($"Nenhuma região com o ID {id} encontrado");
+            return NotFound();
 
         return Ok(regiao);
     }
@@ -41,7 +41,7 @@ public class RegiaoController : ControllerBase
     [Route("cadastrar")]
     public async Task<ActionResult<Regiao>> Cadastrar(Regiao regiao)
     {
-        if (_context.Regiao.Contains(regiao)) 
+        if (_context.Regiao.Contains(regiao))
             return Conflict();
 
         await _context.AddAsync(regiao);
@@ -54,10 +54,12 @@ public class RegiaoController : ControllerBase
     [Route("alterar")]
     public async Task<ActionResult> Alterar(Regiao regiao)
     {
-        if (!_context.Regiao.Contains(regiao)) return NotFound();
+        if (!_context.Regiao.Contains(regiao)) 
+            return NotFound();
 
         _context.Regiao.Update(regiao);
         await _context.SaveChangesAsync();
+
         return Ok();
     }
 
@@ -67,13 +69,12 @@ public class RegiaoController : ControllerBase
     {
         var regiao = await _context.Regiao.FindAsync(id);
 
-        if (regiao == null) return NotFound($"Nenhuma região com o ID {id} encontrado");
+        if (regiao == null) 
+            return NotFound();
 
         _context.Regiao.Remove(regiao);
         await _context.SaveChangesAsync();
+
         return NoContent();
     }
-
-
-
 }
