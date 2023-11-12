@@ -12,7 +12,8 @@ public class Cliente
     public DateOnly DataAniversario { get; set; }
     public Endereco Endereco { get; set; }
 
-    public Cliente() {
+    public Cliente() 
+    {
         Cpf = "";
         Nome = "";
         Telefone = "";

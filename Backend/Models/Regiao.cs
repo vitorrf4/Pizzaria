@@ -13,7 +13,10 @@ public class Regiao
     [JsonIgnore]
     public List<Endereco> ?Enderecos { get; set; }
      
-    public Regiao() { }
+    public Regiao() 
+    { 
+        Nome = "";
+    }
 
     public Regiao(string nome)
     {

@@ -15,7 +15,12 @@ public class AcompanhamentoPedido
     [JsonIgnore]
     public PedidoFinal? PedidoFinal { get; set; }
 
-    public AcompanhamentoPedido() { }
+    public AcompanhamentoPedido() 
+    {
+        Acompanhamento = new Acompanhamento();
+        Quantidade = 0;
+        Preco = 0;
+    }
 
     public AcompanhamentoPedido(Acompanhamento acompanhamento, int quantidade)
     {

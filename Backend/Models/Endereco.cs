@@ -18,7 +18,13 @@ public class Endereco
     [ForeignKey("Cliente.Endereco")]
     public Cliente ?Cliente { get; set; }
     
-    public Endereco() { } 
+    public Endereco() 
+    {
+        Rua = "";
+        Numero = 0;
+        Cep = "";
+        Regiao = new Regiao();
+    } 
 
     public Endereco(string rua, int numero, string cep, Regiao regiao, string ?complemento = null)
     {

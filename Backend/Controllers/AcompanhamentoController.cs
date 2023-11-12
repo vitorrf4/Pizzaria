@@ -25,7 +25,7 @@ public class AcompanhamentoController : ControllerBase
 
     [HttpGet]
     [Route("listar/{id}")]
-    public async Task<ActionResult<Acompanhamento>> Buscar(int id)   
+    public async Task<ActionResult<Acompanhamento>> Buscar([FromRoute] int id)   
     {
         var Acompanhamento = await _context.Acompanhamento.FindAsync(id);
         if (Acompanhamento == null) 

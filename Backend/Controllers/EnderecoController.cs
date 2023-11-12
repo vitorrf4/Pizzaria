@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 namespace pizzaria;
 
 [ApiController]
-[Route("[controller]")]
+[Route("endereco/")]
 public class EnderecoController : ControllerBase
 {
     private PizzariaDBContext _context;
@@ -22,9 +22,6 @@ public class EnderecoController : ControllerBase
             .Include("Regiao")
             .ToListAsync();
 
-        if (enderecos is null)
-            return NotFound();
-
         return Ok(enderecos);
     }
 
@@ -33,11 +30,12 @@ public class EnderecoController : ControllerBase
     public async Task<ActionResult<Endereco>> Buscar([FromRoute] int id)
     {
         var endereco = await _context.Endereco
-            .Where(enderecoNoBanco => enderecoNoBanco.Id == id)
+            .Where(e => e.Id == id)
             .Include("Regiao")
             .FirstOrDefaultAsync();
 
-        if (endereco == null) return NotFound($"Nenhum endereço com o id {id} encontrado");
+        if (endereco == null) 
+            return NotFound($"Nenhum endereço com o id {id} encontrado");
 
         return Ok(endereco);
     }
@@ -46,21 +44,19 @@ public class EnderecoController : ControllerBase
     [Route("cadastrar")]
     public async Task<IActionResult> Cadastrar(Endereco endereco)
     {
-        var regiaoNoBanco = await _context.Regiao.FindAsync(endereco.Regiao.Id);
-//        if (regiaoNoBanco == null) return BadRequest("Regiao invalida");
-//        endereco.Regiao = regiaoNoBanco;
-
         await _context.AddRangeAsync(endereco);
         await _context.SaveChangesAsync();
+
         return Created("", endereco);
     }
-
+ 
     [HttpPut]
     [Route("alterar")]
     public async Task<IActionResult> Alterar(Endereco endereco)
     {
         _context.Endereco.Update(endereco);
         await _context.SaveChangesAsync();
+
         return Ok();
     }
 
@@ -69,7 +65,8 @@ public class EnderecoController : ControllerBase
     public async Task<IActionResult> Excluir(int id)
     {
         var endereco = await _context.Endereco.FindAsync(id);
-        if (endereco is null) return NotFound($"Nenhum endereço com o id {id} encontrado");
+        if (endereco == null) 
+            return NotFound($"Nenhum endereço com o id {id} encontrado");
          
         _context.Endereco.Remove(endereco);
         await _context.SaveChangesAsync();

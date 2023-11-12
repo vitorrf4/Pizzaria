@@ -27,7 +27,7 @@ public class AcompanhamentoPedidoController : ControllerBase
 
     [HttpGet]
     [Route("listar/{id}")]
-    public async Task<ActionResult<AcompanhamentoPedido>> Buscar(int id)   
+    public async Task<ActionResult<AcompanhamentoPedido>> Buscar([FromRoute] int id)   
     {
         var acompPedido = await _context.AcompanhamentoPedido
                                 .Where(acompBanco => acompBanco.Id == id)

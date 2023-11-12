@@ -11,6 +11,12 @@ public class Acompanhamento
     public string Nome { get; set; }
     public double Preco { get; set; }
 
+    public Acompanhamento() 
+    {
+        Nome = "";
+        Preco = 0;
+    }
+
     public Acompanhamento(string nome, double preco)
     {
         Nome = nome;
