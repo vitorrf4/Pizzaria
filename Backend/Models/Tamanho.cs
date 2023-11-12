@@ -12,7 +12,10 @@ public class Tamanho
     public double MultiplicadorPreco { get; set; }
     public int MaxSabores { get; set; }
 
-    public Tamanho() { }
+    public Tamanho() 
+    { 
+        Nome = "";
+    }
 
     public Tamanho(string nome, int qntdFatias, int maxSabores, double preco)
     { 

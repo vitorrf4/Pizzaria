@@ -19,8 +19,6 @@ public class PromocaoController : ControllerBase
     public async Task<ActionResult<IEnumerable<Promocao>>> Listar()
     {
         var promocoes = await _context.Promocao.ToListAsync();
-        if (promocoes is null)
-            return NotFound();
 
         return Ok(promocoes);
     }
@@ -30,7 +28,8 @@ public class PromocaoController : ControllerBase
     public async Task<ActionResult<Promocao>> Buscar([FromRoute] int id)
     {
         var promocao = await _context.Promocao.FindAsync(id);
-        if (promocao == null) return NotFound();
+        if (promocao == null) 
+            return NotFound();
 
         return Ok(promocao);
     }
@@ -40,7 +39,9 @@ public class PromocaoController : ControllerBase
     public async Task<IActionResult> Cadastrar(Promocao promocao)
     {
         var pedido = await _context.PedidoFinal.FindAsync(promocao.PedidoFinalId);
-        if (pedido == null) return BadRequest("Pedido final inválido");
+        if (pedido == null) 
+            return BadRequest("Pedido final inválido");
+
         promocao.PedidoFinalId = pedido.Id;
 
         await _context.AddAsync(promocao);
@@ -54,6 +55,7 @@ public class PromocaoController : ControllerBase
     {
         _context.Promocao.Update(promocao);
         await _context.SaveChangesAsync();
+
         return Ok();
     }
 
@@ -62,10 +64,12 @@ public class PromocaoController : ControllerBase
     public async Task<IActionResult> Excluir(int id)
     {
         var promocao = await _context.Promocao.FindAsync(id);
-        if (promocao is null) return NotFound();
+        if (promocao == null) 
+            return NotFound();
 
         _context.Promocao.Remove(promocao);
         await _context.SaveChangesAsync();
-        return Ok();
+        
+        return NoContent();
     }
 }

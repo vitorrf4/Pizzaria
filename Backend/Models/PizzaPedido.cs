@@ -9,14 +9,18 @@ public class PizzaPedido
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int  Id { get; set; }
-    public List<Sabor> Sabores { get; set; } = new();
+    public List<Sabor> Sabores { get; set; }
     public Tamanho Tamanho { get; set; }
     public double Preco { get; set; }
     public int Quantidade { get; set;}
     [JsonIgnore]
     public PedidoFinal? PedidoFinal { get; set; }
 
-    public PizzaPedido() { }
+    public PizzaPedido() 
+    {
+        Sabores = new List<Sabor>();
+        Tamanho = new Tamanho();
+    }
 
     public PizzaPedido(List<Sabor> sabores, Tamanho tamanho, int quantidade)
     {

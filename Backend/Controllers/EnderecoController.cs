@@ -44,6 +44,13 @@ public class EnderecoController : ControllerBase
     [Route("cadastrar")]
     public async Task<IActionResult> Cadastrar(Endereco endereco)
     {
+        var regiaoDb = await _context.Regiao
+            .Where(r => r.Nome == endereco.Regiao.Nome)
+            .FirstOrDefaultAsync();
+
+        if (regiaoDb != null) 
+            endereco.Regiao = regiaoDb;
+
         await _context.AddRangeAsync(endereco);
         await _context.SaveChangesAsync();
 

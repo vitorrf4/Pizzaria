@@ -14,7 +14,10 @@ public class Sabor
     [JsonIgnore]
     public List<PizzaPedido>? Pedidos { get; set; } = new();
 
-    public Sabor() { }
+    public Sabor() 
+    {
+        Nome = "";
+    }
 
     public Sabor(string nome, double preco)
     {

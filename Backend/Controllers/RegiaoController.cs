@@ -20,26 +20,19 @@ public class RegiaoController : ControllerBase
     [Route("listar")]
     public async Task<ActionResult<IEnumerable<Regiao>>> ListarTodos()
     {   
-        try
-        {
-            List<Regiao> regioes = await _context.Regiao.ToListAsync();
-            return Ok(regioes); 
-        }
-        catch (SqliteException)
-        {
-            return NotFound("A tabela Região não existe");
-        }
+        var regioes = await _context.Regiao.ToListAsync();
+
+        return Ok(regioes); 
     }
 
     [HttpGet]
     [Route("listar/{id}")]
-    public async Task<ActionResult<Regiao>> BuscarPorId(string id)
+    public async Task<ActionResult<Regiao>> BuscarPorId([FromRoute] int id)
     {
-        if (!int.TryParse(id, out int idInt)) return BadRequest();
+        var regiao = await _context.Regiao.FindAsync(id);
 
-        var regiao = await _context.Regiao.FindAsync(idInt);
-
-        if (regiao == null) return NotFound($"Nenhuma região com o ID {idInt} encontrado");
+        if (regiao == null) 
+            return NotFound($"Nenhuma região com o ID {id} encontrado");
 
         return Ok(regiao);
     }
@@ -48,7 +41,8 @@ public class RegiaoController : ControllerBase
     [Route("cadastrar")]
     public async Task<ActionResult<Regiao>> Cadastrar(Regiao regiao)
     {
-        if (_context.Regiao.Contains(regiao)) return Conflict();
+        if (_context.Regiao.Contains(regiao)) 
+            return Conflict();
 
         await _context.AddAsync(regiao);
         await _context.SaveChangesAsync(); 

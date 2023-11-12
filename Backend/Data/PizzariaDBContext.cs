@@ -35,6 +35,7 @@ public class PizzariaDBContext : DbContext{
         var centro = new Regiao("Centro");
         var aguaVerde = new Regiao("Água Verde");
         var boqueirao = new Regiao("Boqueirão");
+        var capaoRaso = new Regiao("Capão Raso");
 
         // Endereco
         var endereco1 = new Endereco("Rua 1", 1, "11111-11", centro);
@@ -83,7 +84,7 @@ public class PizzariaDBContext : DbContext{
         Acompanhamento.AddRange(refrigerante, suco, paoDeAlho);
         Tamanho.AddRange(broto, pequena, media, grande, familia, gigante);
         Sabor.AddRange(frango, calabresa, quatroQueijos, portuguesa, camarao);
-        Regiao.AddRange(boqueirao, aguaVerde, centro);
+        Regiao.AddRange(boqueirao, aguaVerde, centro, capaoRaso);
         Endereco.AddRange(endereco1, endereco2);
         Cliente.AddRange(cliente1, cliente2);
         AcompanhamentoPedido.AddRange(acompanhamentoPedido1, acompanhamentoPedido2);

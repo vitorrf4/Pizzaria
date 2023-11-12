@@ -49,9 +49,6 @@ public class ClienteController : ControllerBase
             .Where(p => p.Cliente.Cpf == cpf)
             .ToListAsync();
 
-        if (pedidos.Count == 0) 
-            return NotFound("Nenhum pedido encontrado");
-
         return Ok(pedidos);
     }
 
@@ -62,13 +59,27 @@ public class ClienteController : ControllerBase
         if (_context.Cliente.Contains(cliente)) 
             return Conflict("Um cliente com esse CPF já está cadastrado");
 
-        if (cliente.Endereco == null) 
-            return BadRequest("Endereço inválido");
+        VerificaRegiao(cliente);
 
         await _context.AddAsync(cliente);
         await _context.SaveChangesAsync();
 
         return Created("", cliente);
+    }
+
+    private async void VerificaRegiao(Cliente cliente) 
+    {
+        // Verifica se a regiao ja esta cadastrada, se sim, simplesmente
+        // adiciona a regiao pra dentro do cliente, caso não ele ira criar a regiao
+        // junto com o cliente
+        var regiaoCliente = cliente.Endereco.Regiao.Nome;
+
+        var regiaoDb = await _context.Regiao
+                .Where(r => r.Nome == regiaoCliente)
+                .FirstOrDefaultAsync();
+
+        if (regiaoDb != null) 
+            cliente.Endereco.Regiao = regiaoDb;
     }
 
     [HttpPut]

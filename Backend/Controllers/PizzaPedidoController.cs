@@ -78,6 +78,7 @@ public class PizzaPedidoController : ControllerBase
 
         _context.PizzaPedido.Remove(pedido);
         await _context.SaveChangesAsync();
+        
         return NoContent();
     }
 }
