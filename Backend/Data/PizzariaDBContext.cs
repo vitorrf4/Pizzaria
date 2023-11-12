@@ -52,12 +52,12 @@ public class PizzariaDBContext : DbContext{
         var camarao = new Sabor("Camarão", 19.0);
 
         // Tamanho 
-        var broto = new Tamanho("BROTO", 4, 1, 0.0);
-        var pequena = new Tamanho("PEQUENA", 6, 1, 50.0);
-        var media = new Tamanho("MEDIA", 8, 2, 100.0);
-        var grande = new Tamanho("GRANDE", 10, 2, 150.0);
-        var familia = new Tamanho("FAMILIA", 12, 3, 200.0);
-        var gigante = new Tamanho("GIGANTE", 16, 4, 300.0);
+        var broto = new Tamanho("Broto", 4, 1, 0.0);
+        var pequena = new Tamanho("Pequena", 6, 1, 50.0);
+        var media = new Tamanho("Media", 8, 2, 100.0);
+        var grande = new Tamanho("Grande", 10, 2, 150.0);
+        var familia = new Tamanho("Familia", 12, 3, 200.0);
+        var gigante = new Tamanho("Gigante", 16, 4, 300.0);
 
         // Acompanhamento
         var refrigerante = new Acompanhamento("Refrigerante", 12.0);
