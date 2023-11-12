@@ -31,7 +31,7 @@ public class RegiaoController : ControllerBase
         }
     }
 
-    [HttpGet()]
+    [HttpGet]
     [Route("listar/{id}")]
     public async Task<ActionResult<Regiao>> BuscarPorId(string id)
     {

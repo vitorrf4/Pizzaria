@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 namespace pizzaria;
 
 [ApiController]
-[Route("[controller]")]
+[Route("acompanhamento")]
 public class AcompanhamentoController : ControllerBase
 {
     private PizzariaDBContext _context;
@@ -18,17 +18,18 @@ public class AcompanhamentoController : ControllerBase
     [Route("listar")]
     public async Task<ActionResult<IEnumerable<Acompanhamento>>> Listar()
     {
-        if (_context.Acompanhamento == null) return NotFound();
+        var acompanhamentos = await _context.Acompanhamento.ToListAsync();
         
-        return await _context.Acompanhamento.ToListAsync();
+        return acompanhamentos;
     }
 
     [HttpGet]
     [Route("listar/{id}")]
-    public async Task<ActionResult<Acompanhamento>> Buscar([FromRoute] int id)   
+    public async Task<ActionResult<Acompanhamento>> Buscar(int id)   
     {
         var Acompanhamento = await _context.Acompanhamento.FindAsync(id);
-        if (Acompanhamento == null) return NotFound();
+        if (Acompanhamento == null) 
+            return NotFound();
         
         return Ok(Acompanhamento);
     }
@@ -45,7 +46,7 @@ public class AcompanhamentoController : ControllerBase
 
     [HttpPut]
     [Route("alterar")]
-    public async Task<IActionResult> Alterar (Acompanhamento acompanhamento)
+    public async Task<IActionResult> Alterar(Acompanhamento acompanhamento)
     {
         _context.Acompanhamento.Update(acompanhamento);
         await _context.SaveChangesAsync();
@@ -57,7 +58,8 @@ public class AcompanhamentoController : ControllerBase
     public async Task<IActionResult> Excluir(int id)
     {
         var acompanhamento = await _context.Acompanhamento.FindAsync(id);
-        if (acompanhamento is null) return NotFound();
+        if (acompanhamento == null) 
+            return NotFound();
         
         _context.Acompanhamento.Remove(acompanhamento);
         await _context.SaveChangesAsync();

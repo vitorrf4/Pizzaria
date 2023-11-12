@@ -4,16 +4,14 @@ using Microsoft.EntityFrameworkCore;
 namespace pizzaria;
 
 [ApiController]
-[Route("[controller]")]
+[Route("pedido-final/")]
 public class PedidoFinalController : ControllerBase
 {
-    private readonly ILogger<PedidoFinalController> _logger;
     private PizzariaDBContext _context;
 
-    public PedidoFinalController(PizzariaDBContext context, ILogger<PedidoFinalController> logger)
+    public PedidoFinalController(PizzariaDBContext context)
     {
         _context = context;
-        _logger = logger;
     }
 
     [HttpGet]
@@ -31,7 +29,7 @@ public class PedidoFinalController : ControllerBase
         var pedidoFinal = await GetPedidoFinalComTodasAsPropriedades(id).FirstOrDefaultAsync();
 
         if (pedidoFinal == null)
-            return NotFound("Pedido n�o encontrado");
+            return NotFound("Pedido nao encontrado");
 
         return Ok(pedidoFinal);
     }
@@ -40,12 +38,12 @@ public class PedidoFinalController : ControllerBase
     [Route("cadastrar")]
     public async Task<IActionResult> Cadastrar(PedidoFinal pedidoFinal)
     {
-        pedidoFinal.HoraPedido = DateTime.Now;
         // A função Attach comunica que um campo já está no banco de dados e não precisa ser inserido novamente
         // sem ela, o entity framework tenta adicionar um campo com um ID existente e da erro
         AttachCampos(pedidoFinal);
 
         pedidoFinal.CalcularPrecoTotal();
+        pedidoFinal.HoraPedido = DateTime.Now;
 
         await _context.AddAsync(pedidoFinal);
         await _context.SaveChangesAsync();
@@ -67,7 +65,6 @@ public class PedidoFinalController : ControllerBase
         // Attach acompanhamentos
         pedidoFinal.Acompanhamentos?.ForEach(a =>
         {
-            
             _context.Acompanhamento.Attach(a.Acompanhamento);
         });
 
@@ -78,25 +75,29 @@ public class PedidoFinalController : ControllerBase
     public async Task<IActionResult> Alterar(PedidoFinal pedidoFinal)
     {
         var pedidoNoBanco = await _context.PedidoFinal.FindAsync(pedidoFinal.Id);
-        if (pedidoNoBanco == null) return NotFound("Pedido n�o encontrado");
+        if (pedidoNoBanco == null) 
+            return NotFound("Pedido nao encontrado");
 
         var clienteCompleto = await GetClienteComTodasAsPropriedades(pedidoFinal.Cliente.Cpf);
-        if (clienteCompleto == null) return BadRequest("O cliente n�o foi encontrado");
+        if (clienteCompleto == null) 
+            return BadRequest("O cliente nao foi encontrado");
 
         pedidoFinal.Cliente = clienteCompleto;
 
         if (pedidoFinal.Acompanhamentos != null)
         {
             var acompanhamentosCompletos = await GetAcompanhamentosCompletos(pedidoFinal.Acompanhamentos);
-            if (acompanhamentosCompletos == null) return BadRequest("O acompanhamento pedido n�o foi encontrado");
+            if (acompanhamentosCompletos == null) 
+                return BadRequest("O acompanhamento pedido nao foi encontrado");
+
             pedidoFinal.Acompanhamentos = acompanhamentosCompletos;
         }
 
         var pizzasCompletas = await GetPizzasCompletas(pedidoFinal.Pizzas);
-        if (pizzasCompletas == null) return BadRequest("Pizza pedido inv�lido");
+        if (pizzasCompletas == null) return BadRequest("Pizza pedido invalido");
         pedidoFinal.Pizzas = pizzasCompletas;
 
-        // linha necess�ria para o _context n�o dar erro de conflito
+        // linha necessaria para o _context nao dar erro de conflito
         _context.Entry(pedidoNoBanco).State = EntityState.Detached;
 
         pedidoFinal.CalcularPrecoTotal();
@@ -208,12 +209,5 @@ public class PedidoFinalController : ControllerBase
             pizzasCompletas.Add(pizzaCompleta);
         }
         return pizzasCompletas;
-    }
-
-    [HttpGet("teste/{numero}")]
-    public ActionResult teste([FromRoute] double numero)
-    {
-        Console.WriteLine("numero: " + numero);
-        return Ok(numero);
     }
 }

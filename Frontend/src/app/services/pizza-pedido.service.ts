@@ -13,18 +13,18 @@ export class PizzaPedidoService {
   constructor(private http: HttpClient) { }
 
   listar(): Observable<PizzaPedido[]> {
-    return this.http.get<PizzaPedido[]>(`${this.apiUrl}/pizzaPedido/listar`)
+    return this.http.get<PizzaPedido[]>(`${this.apiUrl}/pizza-pedido/listar`)
   }
 
   listarId(id: number) {
-    return this.http.get<PizzaPedido>(`${this.apiUrl}/pizzaPedido/listar/` + id)
+    return this.http.get<PizzaPedido>(`${this.apiUrl}/pizza-pedido/listar/` + id)
   }
 
   cadastrar(pizzaPedido: PizzaPedido) {
-    return this.http.post<PizzaPedido>(`${this.apiUrl}/pizzaPedido/cadastrar/`, pizzaPedido)
+    return this.http.post<PizzaPedido>(`${this.apiUrl}/pizza-pedido/cadastrar/`, pizzaPedido)
   }
 
   alterar(pizzaPedido: PizzaPedido) {
-    return this.http.put(`${this.apiUrl}/pizzaPedido/alterar/`, pizzaPedido)
+    return this.http.put(`${this.apiUrl}/pizza-pedido/alterar/`, pizzaPedido)
   }
 }

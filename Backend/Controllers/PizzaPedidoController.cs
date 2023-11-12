@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace pizzaria;
 
-[Route("[controller]")]
+[Route("pizza-pedido")]
 [ApiController]
 public class PizzaPedidoController : ControllerBase
 {

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 namespace pizzaria;
 
 [ApiController]
-[Route("[controller]")]
+[Route("acompanhamento-pedido")]
 public class AcompanhamentoPedidoController : ControllerBase
 {
     private PizzariaDBContext _context;
@@ -18,35 +18,33 @@ public class AcompanhamentoPedidoController : ControllerBase
     [Route("listar")]
     public async Task<ActionResult<IEnumerable<AcompanhamentoPedido>>> Listar()
     {
-        if (_context.AcompanhamentoPedido is null)
-            return NotFound();
+       var acompPedidos = await _context.AcompanhamentoPedido
+                                .Include("Acompanhamento")
+                                .ToListAsync();
         
-        return await _context.AcompanhamentoPedido.Include("Acompanhamento").ToListAsync();
+        return acompPedidos;
     }
 
     [HttpGet]
     [Route("listar/{id}")]
-    public async Task<ActionResult<AcompanhamentoPedido>> Buscar([FromRoute] int id)   
+    public async Task<ActionResult<AcompanhamentoPedido>> Buscar(int id)   
     {
-        var AcompanhamentoPedido = await _context.AcompanhamentoPedido
+        var acompPedido = await _context.AcompanhamentoPedido
             .Where(acompBanco => acompBanco.Id == id)
             .Include("Acompanhamento")
             .FirstOrDefaultAsync();
 
-        if (AcompanhamentoPedido == null)
+        if (acompPedido == null)
             return NotFound();
         
-        return Ok(AcompanhamentoPedido);
+        return Ok(acompPedido);
     }
 
     [HttpPost]
     [Route("cadastrar")]
     public async Task<IActionResult> Cadastrar(AcompanhamentoPedido acompanhamentoPedido)
     {
-        var acompBanco = await _context.Acompanhamento.FindAsync(acompanhamentoPedido.Acompanhamento.Id);
-        if (acompBanco == null) return NotFound("Acompanhamento inválido");
-        
-        acompanhamentoPedido.Acompanhamento = acompBanco;
+        _context.Acompanhamento.Attach(acompanhamentoPedido.Acompanhamento);
         acompanhamentoPedido.CalcularPreco();
 
         await _context.AddAsync(acompanhamentoPedido);
@@ -56,16 +54,13 @@ public class AcompanhamentoPedidoController : ControllerBase
 
     [HttpPut]
     [Route("alterar")]
-    public async Task<IActionResult> Alterar (AcompanhamentoPedido acompanhamentoPedido)
+    public async Task<IActionResult> Alterar(AcompanhamentoPedido acompanhamentoPedido)
     {
-        if (await _context.AcompanhamentoPedido.FindAsync(acompanhamentoPedido.Id) == null)
-            return NotFound("Acompanhamento pedido não encontrado");
+        var acompanhamentoExisteNoBanco = await _context.AcompanhamentoPedido.ContainsAsync(acompanhamentoPedido);
+        if (!acompanhamentoExisteNoBanco)
+            return NotFound("Acompanhamento pedido nao encontrado");
 
-
-        var acompanhamentoBanco = await _context.Acompanhamento.FindAsync(acompanhamentoPedido.Acompanhamento.Id);
-        if (acompanhamentoBanco == null) return NotFound("Acompanhamento não encontrado");
-        
-        acompanhamentoPedido.Acompanhamento = acompanhamentoBanco;
+        _context.Acompanhamento.Attach(acompanhamentoPedido.Acompanhamento);
         acompanhamentoPedido.CalcularPreco();
 
         _context.AcompanhamentoPedido.Update(acompanhamentoPedido);
@@ -78,7 +73,8 @@ public class AcompanhamentoPedidoController : ControllerBase
     public async Task<IActionResult> Excluir(int id)
     {
         var acompanhamentoPedido = await _context.AcompanhamentoPedido.FindAsync(id);
-        if(acompanhamentoPedido is null) return NotFound();
+        if(acompanhamentoPedido is null) 
+            return NotFound();
         
         _context.AcompanhamentoPedido.Remove(acompanhamentoPedido);
         await _context.SaveChangesAsync();
