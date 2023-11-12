@@ -4,47 +4,41 @@ using Microsoft.EntityFrameworkCore;
 
 namespace pizzaria;
 
-[Route("pizza-pedido")]
 [ApiController]
+[Route("pizza-pedido")]
 public class PizzaPedidoController : ControllerBase
 {
-    private readonly ILogger<ClienteController> _logger;
     public PizzariaDBContext _context;
 
-    public PizzaPedidoController(PizzariaDBContext context, ILogger<ClienteController> logger)
+    public PizzaPedidoController(PizzariaDBContext context)
     {
         _context = context;
-        _logger = logger;
     }
 
-    [HttpGet()]
+    [HttpGet]
     [Route("buscar")]
     public async Task<ActionResult<IEnumerable<Cliente>>> ListarTodos()
     {   
-        try
-        {
-            List<PizzaPedido> pedidos;
-            pedidos = await _context.PizzaPedido.Include("Tamanho").Include("Sabores").ToListAsync();
-            return Ok(pedidos); 
-        }
-        catch (SqliteException)
-        {
-            return NotFound("A tabela PizzaPedido não existe");
-        }
+        var pedidos = await _context.PizzaPedido
+            .Include("Tamanho")
+            .Include("Sabores")
+            .ToListAsync();
+
+        return Ok(pedidos); 
     }
 
-    [HttpGet()]
+    [HttpGet]
     [Route("buscar/{id}")]
-    public async Task<ActionResult<PizzaPedido>> BuscarPorId(string id)
+    public async Task<ActionResult<PizzaPedido>> BuscarPorId(int id)
     {
-        if (!int.TryParse(id, out int idInt)) return BadRequest();
-
         var pedido = await _context.PizzaPedido
-            .Where(pedido => pedido.Id == idInt)
-            .Include("Tamanho").Include("Sabores")
+            .Where(pedido => pedido.Id == id)
+            .Include("Tamanho")
+            .Include("Sabores")
             .FirstOrDefaultAsync();
 
-        if (pedido == null) return NotFound($"Nenhum pedido com o ID {idInt} encontrado");
+        if (pedido == null) 
+            return NotFound($"Nenhum pedido com o ID {id} encontrado");
 
         return Ok(pedido);
     }
@@ -53,15 +47,9 @@ public class PizzaPedidoController : ControllerBase
     [Route("cadastrar")]
     public async Task<ActionResult<PizzaPedido>> Cadastrar(PizzaPedido pedido)
     {
-        var saboresPedido = new List<Sabor>();
+        _context.Tamanho.Attach(pedido.Tamanho);
+        _context.Sabor.AttachRange(pedido.Sabores);
 
-        // procura o sabor no banco e relaciona com o pedido
-        pedido.Sabores.ForEach(sabor => saboresPedido.Add(_context.Sabor.Find(sabor.Id)));
-        pedido.Tamanho = await _context.Tamanho.FindAsync(pedido.Tamanho.Nome);
-
-        if (pedido.Tamanho == null || saboresPedido.Any(sabor => sabor == null)) return BadRequest();
-
-        pedido.Sabores = saboresPedido;
         pedido.CalcularPreco();
         await _context.AddAsync(pedido);
         await _context.SaveChangesAsync(); 
@@ -75,6 +63,7 @@ public class PizzaPedidoController : ControllerBase
     {
         _context.PizzaPedido.Update(pedido);
         await _context.SaveChangesAsync();
+        
         return Ok();
     }
 
@@ -84,7 +73,8 @@ public class PizzaPedidoController : ControllerBase
     {
         var pedido = await _context.PizzaPedido.FindAsync(id);
 
-        if (pedido == null) return NotFound($"Nenhum pedido com o ID {id} encontrado");
+        if (pedido == null) 
+            return NotFound($"Nenhum pedido com o ID {id} encontrado");
 
         _context.PizzaPedido.Remove(pedido);
         await _context.SaveChangesAsync();
