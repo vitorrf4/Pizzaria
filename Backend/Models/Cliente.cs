@@ -6,14 +6,18 @@ namespace pizzaria;
 public class Cliente 
 {
     [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public string Cpf { get; set; }
     public string Nome { get; set; }
     public string Telefone { get; set; }
     public DateOnly DataAniversario { get; set; }
     public Endereco Endereco { get; set; }
 
-    public Cliente() { }
+    public Cliente() {
+        Cpf = "";
+        Nome = "";
+        Telefone = "";
+        Endereco = new Endereco();
+     }
 
     public Cliente(string cpf, string nome, string telefone, DateOnly dataAniversario, Endereco endereco)
     {

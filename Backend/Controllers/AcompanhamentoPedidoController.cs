@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 namespace pizzaria;
 
 [ApiController]
-[Route("acompanhamento-pedido")]
+[Route("acompanhamento-pedido/")]
 public class AcompanhamentoPedidoController : ControllerBase
 {
     private PizzariaDBContext _context;
@@ -30,9 +30,9 @@ public class AcompanhamentoPedidoController : ControllerBase
     public async Task<ActionResult<AcompanhamentoPedido>> Buscar(int id)   
     {
         var acompPedido = await _context.AcompanhamentoPedido
-            .Where(acompBanco => acompBanco.Id == id)
-            .Include("Acompanhamento")
-            .FirstOrDefaultAsync();
+                                .Where(acompBanco => acompBanco.Id == id)
+                                .Include("Acompanhamento")
+                                .FirstOrDefaultAsync();
 
         if (acompPedido == null)
             return NotFound();
