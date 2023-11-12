@@ -71,6 +71,9 @@ export class PizzasComponent {
 
     this.pizza.calcularPreco();
     this.carrinhoService.adicionarNoCarrinho(this.pizza);
+
+    this.tamanho = new Tamanho();
+    this.saboresSelecionados = [];
   }
 
   ordernarTamanhosPorQntdFatias() {
