@@ -1,10 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {ClienteService} from "../../services/cliente.service";
 import {Cliente} from "../../models/Cliente";
-import {FormControl, FormGroup} from '@angular/forms';
-import {RegiaoService} from 'src/app/services/regiao.service';
-import {Regiao} from 'src/app/models/Regiao';
-import {EnderecoService} from "../../services/endereco.service";
 import {LoginService} from "../../services/login.service";
 import {PedidoFinal} from "../../models/PedidoFinal";
 
@@ -29,4 +25,5 @@ export class ClienteComponent {
     })
 
   }
+
 }

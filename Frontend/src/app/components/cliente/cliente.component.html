@@ -14,7 +14,6 @@
   <ul *ngFor="let pedido of pedidos">
     <li *ngFor="let pizza of pedido.pizzas">
       <p> Pedido {{pedido.id}} </p>
-      <p> Quantidade: {{pizza.quantidade}}</p>
       <p> Pizza {{pizza.tamanho.nome}} | Sabores {{pizza.sabores | json}}</p>
       <p *ngIf="pedido.acompanhamentos.length > 0">Acompanhamentos: {{pedido.acompanhamentos | json}}</p>
       <p>Data: {{pedido.horaPedido | date : "dd/MM/yyyy HH:mm"}}</p>
