@@ -49,6 +49,7 @@ public class PedidoFinalController : ControllerBase
 
         await _context.AddAsync(pedidoFinal);
         await _context.SaveChangesAsync();
+
         return Created("", pedidoFinal);
     }
 
@@ -72,49 +73,13 @@ public class PedidoFinalController : ControllerBase
 
     }
 
-    [HttpPut]
-    [Route("alterar")]
-    public async Task<IActionResult> Alterar(PedidoFinal pedidoFinal)
-    {
-        var pedidoNoBanco = await _context.PedidoFinal.FindAsync(pedidoFinal.Id);
-        if (pedidoNoBanco == null) 
-            return NotFound("Pedido nao encontrado");
-
-        var clienteCompleto = await GetClienteComTodasAsPropriedades(pedidoFinal.Cliente.Cpf);
-        if (clienteCompleto == null) 
-            return BadRequest("O cliente nao foi encontrado");
-
-        pedidoFinal.Cliente = clienteCompleto;
-
-        if (pedidoFinal.Acompanhamentos != null)
-        {
-            var acompanhamentosCompletos = await GetAcompanhamentosCompletos(pedidoFinal.Acompanhamentos);
-            if (acompanhamentosCompletos == null) 
-                return BadRequest("O acompanhamento pedido nao foi encontrado");
-
-            pedidoFinal.Acompanhamentos = acompanhamentosCompletos;
-        }
-
-        var pizzasCompletas = await GetPizzasCompletas(pedidoFinal.Pizzas);
-        if (pizzasCompletas == null) return BadRequest("Pizza pedido invalido");
-        pedidoFinal.Pizzas = pizzasCompletas;
-
-        // linha necessaria para o _context nao dar erro de conflito
-        _context.Entry(pedidoNoBanco).State = EntityState.Detached;
-
-        pedidoFinal.CalcularPrecoTotal();
-        _context.PedidoFinal.Update(pedidoFinal);
-        await _context.SaveChangesAsync();
-        return Ok();
-    }
-
     [HttpDelete]
-    [Route("excluir")]
-    public async Task<IActionResult> Excluir(int id)
+    [Route("excluir/{id}")]
+    public async Task<IActionResult> Excluir([FromRoute] int id)
     {
-        var pedidoFinal = await GetPedidoFinalComTodasAsPropriedades(id).FirstOrDefaultAsync();
-
-        if (pedidoFinal == null) return NotFound("Pedido n�o encontrado");
+        var pedidoFinal = await GetPedidoFinalComTodasAsPropriedades(id)
+                                .FirstOrDefaultAsync();
+        if (pedidoFinal == null) return NotFound("Pedido nao encontrado");
 
         if (pedidoFinal.Acompanhamentos != null)
         {
@@ -131,7 +96,8 @@ public class PedidoFinalController : ControllerBase
 
         _context.PedidoFinal.Remove(pedidoFinal);
         await _context.SaveChangesAsync();
-        return Ok();
+
+        return NoContent();
     }
 
     [HttpGet]
