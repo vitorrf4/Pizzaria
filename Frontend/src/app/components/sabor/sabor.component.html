@@ -1,0 +1,11 @@
+<form>
+    <label for="name">Nome</label>
+    <input [(ngModel)]="sabor.nome" name="nome">
+
+    <label for="preco">Preço</label>
+    <input [(ngModel)]="sabor.preco" name="preco">
+
+    <button (click)="cadastrarSabor()">Cadastrar</button>
+</form>
+
+<p *ngFor="let sabor of sabores">{{sabor.nome}}</p>
