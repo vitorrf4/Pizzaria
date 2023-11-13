@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component} from '@angular/core';
 import {Acompanhamento} from "../../models/Acompanhamento";
 import {AcompanhamentoService} from "../../services/acompanhamento.service";
 import {AcompanhamentoPedido} from "../../models/AcompanhamentoPedido";

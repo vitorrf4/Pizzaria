@@ -14,13 +14,13 @@ public class SaborController : ControllerBase
         _context = context;
     }
 
-    [HttpGet()]
+    [HttpGet]
     [Route("listar")]
     public async Task<ActionResult<IEnumerable<Sabor>>> Listar()
     {
         var sabores = await _context.Sabor.ToListAsync();
         
-        return sabores;
+        return Ok(sabores);
     }
 
     [HttpGet]

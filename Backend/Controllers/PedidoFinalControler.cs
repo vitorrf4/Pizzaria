@@ -18,7 +18,8 @@ public class PedidoFinalController : ControllerBase
     [Route("listar")]
     public async Task<ActionResult<IEnumerable<PedidoFinal>>> Listar()
     {
-        var pedidoFinal = await GetPedidosFinaisComTodasAsPropriedades().ToListAsync();
+        var pedidoFinal = await GetPedidosFinaisComTodasAsPropriedades()
+                                .ToListAsync();
 
         return pedidoFinal;
     }
@@ -37,6 +38,7 @@ public class PedidoFinalController : ControllerBase
         return Ok(pedidoFinal);
     }
 
+    // FIX: ao tentar cadastrar duas pizzas com o mesmo tamanho ou sabor o programa da erro
     [HttpPost]
     [Route("cadastrar")]
     public async Task<IActionResult> Cadastrar(PedidoFinal pedidoFinal)
@@ -82,12 +84,12 @@ public class PedidoFinalController : ControllerBase
                                 .Where(p => p.Id == id)
                                 .FirstOrDefaultAsync();
         if (pedidoFinal == null) 
-            return NotFound("Pedido nao encontrado");
+            return NotFound();
 
         pedidoFinal.Pizzas.ForEach(p => _context.PizzaPedido.RemoveRange(p));
         pedidoFinal.Acompanhamentos?.ForEach(a => _context.AcompanhamentoPedido.RemoveRange(a));
-
         _context.Remove(pedidoFinal);
+        
         await _context.SaveChangesAsync();
 
         return NoContent();
@@ -95,7 +97,7 @@ public class PedidoFinalController : ControllerBase
 
     private IQueryable<PedidoFinal> GetPedidosFinaisComTodasAsPropriedades()
     {
-        // Campos que s�o objetos n�o s�o retornados automaticamente do banco,
+        // Campos que sao objetos nao sao retornados automaticamente do banco,
         // precisamos do Include() para que eles sejam incluidos
         return _context.PedidoFinal
             .Include(p => p.Cliente.Endereco.Regiao)

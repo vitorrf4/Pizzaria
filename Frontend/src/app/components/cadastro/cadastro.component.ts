@@ -63,11 +63,10 @@ export class CadastroComponent implements OnInit {
 
   cadastrarCliente() {
     const cliente : Cliente = this.formularioCliente.value;
-    let regiao : Regiao = new Regiao();
-    regiao.nome = this.formularioEndereco.value.regiao;
-
     cliente.endereco = this.formularioEndereco.value;
-    cliente.endereco.regiao = regiao;
+    
+    let nomeRegiao = this.formularioEndereco.value.regiao;
+    cliente.endereco.regiao = new Regiao(nomeRegiao);
 
     this.clienteService.cadastrar(cliente).subscribe({
       next: clienteCriado => {

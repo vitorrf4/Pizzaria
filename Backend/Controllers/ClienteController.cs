@@ -59,6 +59,9 @@ public class ClienteController : ControllerBase
         if (_context.Cliente.Contains(cliente)) 
             return Conflict("Um cliente com esse CPF já está cadastrado");
 
+        // Verifica se a regiao ja esta cadastrada, se sim, simplesmente
+        // adiciona a regiao pra dentro do cliente, caso contrário, a função
+        // não faz nada e a região será criada junto com o cliente na função principal 
         VerificaRegiao(cliente);
 
         await _context.AddAsync(cliente);
@@ -69,9 +72,6 @@ public class ClienteController : ControllerBase
 
     private async void VerificaRegiao(Cliente cliente) 
     {
-        // Verifica se a regiao ja esta cadastrada, se sim, simplesmente
-        // adiciona a regiao pra dentro do cliente, caso não ele ira criar a regiao
-        // junto com o cliente
         var regiaoCliente = cliente.Endereco.Regiao.Nome;
 
         var regiaoDb = await _context.Regiao

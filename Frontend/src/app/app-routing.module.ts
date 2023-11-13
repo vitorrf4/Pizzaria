@@ -18,7 +18,7 @@ const routes: Routes = [
       { path: "sabores", component: PizzasComponent },
       { path: "carrinho", component: CarrinhoComponent },
     ]},
-  { path: "**", component: LoginComponent }
+  { path: "**", component: LoginComponent } // Rota padrão para tratamento de rotas não reconhecidas
 ];
 
 @NgModule({
