@@ -16,15 +16,15 @@ export class SaborService {
     return this.http.get<Sabor[]>(`${this.apiUrl}/sabor/listar`)
   }
 
-  listarId(id: number): Observable<Sabor[]> {
-    return this.http.get<Sabor[]>(`${this.apiUrl}/sabor/listar/` + id)
+  listarId(id: number): Observable<Sabor> {
+    return this.http.get<Sabor>(`${this.apiUrl}/sabor/listar/` + id)
   }
 
-  cadastrar(sabor: Sabor): Observable<Sabor[]>{
-    return this.http.post<Sabor[]>(`${this.apiUrl}/sabor/cadastrar/`, sabor)
+  cadastrar(sabor: Sabor): Observable<Sabor>{
+    return this.http.post<Sabor>(`${this.apiUrl}/sabor/cadastrar/`, sabor)
   }
 
-  alterar(sabor: Sabor): Observable<Sabor[]>{
-    return this.http.put<Sabor[]>(`${this.apiUrl}/sabor/alterar/`, sabor)
+  alterar(sabor: Sabor): Observable<Object>{
+    return this.http.put<Object>(`${this.apiUrl}/sabor/alterar/`, sabor)
   }
 }
