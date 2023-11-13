@@ -11,20 +11,20 @@
   <fieldset>
     <legend>Cliente</legend>
     <div class="form-group">
-      <label>Cpf:</label>
-      <input type="text" formControlName="cpf">
+      <label>Cpf*:</label>
+      <input type="text" formControlName="cpf" required>
     </div>
     <div class="form-group">
-      <label>Nome:</label>
-      <input type="text" formControlName="nome">
+      <label>Nome*:</label>
+      <input type="text" formControlName="nome" required>
     </div>
     <div class="form-group">
-      <label>Telefone:</label>
-      <input type="text" formControlName="telefone">
+      <label>Telefone*:</label>
+      <input type="text" formControlName="telefone" required>
     </div>
     <div class="form-group">
-      <label>Data de Nascimento:</label>
-      <input type="date" formControlName="dataAniversario">
+      <label>Data de Nascimento*:</label>
+      <input type="date" formControlName="dataAniversario" required>
     </div>
   </fieldset>
 </form>
@@ -33,21 +33,21 @@
 <fieldset>
   <legend>Endereço</legend>
   <div class="form-group">
-    <label>CEP:</label>
-    <input type="text" formControlName="cep">
+    <label>CEP*:</label>
+    <input type="text" formControlName="cep" required>
     <button (click)="buscarCEP()">Buscar CEP</button>
   </div>
   <div class="form-group">
-    <label>Rua:</label>
-    <input type="text" formControlName="rua">
+    <label>Rua*:</label>
+    <input type="text" formControlName="rua" required>
   </div>
   <div class="form-group">
-    <label>Regiao:</label>
-    <input type="text" formControlName="regiao" readonly>
+    <label>Regiao*:</label>
+    <input type="text" formControlName="regiao" required>
   </div>
   <div class="form-group">
-    <label>Numero:</label>
-    <input type="number" formControlName="numero">
+    <label>Numero*:</label>
+    <input type="number" formControlName="numero" required>
   </div>
   <div class="form-group">
     <label>Complemento:</label>
