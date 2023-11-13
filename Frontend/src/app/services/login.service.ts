@@ -11,8 +11,6 @@ export class LoginService {
     // Quando o programa é iniciado, ele pega o valor "cliente" salvo na sessão do browser, transforma
     // para um JSON e o atribue para a variavel clienteLogado que pode ser usado
     // pelos outros componentes.
-    // O "!" indica para o angular que o valor não será null ou undefined, sem ele
-    // o compilador reclama dessa atribuição
     this.clienteLogado = JSON.parse(sessionStorage.getItem("cliente")!);
   }
 

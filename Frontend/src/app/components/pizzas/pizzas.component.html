@@ -13,26 +13,46 @@
 
 <div *ngIf="tamanho.maxSabores > 0">
   <label>Quantidade de Sabores:</label>
-  <select [(ngModel)]="quantidadeSabores" [value]="1" (change)="construirPizza();">
+  <select [(ngModel)]="quantidadeSabores" [value]="1" (change)="construirPizza()">
     <option *ngFor="let qntd of maxQntdSabores">{{qntd}}</option>
   </select>
 
-  <table *ngFor="let sabor of saboresDB">
-    <tr>
-      <td (change)="construirPizza()">{{sabor.nome}} | Preço: R${{sabor.preco}} </td>
-      <button (click)="adicionarSabor(sabor)">Selecionar</button>
-    </tr>
-  </table>
+  <div class="flex-parent">
 
-  <br>
+    <div class="pizzas-div flex-child">
+      <table class="table">
+        <thead class="thead-dark ">
+          <tr>
+            <th scope="col">Sabor</th>
+            <th scope="col">Preço</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tr *ngFor="let sabor of saboresDB">
+          <td (change)="construirPizza()">{{sabor.nome}}</td>
+          <td>{{sabor.preco | currency : "BRL"}}</td>
+          <td>
+            <button (click)="adicionarSabor(sabor)" class="btn btn-info">Selecionar</button>
+          </td>
+        </tr>
+      </table>
+    </div>
 
-  <h3>Pedido</h3>
-  <p [(ngModel)]="pizza" ngDefaultControl>Pizza {{pizza.tamanho.nome}}</p>
-  <div *ngFor="let pizza of pizza.sabores; let i = index">
-    <p>{{pizza.nome}} <button (click)="removerSabor(i)">Retirar</button> </p>
+    <div class="flex-child">
+      <h3>Seu Pedido</h3>
+      <p [(ngModel)]="pizza" ngDefaultControl>Pizza {{pizza.tamanho.nome}}</p>
+      <div *ngFor="let pizza of pizza.sabores; let i = index">
+        <p>{{pizza.nome}} <button (click)="removerSabor(i)" class="btn btn-danger">Retirar</button> </p>
+      </div>
+      <label for="qntd" >Quantidade:</label>
+      <input type="number" [(ngModel)]="quantidadePizzas" (change)="construirPizza()" style="width: 40px">
+
+      <br>
+    
+      <button (click)="adicionarAoCarrinho()" class="btn btn-success">Adicionar Pizza Ao Carrinho</button>
+    </div>
+
   </div>
-
-  <button (click)="adicionarAoCarrinho()">Adicionar Pizza Ao Carrinho</button>
 
 </div>
 

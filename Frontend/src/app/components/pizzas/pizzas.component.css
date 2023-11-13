@@ -1,0 +1,13 @@
+.flex-parent {
+    display: flex;
+    width: 50%;
+}
+  
+.flex-child {
+    flex: 1;
+    margin: 10px;
+}
+
+.flex-child:first-child {
+    margin-right: 20px;
+} 

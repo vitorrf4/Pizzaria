@@ -17,6 +17,8 @@ export class PizzaPedido implements Pedido {
   }
 
   calcularPreco() {
+    this.preco = 0;
+    
     this.sabores.forEach(sabor => this.preco += sabor.preco);
     this.preco *= this.tamanho.multiplicadorPreco;
 
