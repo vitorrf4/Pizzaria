@@ -47,18 +47,24 @@ public class PizzariaDBContext : DbContext{
 
         // Sabor
         var frango = new Sabor("Frango", 15.0);
-        var calabresa = new Sabor("Calabresa", 17.0);
-        var quatroQueijos = new Sabor("Quatro Queijos", 19.0);
         var portuguesa = new Sabor("Portuguesa", 15.0);
+        var muzzarela = new Sabor("Muzzarela", 15.0);
+        var calabresa = new Sabor("Calabresa", 15.0);
+        var quatroQueijos = new Sabor("Quatro Queijos", 17.0);
+        var brocolisBacon = new Sabor("Brocolis com Bacon", 17.0);
         var camarao = new Sabor("Camarão", 19.0);
+        var champignon = new Sabor("Champignon", 19.0);
+        var pepperoni = new Sabor("Pepperoni", 19.0);
+        var brigadeiro = new Sabor("Brigadeiro", 19.0);
+        var leiteCondensado = new Sabor("Leite Condensado", 19.0);
 
         // Tamanho 
-        var broto = new Tamanho("Broto", 4, 1, 0.0);
-        var pequena = new Tamanho("Pequena", 6, 1, 0.5);
-        var media = new Tamanho("Media", 8, 2, 0.8);
-        var grande = new Tamanho("Grande", 10, 2, 1.2);
-        var familia = new Tamanho("Familia", 12, 3, 2);
-        var gigante = new Tamanho("Gigante", 16, 4, 2.5);
+        var broto = new Tamanho("Broto", 4, 1, 1.0);
+        var pequena = new Tamanho("Pequena", 6, 1, 1.5);
+        var media = new Tamanho("Media", 8, 2, 1.8);
+        var grande = new Tamanho("Grande", 10, 2, 2.5);
+        var familia = new Tamanho("Familia", 12, 3, 3);
+        var gigante = new Tamanho("Gigante", 16, 4, 3.5);
 
         // Acompanhamento
         var refrigerante = new Acompanhamento("Coca Cola 2L", 12.0);
@@ -85,7 +91,10 @@ public class PizzariaDBContext : DbContext{
         //Adiciona no Banco
         Acompanhamento.AddRange(refrigerante, suco, paoDeAlho, agua, chocolate);
         Tamanho.AddRange(broto, pequena, media, grande, familia, gigante);
-        Sabor.AddRange(frango, calabresa, quatroQueijos, portuguesa, camarao);
+
+        Sabor.AddRange(frango, calabresa, quatroQueijos, portuguesa, camarao, 
+        muzzarela, brocolisBacon, champignon, pepperoni, brigadeiro, leiteCondensado);
+
         Regiao.AddRange(boqueirao, aguaVerde, centro, capaoRaso);
         Endereco.AddRange(endereco1, endereco2);
         Cliente.AddRange(cliente1, cliente2);
