@@ -10,17 +10,22 @@ import {LoginService} from "../../services/login.service";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  formularioCliente: any;
+  formularioCliente: FormGroup;
 
   constructor(private clienteService: ClienteService, private router: Router,
               private loginService: LoginService) {
     this.formularioCliente = new FormGroup({
-      cpf: new FormControl(null),
+      cpf: new FormControl(), 
     });
   }
 
   logarCliente() {
     const cpf = this.formularioCliente.value.cpf;
+
+    if (!cpf) {
+      alert("Cpf está vazio");
+      return;
+    }
 
     // Busca o cpf no banco de dados e caso exista, salva o cliente
     // na sessão, e navega para a página "home"
@@ -29,8 +34,10 @@ export class LoginComponent {
         this.loginService.salvarClienteLogado(cliente);
         this.router.navigateByUrl("/home").then();
       },
-      error: err => console.log(err)
+      error: err => {
+        console.log(err);
+        alert("Login inválido");
+      }
     });
   }
-
 }
