@@ -1,9 +1,9 @@
-<h3 *ngIf="itensCarrinho.length == 0; else items">Carrinho vazio</h3>
+<h2 *ngIf="itensCarrinho.length == 0; else items">Carrinho vazio</h2>
 
 <ng-template #items>
   <ul *ngFor="let item of itensCarrinho;let i = index;">
     <li>
-      {{item.getDescricao()}} | Quantidade: {{item.getQuantidade()}} | Total: R${{item.getPreco()}}
+      {{item.getDescricao()}} | Quantidade: {{item.getQuantidade()}} | Total: {{item.getPreco() | currency : "BRL"}}
       <button (click)="removerDoCarrinho(i)">Remover</button>
     </li>
   </ul>

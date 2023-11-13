@@ -71,12 +71,10 @@ export class PizzasComponent {
       return;
     }
 
-    console.log(this.pizza);
     this.pizza.calcularPreco();
     this.carrinhoService.adicionarNoCarrinho(this.pizza);
 
     alert("Pizza adicionada!");
-    console.log(this.pizza);
 
     this.tamanho = new Tamanho();
     this.saboresSelecionados = [];

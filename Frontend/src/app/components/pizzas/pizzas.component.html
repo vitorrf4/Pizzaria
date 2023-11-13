@@ -19,9 +19,9 @@
 
   <div class="flex-parent">
 
-    <div class="pizzas-div flex-child">
+    <div class="flex-child">
       <table class="table">
-        <thead class="thead-dark ">
+        <thead class="thead-dark">
           <tr>
             <th scope="col">Sabor</th>
             <th scope="col">Preço</th>
@@ -29,10 +29,10 @@
           </tr>
         </thead>
         <tr *ngFor="let sabor of saboresDB">
-          <td (change)="construirPizza()">{{sabor.nome}}</td>
-          <td>{{sabor.preco | currency : "BRL"}}</td>
+          <td>{{sabor.nome}}</td>
+          <td>{{sabor.preco * tamanho.multiplicadorPreco| currency : "BRL"}}</td>
           <td>
-            <button (click)="adicionarSabor(sabor)" class="btn btn-info">Selecionar</button>
+            <button (click)="adicionarSabor(sabor); construirPizza()" class="btn btn-info">Selecionar</button>
           </td>
         </tr>
       </table>
@@ -42,12 +42,12 @@
       <h3>Seu Pedido</h3>
       <p [(ngModel)]="pizza" ngDefaultControl>Pizza {{pizza.tamanho.nome}}</p>
       <div *ngFor="let pizza of pizza.sabores; let i = index">
-        <p>{{pizza.nome}} <button (click)="removerSabor(i)" class="btn btn-danger">Retirar</button> </p>
+        <p>{{pizza.nome}} <button (click)="removerSabor(i);construirPizza()" class="btn btn-danger">Retirar</button> </p>
       </div>
       <label for="qntd" >Quantidade:</label>
       <input type="number" [(ngModel)]="quantidadePizzas" (change)="construirPizza()" style="width: 40px">
 
-      <br>
+      <p [(ngModel)]="pizza" ngDefaultControl>Preço: {{pizza.preco | currency : "BRL"}}</p>
     
       <button (click)="adicionarAoCarrinho()" class="btn btn-success">Adicionar Pizza Ao Carrinho</button>
     </div>
