@@ -54,15 +54,17 @@ public class PizzariaDBContext : DbContext{
 
         // Tamanho 
         var broto = new Tamanho("Broto", 4, 1, 0.0);
-        var pequena = new Tamanho("Pequena", 6, 1, 50.0);
-        var media = new Tamanho("Media", 8, 2, 100.0);
-        var grande = new Tamanho("Grande", 10, 2, 150.0);
-        var familia = new Tamanho("Familia", 12, 3, 200.0);
-        var gigante = new Tamanho("Gigante", 16, 4, 300.0);
+        var pequena = new Tamanho("Pequena", 6, 1, 0.5);
+        var media = new Tamanho("Media", 8, 2, 0.8);
+        var grande = new Tamanho("Grande", 10, 2, 1.2);
+        var familia = new Tamanho("Familia", 12, 3, 2);
+        var gigante = new Tamanho("Gigante", 16, 4, 2.5);
 
         // Acompanhamento
-        var refrigerante = new Acompanhamento("Refrigerante", 12.0);
-        var suco = new Acompanhamento("Suco", 10.0);
+        var refrigerante = new Acompanhamento("Coca Cola 2L", 12.0);
+        var suco = new Acompanhamento("Suco Del Valle 500ml", 8.0);
+        var agua = new Acompanhamento("Agua 500ml", 3.0);
+        var chocolate = new Acompanhamento("Barra Diamante Negro", 7.0);
         var paoDeAlho = new Acompanhamento("Pão de Alho", 25.0);
 
         // AcompanhamentoPedido
@@ -81,7 +83,7 @@ public class PizzariaDBContext : DbContext{
             new List<AcompanhamentoPedido>() { acompanhamentoPedido1 });
          
         //Adiciona no Banco
-        Acompanhamento.AddRange(refrigerante, suco, paoDeAlho);
+        Acompanhamento.AddRange(refrigerante, suco, paoDeAlho, agua, chocolate);
         Tamanho.AddRange(broto, pequena, media, grande, familia, gigante);
         Sabor.AddRange(frango, calabresa, quatroQueijos, portuguesa, camarao);
         Regiao.AddRange(boqueirao, aguaVerde, centro, capaoRaso);

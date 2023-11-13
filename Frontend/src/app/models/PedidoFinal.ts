@@ -16,10 +16,8 @@ export class PedidoFinal {
       this.cliente = cliente;
       this.pizzas = pizzas;
       this.acompanhamentos = acompanhamentos || [];
+      this.horaPedido = new Date();
       this.calcularPreco();
-
-      const date = new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo"});
-      this.horaPedido = new Date(date);
     }
 
     calcularPreco() {

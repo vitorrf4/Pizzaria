@@ -12,13 +12,25 @@
   <p *ngIf="cliente.endereco.complemento"> Complemento: {{cliente.endereco.complemento}}</p>
 
 <h2>Meus Pedidos</h2>
-  <ul *ngFor="let pedido of pedidos">
-    <li *ngFor="let pizza of pedido.pizzas">
-      <p> Pedido {{pedido.id}} </p>
-      <p> Pizza {{pizza.tamanho.nome}} | Sabores {{pizza.sabores | json}}</p>
-      <p *ngIf="pedido.acompanhamentos.length > 0">Acompanhamentos: {{pedido.acompanhamentos | json}}</p>
-      <p>Data: {{pedido.horaPedido | date : "dd/MM/yyyy HH:mm"}}</p>
-      Preço: R${{pedido.precoTotal}}
+  <ul *ngFor="let pedido of pedidos" class="list-group ">
+    <li class="list-group-item">
+      <label> Pedido {{pedido.id}} </label>
+
+      <ul>
+        <li *ngFor="let pizza of pedido.pizzas" > 
+            {{getDescricaoPizza(pizza)}} | Quantidade: {{pizza.quantidade}} | Preço: {{pizza.preco | currency : "BRL"}}
+        </li>
+      </ul>
+
+      <ul *ngIf="pedido.acompanhamentos.length > 0" >
+        <li *ngFor="let acomp of pedido.acompanhamentos">
+              {{getDescricaoAcompanhamento(acomp)}} | Quantidade: {{acomp.quantidade}} | Preço: {{acomp.preco | currency : "BRL"}}
+        </li>
+      </ul>
+      
+      <p> Data: {{pedido.horaPedido | date : "dd/MM/yyyy HH:mm"}}</p>
+      <p> Total do Pedido: R${{pedido.precoTotal | currency : "BRL"}}</p>
+
     </li>
   </ul>
 

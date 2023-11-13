@@ -32,7 +32,7 @@ export class LoginComponent {
     this.clienteService.listarCpf(cpf).subscribe({
       next: cliente => {
         this.loginService.salvarClienteLogado(cliente);
-        this.router.navigateByUrl("/home").then();
+        this.router.navigateByUrl("/home/clientes").then();
       },
       error: err => {
         console.log(err);
