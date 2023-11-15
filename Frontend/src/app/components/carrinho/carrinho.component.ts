@@ -23,12 +23,7 @@ export class CarrinhoComponent{
               private pedidoFinalService: PedidoFinalService,) {
     this.itensCarrinho = this.carrinhoService.itensCarrinho;
 
-    if (this.itensCarrinho.length > 0) {
-      this.construirPedido();
-      return;
-    }
-    
-    this.pedidoFinal = new PedidoFinal();
+    this.construirPedido();
   }
 
   removerDoCarrinho(index: number) {
@@ -63,6 +58,10 @@ export class CarrinhoComponent{
   }
 
   construirPedido() {
+    if (this.itensCarrinho.length <= 0) {
+      return;
+    }
+
     const cliente = this.clienteService.clienteLogado;
     const pizzas = this.carrinhoService.filtrarPizzasNoCarrinho();
     const acompanhamentos = this.carrinhoService.filtrarAcompanhamentosNoCarrinho();
