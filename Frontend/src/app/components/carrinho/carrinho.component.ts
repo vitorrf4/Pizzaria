@@ -15,14 +15,20 @@ import { PizzaPedido } from 'src/app/models/PizzaPedido';
 })
 export class CarrinhoComponent{
   itensCarrinho : Pedido[];
-  pedidoFinal!: PedidoFinal;
+  pedidoFinal: PedidoFinal = new PedidoFinal();
 
   constructor(private carrinhoService: CarrinhoService,
               private clienteService: LoginService,
               private pizzaPedidoService: PizzaPedidoService,
-              private acompService: AcompanhamentoPedidoService,
               private pedidoFinalService: PedidoFinalService,) {
     this.itensCarrinho = this.carrinhoService.itensCarrinho;
+
+    if (this.itensCarrinho.length > 0) {
+      this.construirPedido();
+      return;
+    }
+    
+    this.pedidoFinal = new PedidoFinal();
   }
 
   removerDoCarrinho(index: number) {

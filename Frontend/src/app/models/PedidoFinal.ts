@@ -12,9 +12,9 @@ export class PedidoFinal {
     horaPedido : Date;
     promocao: Promocao | undefined;
 
-    constructor(cliente: Cliente, pizzas: PizzaPedido[], acompanhamentos?: AcompanhamentoPedido[]) {
-      this.cliente = cliente;
-      this.pizzas = pizzas;
+    constructor(cliente?: Cliente, pizzas?: PizzaPedido[], acompanhamentos?: AcompanhamentoPedido[]) {
+      this.cliente = cliente || new Cliente();
+      this.pizzas = pizzas || [];
       this.acompanhamentos = acompanhamentos || [];
       this.horaPedido = new Date();
       this.calcularPreco();

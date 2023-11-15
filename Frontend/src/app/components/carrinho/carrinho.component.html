@@ -8,5 +8,7 @@
     </li>
   </ul>
 
+  <p [(ngModel)]="pedidoFinal" ngDefaultControl>Total do Pedido: {{pedidoFinal.precoTotal | currency : "BRL" || 0}}</p>
+
   <button (click)="finalizarPedido()">Finalizar Pedido</button>
 </ng-template>

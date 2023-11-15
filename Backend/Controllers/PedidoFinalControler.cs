@@ -54,8 +54,6 @@ public class PedidoFinalController : ControllerBase
             _context.Entry(p).State = EntityState.Unchanged;
         }
 
-        _context.Entry(pedidoFinal.Cliente).State = EntityState.Unchanged;
-
         pedidoFinal.CalcularPrecoTotal();
         pedidoFinal.HoraPedido = DateTime.Now;
 
