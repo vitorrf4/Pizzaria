@@ -45,8 +45,6 @@ public class PedidoFinalController : ControllerBase
 {       
         // A função Attach comunica que um campo já está no banco de dados e não precisa ser inserido novamente
         // sem ela, o entity framework tenta adicionar um campo com um ID existente e da erro
-
-
         ChangeTracking(pedidoFinal);
 
         foreach (var p in  pedidoFinal.Pizzas) {
@@ -62,40 +60,9 @@ public class PedidoFinalController : ControllerBase
         pedidoFinal.HoraPedido = DateTime.Now;
 
         await _context.PedidoFinal.AddAsync(pedidoFinal);
-
-
-
-
         await _context.SaveChangesAsync();
 
-        // System.Console.WriteLine($"Pedido final {pedidoFinal.Id} salvo");
-
-
         return Created("", pedidoFinal);
-    }
-
-    private void SalvarSabores(PizzaPedido pedido) {
-        // var context = new PizzariaDBContext();
-        
-        // _context.Attach(pedido.Tamanho);
-
-        // pedido.Sabores.ForEach(s => {
-        //     if (!updatedSabores.Contains(s.Id)) {
-        //         System.Console.WriteLine(s.Nome);
-
-        //         s.Pedidos.Add(pedido);
-
-        //         _context.Entry(s).CurrentValues.SetValues(s);
-        //         updatedSabores.Add(s.Id);
-
-        //         _context.Update(s);
-        //         // _context.SaveChanges();
-
-        //     }
-        // });
-
-        // _context.Update(pedido);
-        // _context.SaveChanges();
     }
 
     private void ChangeTracking(PedidoFinal pedidoFinal) {
@@ -113,44 +80,6 @@ public class PedidoFinalController : ControllerBase
             }
         });
         System.Console.WriteLine();
-    }
-
-    private void SalvarPizza(PizzaPedido pedido) {
-        var context = new PizzariaDBContext();
-
-        pedido.Sabores.ForEach(s => context.Entry(s).State = EntityState.Detached);
-        context.Attach(pedido.Tamanho);
-
-        context.PizzaPedido.AddRange(pedido);
-        context.SaveChanges();
-    }
-
-    private void AttachCampos(PedidoFinal pedidoFinal)
-    {
-        // Attach cliente
-        _context.Cliente.Attach(pedidoFinal.Cliente);
-        
-        // Attach tamanho e sabores
-        pedidoFinal.Pizzas.ForEach(p =>
-        {
-
-            _context.Tamanho.Attach(p.Tamanho);
-            // _context.Sabor.AttachRange(p.Sabores);
-            
-            // p.Sabores.ForEach(s => s.Pedidos.Add(p));
-            // p.Sabores.ForEach(s => context.Entry(s).State = EntityState.Unchanged);
-
-            // context.PizzaPedido.Add(p);
-            // context.SaveChanges();
-            // System.Console.WriteLine(p.Id + " salvo");
-        });
-
-        // Attach acompanhamentos
-        pedidoFinal.Acompanhamentos?.ForEach(a =>
-        {
-            _context.Acompanhamento.Attach(a.Acompanhamento);
-        });
-
     }
 
     [HttpDelete]

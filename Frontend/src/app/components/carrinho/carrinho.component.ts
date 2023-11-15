@@ -33,14 +33,10 @@ export class CarrinhoComponent{
   finalizarPedido() {
     this.construirPedido();
 
-    this.pedidoFinal.pizzas.forEach(p => {
-    })
-
     for (let i = 0; i < this.pedidoFinal.pizzas.length; i++) {
       let pizza = this.pedidoFinal.pizzas[i];
       this.pizzaPedidoService.cadastrar(pizza).subscribe(res => {
         this.pedidoFinal.pizzas[i] = res;
-        console.log(`pizza ${res.id} cadastrada`);
       });
     }
 
@@ -56,7 +52,7 @@ export class CarrinhoComponent{
         error: err => console.log(err)
       });
 
-    }, 500);
+    }, 900);
 
   }
 
