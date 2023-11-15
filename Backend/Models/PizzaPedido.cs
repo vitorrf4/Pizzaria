@@ -9,7 +9,7 @@ public class PizzaPedido
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int  Id { get; set; }
-    public List<Sabor> Sabores { get; set; }
+    public List<Sabor>? Sabores { get; set; }
     public Tamanho Tamanho { get; set; }
     public double Preco { get; set; }
     public int Quantidade { get; set;}

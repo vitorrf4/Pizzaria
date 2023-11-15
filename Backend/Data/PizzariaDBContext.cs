@@ -3,16 +3,16 @@ using Microsoft.EntityFrameworkCore;
 namespace pizzaria;
 
 public class PizzariaDBContext : DbContext{
-    public DbSet<Cliente> Cliente { get; set; }
-    public DbSet<PizzaPedido> PizzaPedido { get; set; }
-    public DbSet<PedidoFinal> PedidoFinal { get; set; }
-    public DbSet<Acompanhamento> Acompanhamento { get; set; }
-    public DbSet<Tamanho> Tamanho { get; set; }
-    public DbSet<Sabor> Sabor { get; set; }
-    public DbSet<Regiao> Regiao { get; set; }
-    public DbSet<AcompanhamentoPedido> AcompanhamentoPedido { get; set; }
-    public DbSet<Endereco> Endereco { get; set; }
-    public DbSet<Promocao> Promocao { get; set; }
+    public DbSet<Cliente>? Cliente { get; set; }
+    public DbSet<PizzaPedido>? PizzaPedido { get; set; }
+    public DbSet<PedidoFinal>? PedidoFinal { get; set; }
+    public DbSet<Acompanhamento>? Acompanhamento { get; set; }
+    public DbSet<Tamanho>? Tamanho { get; set; }
+    public DbSet<Sabor>? Sabor { get; set; }
+    public DbSet<Regiao>? Regiao { get; set; }
+    public DbSet<AcompanhamentoPedido>? AcompanhamentoPedido { get; set; }
+    public DbSet<Endereco>? Endereco { get; set; }
+    public DbSet<Promocao>? Promocao { get; set; }
 
     public PizzariaDBContext() 
     {
@@ -25,6 +25,14 @@ public class PizzariaDBContext : DbContext{
         optionsBuilder.EnableSensitiveDataLogging();
         
     }
+    
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        // modelBuilder.Entity<PizzaPedido>()
+        //     .HasMany(p => p.Sabores)
+        //     .WithMany();
+    }
+
 
     public void InicializaValores()
     {
@@ -85,7 +93,7 @@ public class PizzariaDBContext : DbContext{
         // PedidoFinal
         var pedidoFinal = new PedidoFinal(
             cliente1,
-            new List<PizzaPedido>() { pizzaPedido },
+            new List<PizzaPedido>() { pizzaPedido, pizzaPedido2 },
             new List<AcompanhamentoPedido>() { acompanhamentoPedido1 });
          
         //Adiciona no Banco

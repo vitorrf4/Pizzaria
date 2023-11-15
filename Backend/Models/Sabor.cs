@@ -17,6 +17,7 @@ public class Sabor
     public Sabor() 
     {
         Nome = "";
+        // Pedidos = new List<PizzaPedido>();
     }
 
     public Sabor(string nome, double preco)

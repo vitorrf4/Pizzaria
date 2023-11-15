@@ -9,7 +9,7 @@ public class PedidoFinal
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
     public Cliente Cliente { get; set; }
-    public List<PizzaPedido> Pizzas { get; set; }
+    public List<PizzaPedido> ?Pizzas { get; set; }
     public List<AcompanhamentoPedido> ?Acompanhamentos { get; set; }
     public double PrecoTotal { get; private set; }
     public DateTime HoraPedido { get; set; }
