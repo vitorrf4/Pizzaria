@@ -36,17 +36,13 @@ public class PizzaPedido
 
         double precoTotal = 0.0;
 
-        foreach (Sabor sabor in Sabores)
-        {
-            precoTotal += sabor.Preco;
-        }
+        Sabores.ForEach(sabor => precoTotal += sabor.Preco);
 
         if (Sabores.Count > 1)
-        {
             precoTotal = precoTotal / Sabores.Count;
-        }
+        
 
-        precoTotal += precoTotal * (Tamanho.MultiplicadorPreco / 100.0);
+        precoTotal *= Tamanho.MultiplicadorPreco;
 
         Preco = precoTotal * Quantidade;
         return Preco;

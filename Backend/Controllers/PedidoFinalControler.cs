@@ -41,12 +41,10 @@ public class PedidoFinalController : ControllerBase
     [HttpPost]
     [Route("cadastrar")]
     public async Task<IActionResult> Cadastrar(PedidoFinal pedidoFinal)
-{       
+    {       
         if (!MudarTrackingDosCampos(pedidoFinal))
             return BadRequest();
 
-
-        // FIX: precos diferente no front e no back
         pedidoFinal.CalcularPrecoTotal();
         pedidoFinal.HoraPedido = DateTime.Now;
 
@@ -72,7 +70,8 @@ public class PedidoFinalController : ControllerBase
         // outro loop para deixar as pizzas como Unchanged ao inves de detached.
         // Ainda verificamos se alguma das pizzas tem um id invalido, se sim
         // retornamos um false aqui e um erro 400 para o usuario na funcao principal
-        foreach (var p in  pedidoFinal.Pizzas) {
+        foreach (var p in  pedidoFinal.Pizzas) 
+        {
             if (p.Id <= 0)
                 return false;
 
