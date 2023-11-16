@@ -5,9 +5,9 @@ import { Promocao } from "./Promocao";
 
 export class PedidoFinal {
     id: number = 0;
-    cliente: Cliente = new Cliente();
-    pizzas: PizzaPedido[] = [];
-    acompanhamentos: AcompanhamentoPedido[] = [];
+    cliente: Cliente;
+    pizzas: PizzaPedido[];
+    acompanhamentos: AcompanhamentoPedido[];
     precoTotal: number = 0;
     horaPedido : Date;
     promocao: Promocao | undefined;

@@ -42,8 +42,6 @@ export class CarrinhoComponent{
     }
 
     setTimeout(() => {
-      console.log(this.pedidoFinal.pizzas);
-
       this.pedidoFinalService.cadastrar(this.pedidoFinal).subscribe({
         next: res => {
           // alert("Pedido finalizado com sucesso");

@@ -38,22 +38,15 @@ public class PedidoFinalController : ControllerBase
         return Ok(pedidoFinal);
     }
 
-    // FIX: ao tentar cadastrar duas pizzas com o mesmo tamanho ou sabor o programa da erro
     [HttpPost]
     [Route("cadastrar")]
     public async Task<IActionResult> Cadastrar(PedidoFinal pedidoFinal)
 {       
-        // A função Attach comunica que um campo já está no banco de dados e não precisa ser inserido novamente
-        // sem ela, o entity framework tenta adicionar um campo com um ID existente e da erro
-        ChangeTracking(pedidoFinal);
+        if (!MudarTrackingDosCampos(pedidoFinal))
+            return BadRequest();
 
-        foreach (var p in  pedidoFinal.Pizzas) {
-            if (p.Id <= 0)
-                return BadRequest();
 
-            _context.Entry(p).State = EntityState.Unchanged;
-        }
-
+        // FIX: precos diferente no front e no back
         pedidoFinal.CalcularPrecoTotal();
         pedidoFinal.HoraPedido = DateTime.Now;
 
@@ -63,21 +56,30 @@ public class PedidoFinalController : ControllerBase
         return Created("", pedidoFinal);
     }
 
-    private void ChangeTracking(PedidoFinal pedidoFinal) {
+    private bool MudarTrackingDosCampos(PedidoFinal pedidoFinal) {
+        // Codigo que checa se as entidades do pedidoFinal tem uma chave primaria
+        // ja definida, se sim, marca a entidade como Detached, nao sera adicionado no banco
+        // caso nao tenha, sera adicionada 
         _context.ChangeTracker.TrackGraph(pedidoFinal, p =>
         {
             if (!p.Entry.IsKeySet)
-            {
-                p.Entry.State = EntityState.Added;
-                System.Console.WriteLine( $" Added: {p.Entry}");
-            }
+                p.Entry.State = EntityState.Added;                                                                       
             else
-            {
                 p.Entry.State = EntityState.Detached;
-                System.Console.WriteLine( $" Detached: {p.Entry}");
-            }
         });
-        System.Console.WriteLine();
+
+        // Para que as pizzas se juntem ao pedido final Precisamos fazer 
+        // outro loop para deixar as pizzas como Unchanged ao inves de detached.
+        // Ainda verificamos se alguma das pizzas tem um id invalido, se sim
+        // retornamos um false aqui e um erro 400 para o usuario na funcao principal
+        foreach (var p in  pedidoFinal.Pizzas) {
+            if (p.Id <= 0)
+                return false;
+
+            _context.Entry(p).State = EntityState.Unchanged;
+        }
+
+        return true;
     }
 
     [HttpDelete]
