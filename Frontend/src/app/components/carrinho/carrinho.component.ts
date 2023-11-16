@@ -5,8 +5,6 @@ import {PedidoFinal} from "../../models/PedidoFinal";
 import {LoginService} from "../../services/login.service";
 import {PedidoFinalService} from "../../services/pedido-final.service";
 import { PizzaPedidoService } from 'src/app/services/pizza-pedido.service';
-import { AcompanhamentoPedidoService } from 'src/app/services/acompanhamento-pedido.service';
-import { PizzaPedido } from 'src/app/models/PizzaPedido';
 
 @Component({
   selector: 'app-carrinho',
@@ -26,35 +24,6 @@ export class CarrinhoComponent{
     this.construirPedido();
   }
 
-  removerDoCarrinho(index: number) {
-    this.carrinhoService.removerDoCarrinho(index);
-    this.itensCarrinho.splice(index, 1);
-  }
-
-  finalizarPedido() {
-    this.construirPedido();
-
-    for (let i = 0; i < this.pedidoFinal.pizzas.length; i++) {
-      let pizza = this.pedidoFinal.pizzas[i];
-      this.pizzaPedidoService.cadastrar(pizza).subscribe(res => {
-        this.pedidoFinal.pizzas[i] = res;
-      });
-    }
-
-    setTimeout(() => {
-      this.pedidoFinalService.cadastrar(this.pedidoFinal).subscribe({
-        next: res => {
-          // alert("Pedido finalizado com sucesso");
-          // this.limparCarrinho();
-          console.log(res.id + " criado");
-        },
-        error: err => console.log(err)
-      });
-
-    }, 900);
-
-  }
-
   construirPedido() {
     if (this.itensCarrinho.length <= 0) {
       return;
@@ -66,6 +35,39 @@ export class CarrinhoComponent{
 
     this.pedidoFinal = new PedidoFinal(cliente, pizzas, acompanhamentos);
   }
+
+  removerDoCarrinho(index: number) {
+    this.carrinhoService.removerDoCarrinho(index);
+    this.itensCarrinho.splice(index, 1);
+  }
+
+  finalizarPedido() {
+    this.construirPedido();
+
+    this.salvarPizzas();
+    setTimeout(() => this.salvarPedidoFinal(), 1000);
+  }
+
+  salvarPizzas() {
+    for (let i = 0; i < this.pedidoFinal.pizzas.length; i++) {
+      let pizza = this.pedidoFinal.pizzas[i];
+
+      this.pizzaPedidoService.cadastrar(pizza).subscribe(res => {
+        this.pedidoFinal.pizzas[i] = res;
+      });
+    }
+  }
+
+  salvarPedidoFinal() {
+    this.pedidoFinalService.cadastrar(this.pedidoFinal).subscribe({
+      next: () => {
+        alert("Pedido finalizado com sucesso");
+        this.limparCarrinho();
+      },
+      error: err => console.log(err)
+    });
+  }
+
 
   limparCarrinho() {
     this.carrinhoService.limparCarrinho();
