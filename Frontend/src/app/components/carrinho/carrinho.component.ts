@@ -5,6 +5,7 @@ import {PedidoFinal} from "../../models/PedidoFinal";
 import {LoginService} from "../../services/login.service";
 import {PedidoFinalService} from "../../services/pedido-final.service";
 import { PizzaPedidoService } from 'src/app/services/pizza-pedido.service';
+import { forkJoin, map } from 'rxjs';
 
 @Component({
   selector: 'app-carrinho',
@@ -44,19 +45,23 @@ export class CarrinhoComponent{
   finalizarPedido() {
     this.construirPedido();
 
-    this.salvarPizzas();
-    setTimeout(() => this.salvarPedidoFinal(), 1000);
+  // Cadastra todas as pizzas invdividualmente e só depois cadastra o pedido final
+    forkJoin(this.salvarPizzas()).subscribe(pizzasComId => {
+      this.pedidoFinal.pizzas = pizzasComId;
+      this.salvarPedidoFinal();
+    });
   }
 
   salvarPizzas() {
-    for (let i = 0; i < this.pedidoFinal.pizzas.length; i++) {
-      let pizza = this.pedidoFinal.pizzas[i];
-
-      this.pizzaPedidoService.cadastrar(pizza).subscribe(res => {
-        this.pedidoFinal.pizzas[i] = res;
-      });
-    }
+    const pizzaObservables = this.pedidoFinal.pizzas.map(pizza => {
+      return this.pizzaPedidoService.cadastrar(pizza).pipe(
+        map(pizzaCadastrada => { return pizzaCadastrada; })
+      );
+    });
+  
+    return pizzaObservables;
   }
+  
 
   salvarPedidoFinal() {
     this.pedidoFinalService.cadastrar(this.pedidoFinal).subscribe({
