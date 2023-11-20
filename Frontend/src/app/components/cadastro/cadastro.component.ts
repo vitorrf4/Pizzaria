@@ -55,7 +55,7 @@ export class CadastroComponent {
 
         this.formularioEndereco.get("rua").setValue(res.logradouro);
         this.formularioEndereco.get("regiao").setValue(res.bairro);
-      }, 
+      },
       error: () => {
         alert("CEP inválido");
       }
@@ -66,7 +66,7 @@ export class CadastroComponent {
   cadastrarCliente() {
     const cliente : Cliente = this.formularioCliente.value;
     const endereco = this.formularioEndereco.value;
-    
+
     if (!this.cadastroEstaValido(cliente, endereco)) {
       return;
     }

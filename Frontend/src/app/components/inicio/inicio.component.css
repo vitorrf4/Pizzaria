@@ -1,0 +1,64 @@
+/* styles.css */
+
+.section {
+  height: 100vh;
+}
+
+.container-fluid {
+  height: 100%;
+}
+
+.text-black {
+  color: #000 !important;
+}
+
+.px-5 {
+  padding-left: 1.25rem !important;
+  padding-right: 1.25rem !important;
+}
+
+.ms-xl-4 {
+  margin-left: 1rem !important;
+}
+
+.fa-crow {
+  font-size: 2rem;
+  margin-right: 0.75rem;
+  padding-top: 1.25rem;
+  margin-top: 0.5rem;
+  color: #709085;
+}
+
+.pt-5 {
+  padding-top: 1.25rem !important;
+}
+
+.mt-xl-4 {
+  margin-top: 1rem !important;
+}
+
+.h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+
+.w-100 {
+  width: 100% !important;
+}
+
+.vh-100 {
+  height: 100vh;
+}
+
+.object-fit-cover {
+  object-fit: cover;
+}
+
+.object-position-left {
+  object-position: left;
+}

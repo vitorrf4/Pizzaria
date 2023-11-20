@@ -7,10 +7,14 @@ import { CadastroComponent } from "./components/cadastro/cadastro.component";
 import { LoginComponent } from "./components/login/login.component";
 import { HomeComponent } from "./components/home/home.component";
 import { CarrinhoComponent } from "./components/carrinho/carrinho.component";
+import {InicioComponent} from "./components/inicio/inicio.component";
 
 const routes: Routes = [
-  { path: "login", component: LoginComponent },
-  { path: "cadastro", component: CadastroComponent },
+  { path: "", component: InicioComponent,
+    children : [
+      { path: "login", component: LoginComponent },
+      { path: "cadastro", component: CadastroComponent },
+    ]},
   { path: "home", component: HomeComponent,
     children: [
       { path: "clientes", component: ClienteComponent },
