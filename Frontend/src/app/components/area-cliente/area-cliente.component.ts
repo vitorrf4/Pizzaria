@@ -13,7 +13,6 @@ import {AcompanhamentoPedido} from 'src/app/models/AcompanhamentoPedido';
 })
 export class AreaClienteComponent {
   cliente: Cliente = new Cliente();
-  pedidos: PedidoFinal[] = [];
 
   constructor(private clienteService: ClienteService, loginService: LoginService) {
     const cpf = loginService.clienteLogado.cpf;
@@ -21,26 +20,6 @@ export class AreaClienteComponent {
     this.clienteService.listarCpf(cpf).subscribe(resposta => {
       this.cliente = resposta;
     });
-
-    clienteService.listarPedidosPorCliente(cpf).subscribe(resposta => {
-      this.pedidos = resposta;
-      this.ordernarPedidoPorData();
-    })
   }
 
-  getDescricaoPizza(pizza: PizzaPedido): string {
-    pizza = new PizzaPedido(pizza.sabores, pizza.tamanho, pizza.quantidade);
-
-    return pizza.getDescricao();
-  }
-
-  getDescricaoAcompanhamento(acomp : AcompanhamentoPedido): string {
-    acomp = new AcompanhamentoPedido(acomp.acompanhamento, acomp.quantidade);
-
-    return acomp.getDescricao();
-  }
-
-  ordernarPedidoPorData() {
-    this.pedidos.sort((a, b) => b.id - a.id);
-  }
 }
