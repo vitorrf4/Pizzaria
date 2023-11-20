@@ -24,7 +24,7 @@
 
 <form [formGroup]="formularioEndereco" style="width: 23rem;">
   <fieldset>
-    <legend>Endereço</legend>
+    <legend class="font-weight-bold">Endereço</legend>
     <div class="form-outline">
       <input type="text" class="form-control form-control d-inline" style="width: 16rem" formControlName="cep" required />
       <button (click)="buscarCEP()" class="btn btn-info d-inline ml-2">Buscar CEP</button>
@@ -45,7 +45,6 @@
       <input type="text" class="form-control form-control" formControlName="regiao" required />
       <label class="form-label">Regiao</label>
     </div>
-
 
     <div class="form-outline">
       <input type="text" class="form-control form-control" formControlName="complemento" />
