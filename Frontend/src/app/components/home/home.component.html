@@ -1,21 +1,24 @@
-<h1>Pizzaria Angular</h1>
+<header class="bg-warning py-3 text-center">
+  <h1 class="mb-0 font-weight-bold">Pizzaria Angular</h1>
 
-<table>
-  <tr>
-    <td><button routerLink="/home/clientes">Área do Cliente</button></td>
-    <td><button routerLink="/home/acompanhamentos">Acompanhamentos</button></td>
-    <td><button routerLink="/home/sabores">Pizzas</button></td>
-    <td>
-        <button routerLink="/home/carrinho">Carrinho
-          <span *ngIf="quantidadeItensCarrinho.value > 0" class="d-inline">
-            ({{quantidadeItensCarrinho.value}})
-          </span>
+  <table>
+    <tr>
+      <td><button class="btn btn-danger" routerLink="/home/clientes">Área do Cliente</button></td>
+      <td><button class="btn btn-danger" routerLink="/home/acompanhamentos">Acompanhamentos</button></td>
+      <td><button class="btn btn-danger" routerLink="/home/sabores">Pizzas</button></td>
+      <td>
+        <button class="btn btn-danger" routerLink="/home/carrinho">
+          Carrinho
+          <span *ngIf="quantidadeItensCarrinho.value > 0" class="d-inline badge bg-dark">
+              {{quantidadeItensCarrinho.value}}
+            </span>
         </button>
-    </td>
-    <td><button (click)="deslogar()">SAIR</button></td>
-  </tr>
-</table>
+      </td>
+      <td><button class="btn btn-danger" (click)="deslogar()">SAIR</button></td>
+    </tr>
+  </table>
+</header>
 
-<hr>
+<div class="division"></div>
 
 <router-outlet></router-outlet>
