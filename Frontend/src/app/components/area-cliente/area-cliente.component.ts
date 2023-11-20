@@ -3,8 +3,8 @@ import {ClienteService} from "../../services/cliente.service";
 import {Cliente} from "../../models/Cliente";
 import {LoginService} from "../../services/login.service";
 import {PedidoFinal} from "../../models/PedidoFinal";
-import { PizzaPedido } from 'src/app/models/PizzaPedido';
-import { AcompanhamentoPedido } from 'src/app/models/AcompanhamentoPedido';
+import {PizzaPedido} from 'src/app/models/PizzaPedido';
+import {AcompanhamentoPedido} from 'src/app/models/AcompanhamentoPedido';
 
 @Component({
   selector: 'app-cliente',
@@ -31,15 +31,13 @@ export class AreaClienteComponent {
   getDescricaoPizza(pizza: PizzaPedido): string {
     pizza = new PizzaPedido(pizza.sabores, pizza.tamanho, pizza.quantidade);
 
-    let desc = pizza.getDescricao();
-    return desc;
+    return pizza.getDescricao();
   }
 
   getDescricaoAcompanhamento(acomp : AcompanhamentoPedido): string {
     acomp = new AcompanhamentoPedido(acomp.acompanhamento, acomp.quantidade);
 
-    let desc = acomp.getDescricao();
-    return desc;
+    return acomp.getDescricao();
   }
 
   ordernarPedidoPorData() {

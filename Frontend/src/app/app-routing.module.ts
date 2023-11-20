@@ -8,6 +8,7 @@ import { LoginComponent } from "./components/login/login.component";
 import { HomeComponent } from "./components/home/home.component";
 import { CarrinhoComponent } from "./components/carrinho/carrinho.component";
 import {InicioComponent} from "./components/inicio/inicio.component";
+import {PedidosComponent} from "./components/pedidos/pedidos.component";
 
 const routes: Routes = [
   { path: "", component: InicioComponent,
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: "home", component: HomeComponent,
     children: [
       { path: "area-cliente", component: AreaClienteComponent },
+      { path: "pedidos", component: PedidosComponent },
       { path: "acompanhamentos", component: AcompanhamentoComponent },
       { path: "sabores", component: PizzasComponent },
       { path: "carrinho", component: CarrinhoComponent },
