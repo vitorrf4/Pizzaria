@@ -45,6 +45,7 @@ public class AcompanhamentoPedidoController : ControllerBase
     public async Task<IActionResult> Cadastrar(AcompanhamentoPedido acompanhamentoPedido)
     {
         _context.Acompanhamento.Attach(acompanhamentoPedido.Acompanhamento);
+        
         acompanhamentoPedido.CalcularPreco();
 
         await _context.AddAsync(acompanhamentoPedido);

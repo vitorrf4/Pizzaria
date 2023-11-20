@@ -30,7 +30,7 @@
         </thead>
         <tr *ngFor="let sabor of saboresDB">
           <td>{{sabor.nome}}</td>
-          <td>{{sabor.preco * tamanho.multiplicadorPreco| currency : "BRL"}}</td>
+          <td>{{sabor.preco * tamanho.multiplicadorPreco | currency : "BRL"}}</td>
           <td>
             <button (click)="adicionarSabor(sabor); construirPizza()" class="btn btn-info">Selecionar</button>
           </td>

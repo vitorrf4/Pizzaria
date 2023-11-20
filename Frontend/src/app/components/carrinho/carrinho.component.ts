@@ -39,13 +39,17 @@ export class CarrinhoComponent{
 
   removerDoCarrinho(index: number) {
     this.carrinhoService.removerDoCarrinho(index);
-    this.itensCarrinho.splice(index, 1);
+    this.construirPedido();
   }
 
   finalizarPedido() {
     this.construirPedido();
+    if (this.pedidoFinal.pizzas.length <= 0) {
+      alert("Inclua pelo menos uma pizza no seu pedido");
+      return;
+    }
 
-  // Cadastra todas as pizzas invdividualmente e só depois cadastra o pedido final
+    // Cadastra todas as pizzas individualmente e só depois cadastra o pedido final
     forkJoin(this.salvarPizzas()).subscribe(pizzasComId => {
       this.pedidoFinal.pizzas = pizzasComId;
       this.salvarPedidoFinal();
@@ -58,10 +62,9 @@ export class CarrinhoComponent{
         map(pizzaCadastrada => { return pizzaCadastrada; })
       );
     });
-  
+
     return pizzaObservables;
   }
-  
 
   salvarPedidoFinal() {
     this.pedidoFinalService.cadastrar(this.pedidoFinal).subscribe({
