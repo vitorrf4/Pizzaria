@@ -26,6 +26,7 @@ export class PizzasComponent {
               private carrinhoService: CarrinhoService) {
     this.saborService.listar().subscribe(resposta => {
       this.saboresDB = resposta;
+      this.ordernarSaboresPorPreco();
     });
 
     this.tamanhoService.listar().subscribe(resposta => {
@@ -90,7 +91,12 @@ export class PizzasComponent {
   }
 
   ordernarTamanhosPorQntdFatias() {
-    // funcao que orderna os tamanhos pela quantidade de fatias de forma ascendente
+    // funcao que orderna os tamanhos pela quantidade de fatias
     this.tamanhosDB.sort((tamanhoA, tamanhoB) => tamanhoA.qntdFatias - tamanhoB.qntdFatias)
+  }
+
+  ordernarSaboresPorPreco() {
+    // funcao que orderna os sabores pelo preço
+    this.saboresDB.sort((saborA, saborB) => saborA.preco - saborB.preco)
   }
 }
