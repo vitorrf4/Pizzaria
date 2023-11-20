@@ -1,0 +1,26 @@
+.acompanhamentos-container {
+  margin-top: 20px;
+  padding: 15px;
+}
+
+.acompanhamento-item {
+  list-style-type: none;
+  margin-bottom: 10px;
+}
+
+.acompanhamento-quantity {
+  margin-right: 10px;
+}
+
+.acompanhamento-button {
+  background-color: #007069;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.acompanhamento-button:hover {
+  background-color: #005262;
+}

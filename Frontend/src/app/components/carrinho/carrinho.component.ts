@@ -6,6 +6,7 @@ import {LoginService} from "../../services/login.service";
 import {PedidoFinalService} from "../../services/pedido-final.service";
 import { PizzaPedidoService } from 'src/app/services/pizza-pedido.service';
 import { forkJoin, map } from 'rxjs';
+import { Router} from "@angular/router";
 
 @Component({
   selector: 'app-carrinho',
@@ -16,7 +17,8 @@ export class CarrinhoComponent{
   itensCarrinho : Pedido[];
   pedidoFinal: PedidoFinal = new PedidoFinal();
 
-  constructor(private carrinhoService: CarrinhoService,
+  constructor(private router : Router,
+              private carrinhoService: CarrinhoService,
               private clienteService: LoginService,
               private pizzaPedidoService: PizzaPedidoService,
               private pedidoFinalService: PedidoFinalService,) {
@@ -71,6 +73,7 @@ export class CarrinhoComponent{
       next: () => {
         alert("Pedido finalizado com sucesso");
         this.limparCarrinho();
+        this.router.navigateByUrl("home/pedidos").then();
       },
       error: err => console.log(err)
     });

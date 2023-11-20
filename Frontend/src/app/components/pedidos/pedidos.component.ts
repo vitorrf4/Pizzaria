@@ -13,8 +13,7 @@ import {AcompanhamentoPedido} from "../../models/AcompanhamentoPedido";
 export class PedidosComponent {
   pedidos: PedidoFinal[] = [];
 
-
-  constructor(private clienteService: ClienteService, loginService: LoginService) {
+  constructor(clienteService: ClienteService, loginService: LoginService) {
     const cpf = loginService.clienteLogado.cpf;
 
     clienteService.listarPedidosPorCliente(cpf).subscribe(resposta => {

@@ -1,6 +1,10 @@
-<ul *ngFor="let acompanhamento of acompanhamentos;let i = index">
-  <li>{{acompanhamento.nome}} | Preço: R${{acompanhamento.preco}}</li>
-  <label>Quantidade:</label>
-  <input type="number" [(ngModel)]="quantidadeArray[i]">
-  <button (click)="adicionarAoCarrinho(acompanhamento, quantidadeArray[i])">Adicionar</button>
-</ul>
+<div class="acompanhamentos-container ">
+  <h3>Selecione seus acompanhamentos</h3>
+
+  <ul *ngFor="let acompanhamento of acompanhamentos; let i = index" class="acompanhamento-item">
+    <li>{{acompanhamento.nome}} | Preço: R${{acompanhamento.preco}}</li>
+    <label class="acompanhamento-quantity">Quantidade:</label>
+    <input type="number" [(ngModel)]="quantidadeArray[i]" placeholder="0">
+    <button class="acompanhamento-button" (click)="adicionarAoCarrinho(acompanhamento, quantidadeArray[i])">Adicionar</button>
+  </ul>
+</div>
