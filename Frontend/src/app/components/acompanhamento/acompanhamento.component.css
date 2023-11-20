@@ -6,6 +6,9 @@
 .acompanhamento-item {
   list-style-type: none;
   margin-bottom: 10px;
+  border: thin solid slategray;
+  border-radius: 5px;
+  width: 30%;
 }
 
 .acompanhamento-quantity {
@@ -17,10 +20,15 @@
   color: #fff;
   border: none;
   padding: 5px 10px;
+  margin-left: 10px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
 .acompanhamento-button:hover {
   background-color: #005262;
+}
+
+input {
+  width: 3rem;
 }
