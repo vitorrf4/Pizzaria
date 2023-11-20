@@ -15,7 +15,7 @@ export class LoginComponent {
   constructor(private clienteService: ClienteService, private router: Router,
               private loginService: LoginService) {
     this.formularioCliente = new FormGroup({
-      cpf: new FormControl(), 
+      cpf: new FormControl(),
     });
   }
 
@@ -32,7 +32,7 @@ export class LoginComponent {
     this.clienteService.listarCpf(cpf).subscribe({
       next: cliente => {
         this.loginService.salvarClienteLogado(cliente);
-        this.router.navigateByUrl("/home/clientes").then();
+        this.router.navigateByUrl("/home/area-cliente").then();
       },
       error: err => {
         console.log(err);

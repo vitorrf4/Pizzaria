@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ClienteComponent } from "./components/cliente/cliente.component";
+import { AreaClienteComponent } from "./components/area-cliente/area-cliente.component";
 import { AcompanhamentoComponent } from "./components/acompanhamento/acompanhamento.component";
 import { PizzasComponent } from "./components/pizzas/pizzas.component";
 import { CadastroComponent } from "./components/cadastro/cadastro.component";
@@ -17,12 +17,12 @@ const routes: Routes = [
     ]},
   { path: "home", component: HomeComponent,
     children: [
-      { path: "clientes", component: ClienteComponent },
+      { path: "area-cliente", component: AreaClienteComponent },
       { path: "acompanhamentos", component: AcompanhamentoComponent },
       { path: "sabores", component: PizzasComponent },
       { path: "carrinho", component: CarrinhoComponent },
     ]},
-  { path: "**", component: LoginComponent } // Rota padrão para tratamento de rotas não reconhecidas
+  { path: "**", redirectTo: "/login" } // Rota padrão para tratamento de rotas não reconhecidas
 ];
 
 @NgModule({

@@ -80,7 +80,7 @@ export class CadastroComponent {
         alert("Cliente cadastrado com sucesso");
 
         this.loginService.salvarClienteLogado(clienteCriado)
-        this.router.navigateByUrl("/home/clientes").then();
+        this.router.navigateByUrl("/home/area-cliente").then();
       },
       error: err => console.log(err)
     });

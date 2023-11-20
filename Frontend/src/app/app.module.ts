@@ -4,7 +4,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './components/app/app.component';
-import { ClienteComponent } from './components/cliente/cliente.component';
+import { AreaClienteComponent } from './components/area-cliente/area-cliente.component';
 import { AcompanhamentoComponent } from './components/acompanhamento/acompanhamento.component';
 import { PizzasComponent } from './components/pizzas/pizzas.component';
 import { CadastroComponent } from './components/cadastro/cadastro.component';
@@ -16,7 +16,7 @@ import { InicioComponent } from './components/inicio/inicio.component';
 @NgModule({
   declarations: [
     AppComponent,
-    ClienteComponent,
+    AreaClienteComponent,
     AcompanhamentoComponent,
     PizzasComponent,
     CadastroComponent,

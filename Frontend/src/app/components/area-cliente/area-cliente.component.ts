@@ -8,10 +8,10 @@ import { AcompanhamentoPedido } from 'src/app/models/AcompanhamentoPedido';
 
 @Component({
   selector: 'app-cliente',
-  templateUrl: './cliente.component.html',
-  styleUrls: ['./cliente.component.css']
+  templateUrl: './area-cliente.component.html',
+  styleUrls: ['./area-cliente.component.css']
 })
-export class ClienteComponent {
+export class AreaClienteComponent {
   cliente: Cliente = new Cliente();
   pedidos: PedidoFinal[] = [];
 
@@ -36,7 +36,7 @@ export class ClienteComponent {
 
   getDescricaoAcompanhamento(acomp : AcompanhamentoPedido): string {
     acomp = new AcompanhamentoPedido(acomp.acompanhamento, acomp.quantidade);
-    
+
     let desc = acomp.getDescricao();
     return desc;
   }
