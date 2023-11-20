@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {Cliente} from "../../models/Cliente";
 import {Regiao} from "../../models/Regiao";
 import {ClienteService} from "../../services/cliente.service";
@@ -16,7 +16,6 @@ import { Endereco } from 'src/app/models/Endereco';
 export class CadastroComponent {
   formularioCliente: any;
   formularioEndereco: any;
-
 
   constructor(private clienteService: ClienteService,
               private loginService: LoginService,

@@ -1,5 +1,5 @@
 <form style="width: 23rem;" [formGroup]="formularioCliente" >
-  <h3 >Cadastro</h3>
+  <h3>Cliente</h3>
 
   <div class="form-outline ">
     <input type="text" class="form-control form-control" formControlName="cpf" required/>
@@ -24,7 +24,7 @@
 
 <form [formGroup]="formularioEndereco" style="width: 23rem;">
   <fieldset>
-    <legend class="font-weight-bold">Endereço</legend>
+    <h3>Endereço</h3>
     <div class="form-outline">
       <input type="text" class="form-control form-control d-inline" style="width: 16rem" formControlName="cep" required />
       <button (click)="buscarCEP()" class="btn btn-info d-inline ml-2">Buscar CEP</button>
@@ -41,7 +41,7 @@
       <label class="form-label">Numero</label>
     </div>
 
-    <div class="form-outline ">
+    <div class="form-outline d-inline">
       <input type="text" class="form-control form-control" formControlName="regiao" required />
       <label class="form-label">Regiao</label>
     </div>
