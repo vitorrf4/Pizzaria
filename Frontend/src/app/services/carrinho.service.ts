@@ -51,6 +51,7 @@ export class CarrinhoService {
         acompanhamentos.push(pedido);
       }
     });
+
     return acompanhamentos;
   }
 }

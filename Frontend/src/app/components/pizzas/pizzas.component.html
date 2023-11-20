@@ -1,17 +1,17 @@
 <label>Tamanho: </label>
 
-<select [(ngModel)]="tamanho" (change)="getMaxSabores(); construirPizza()">
+<select [(ngModel)]="tamanhoSelecionado" (change)="getMaxSabores(); construirPizza()">
   <option value="" disabled selected>Selecione um tamanho</option>
   <option *ngFor="let tamanho of tamanhosDB" [ngValue]="tamanho" >{{tamanho.nome}}</option>
 </select>
 
-<span *ngIf="tamanho.maxSabores > 0" [(ngModel)]="tamanho" ngDefaultControl>
-  {{tamanho.qntdFatias}} fatias | Máximo de Sabores: {{tamanho.maxSabores}}
+<span *ngIf="tamanhoSelecionado.maxSabores > 0" [(ngModel)]="tamanhoSelecionado" ngDefaultControl>
+  {{tamanhoSelecionado.qntdFatias}} fatias | Máximo de Sabores: {{tamanhoSelecionado.maxSabores}}
 </span>
 
 <br>
 
-<div *ngIf="tamanho.maxSabores > 0">
+<div *ngIf="tamanhoSelecionado.maxSabores > 0">
   <label>Quantidade de Sabores:</label>
   <select [(ngModel)]="quantidadeSabores" [value]="1" (change)="construirPizza()">
     <option *ngFor="let qntd of maxQntdSabores">{{qntd}}</option>
@@ -30,7 +30,7 @@
         </thead>
         <tr *ngFor="let sabor of saboresDB">
           <td>{{sabor.nome}}</td>
-          <td>{{sabor.preco * tamanho.multiplicadorPreco | currency : "BRL"}}</td>
+          <td>{{sabor.preco * tamanhoSelecionado.multiplicadorPreco | currency : "BRL"}}</td>
           <td>
             <button (click)="adicionarSabor(sabor); construirPizza()" class="btn btn-info">Selecionar</button>
           </td>
@@ -45,10 +45,10 @@
         <p>{{pizza.nome}} <button (click)="removerSabor(i);construirPizza()" class="btn btn-danger">Retirar</button> </p>
       </div>
       <label for="qntd" >Quantidade:</label>
-      <input type="number" [(ngModel)]="quantidadePizzas" (change)="construirPizza()" style="width: 40px">
+      <input type="number" [(ngModel)]="quantidadePizzas" (change)="construirPizza()" style="width: 40px" id="qntd">
 
       <p [(ngModel)]="pizza" ngDefaultControl>Preço: {{pizza.preco | currency : "BRL"}}</p>
-    
+
       <button (click)="adicionarAoCarrinho()" class="btn btn-success">Adicionar Pizza Ao Carrinho</button>
     </div>
 
