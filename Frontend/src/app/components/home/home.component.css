@@ -1,5 +1,5 @@
 h1 {
-  color: #fff3f3; /* White text color */
+  color: #fff3f3;
   font-size: 3rem;
   margin-bottom: 0;
   font-family: "Amatic SC", serif;
@@ -28,4 +28,5 @@ button:hover {
   height: 1px;
   margin-bottom: 20px;
 }
+
 

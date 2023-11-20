@@ -21,6 +21,11 @@ export class AcompanhamentoComponent {
   }
 
   adicionarAoCarrinho(acompanhamento : Acompanhamento, quantidade: number) {
+    if (!quantidade || quantidade <= 0) {
+      alert("Quantidade inválida");
+      return;
+    }
+
     const acompanhamentoPedido = new AcompanhamentoPedido(acompanhamento, quantidade);
 
     this.carrinhoService.adicionarNoCarrinho(acompanhamentoPedido)

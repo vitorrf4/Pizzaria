@@ -24,6 +24,7 @@ export class AreaClienteComponent {
 
     clienteService.listarPedidosPorCliente(cpf).subscribe(resposta => {
       this.pedidos = resposta;
+      this.ordernarPedidoPorData();
     })
   }
 
@@ -39,5 +40,9 @@ export class AreaClienteComponent {
 
     let desc = acomp.getDescricao();
     return desc;
+  }
+
+  ordernarPedidoPorData() {
+    this.pedidos.sort((a, b) => b.id - a.id);
   }
 }
