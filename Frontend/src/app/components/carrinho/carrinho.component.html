@@ -1,14 +1,17 @@
-<h2 *ngIf="itensCarrinho.length == 0; else items">Carrinho vazio</h2>
+<div class="container">
+  <h2 *ngIf="itensCarrinho.length == 0; else items" class="flex-column text-center">O carrinho está vazio</h2>
 
-<ng-template #items>
-  <ul *ngFor="let item of itensCarrinho;let i = index;">
-    <li>
-      {{item.getDescricao()}} | Quantidade: {{item.getQuantidade()}} | Total: {{item.getPreco() | currency : "BRL"}}
-      <button (click)="removerDoCarrinho(i)">Remover</button>
-    </li>
-  </ul>
+  <ng-template #items>
+    <h2>Pedido </h2>
+    <ul *ngFor="let item of itensCarrinho;let i = index;">
+      <li>
+        {{item.getDescricao()}} | Quantidade: {{item.getQuantidade()}} | Total: {{item.getPreco() | currency : "BRL"}}
+        <button (click)="removerDoCarrinho(i)" class="btn btn-danger">Remover</button>
+      </li>
+    </ul>
 
-  <h5 [(ngModel)]="pedidoFinal" ngDefaultControl>Total do Pedido: {{pedidoFinal.precoTotal || 0 | currency : "BRL"}}</h5>
+    <h5 [(ngModel)]="pedidoFinal" ngDefaultControl>Total do Pedido: {{pedidoFinal.precoTotal || 0 | currency : "BRL"}}</h5>
 
-  <button (click)="finalizarPedido()">Finalizar Pedido</button>
-</ng-template>
+    <button (click)="finalizarPedido()">Finalizar Pedido</button>
+  </ng-template>
+</div>

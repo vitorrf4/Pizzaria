@@ -3,6 +3,11 @@ h1 {
   font-size: 3rem;
   margin-bottom: 0;
   font-family: "Amatic SC", serif;
+  text-shadow:
+    1px 1px 0 #000,
+    -1px 1px 0 #000,
+    -1px -1px 0 #000,
+    1px -1px 0 #000;
 }
 
 table td {
@@ -29,4 +34,8 @@ button:hover {
   margin-bottom: 20px;
 }
 
+.table-div {
+  display: flex;
+  justify-content: center;
+}
 

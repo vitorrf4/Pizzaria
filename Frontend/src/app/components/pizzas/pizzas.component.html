@@ -1,58 +1,62 @@
-<label>Tamanho: </label>
+<div class="container">
+  <h2>Monte sua pizza</h2>
+  <div>
 
-<select [(ngModel)]="tamanhoSelecionado" (change)="getMaxSabores(); construirPizza()">
-  <option value="" disabled selected>Selecione um tamanho</option>
-  <option *ngFor="let tamanho of tamanhosDB" [ngValue]="tamanho" >{{tamanho.nome}}</option>
-</select>
+  </div>
+  <label>Tamanho: </label>
 
-<span *ngIf="tamanhoSelecionado.maxSabores > 0" [(ngModel)]="tamanhoSelecionado" ngDefaultControl>
-  {{tamanhoSelecionado.qntdFatias}} fatias | Máximo de Sabores: {{tamanhoSelecionado.maxSabores}}
-</span>
-
-<br>
-
-<div *ngIf="tamanhoSelecionado.maxSabores > 0">
-  <label>Quantidade de Sabores:</label>
-  <select [(ngModel)]="quantidadeSabores" [value]="1" (change)="construirPizza()">
-    <option *ngFor="let qntd of maxQntdSabores">{{qntd}}</option>
+  <select [(ngModel)]="tamanhoSelecionado" (change)="getMaxSabores(); construirPizza()">
+    <option value="" disabled selected>Selecione um tamanho</option>
+    <option *ngFor="let tamanho of tamanhosDB" [ngValue]="tamanho" >{{tamanho.nome}}</option>
   </select>
 
-  <div class="flex-parent">
+  <span *ngIf="tamanhoSelecionado.maxSabores > 0" [(ngModel)]="tamanhoSelecionado" ngDefaultControl>
+    {{tamanhoSelecionado.qntdFatias}} fatias
+  </span>
 
-    <div class="flex-child">
-      <table class="table">
-        <thead class="thead-dark">
-          <tr>
-            <th scope="col">Sabor</th>
-            <th scope="col">Preço</th>
-            <th scope="col"></th>
+  <br>
+
+  <label>Quantidade de Sabores:</label>
+  <select [(ngModel)]="quantidadeSabores" (change)="construirPizza()">
+    <option *ngFor="let qntd of maxQntdSabores">{{qntd}}</option>
+  </select>
+  <div  class="flex-parent">
+
+
+      <div class="flex-child">
+        <table class="table">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Sabor</th>
+              <th scope="col">Preço</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tr *ngFor="let sabor of saboresDB">
+            <td>{{sabor.nome}}</td>
+            <td>{{sabor.preco * tamanhoSelecionado.multiplicadorPreco | currency : "BRL"}}</td>
+            <td>
+              <button (click)="adicionarSabor(sabor); construirPizza()" class="btn btn-info">Selecionar</button>
+            </td>
           </tr>
-        </thead>
-        <tr *ngFor="let sabor of saboresDB">
-          <td>{{sabor.nome}}</td>
-          <td>{{sabor.preco * tamanhoSelecionado.multiplicadorPreco | currency : "BRL"}}</td>
-          <td>
-            <button (click)="adicionarSabor(sabor); construirPizza()" class="btn btn-info">Selecionar</button>
-          </td>
-        </tr>
-      </table>
-    </div>
-
-    <div class="flex-child">
-      <h3>Seu Pedido</h3>
-      <p [(ngModel)]="pizza" ngDefaultControl>Pizza {{pizza.tamanho.nome}}</p>
-      <div *ngFor="let pizza of pizza.sabores; let i = index">
-        <p>{{pizza.nome}} <button (click)="removerSabor(i);construirPizza()" class="btn btn-danger">Retirar</button> </p>
+        </table>
       </div>
-      <label for="qntd" >Quantidade:</label>
-      <input type="number" [(ngModel)]="quantidadePizzas" (change)="construirPizza()" style="width: 40px" id="qntd">
 
-      <p [(ngModel)]="pizza" ngDefaultControl>Preço: {{pizza.preco | currency : "BRL"}}</p>
+      <div class="flex-child">
+        <h3>Seu Pedido</h3>
+        <p [(ngModel)]="pizza" ngDefaultControl>Pizza {{pizza.tamanho.nome}}</p>
+        <div *ngFor="let pizza of pizza.sabores; let i = index">
+          <p>{{pizza.nome}} <button (click)="removerSabor(i);construirPizza()" class="btn btn-danger">Retirar</button> </p>
+        </div>
+        <label for="qntd" >Quantidade:</label>
+        <input type="number" [(ngModel)]="quantidadePizzas" (change)="construirPizza()" style="width: 40px" id="qntd">
 
-      <button (click)="adicionarAoCarrinho()" class="btn btn-success">Adicionar Pizza Ao Carrinho</button>
-    </div>
+        <p [(ngModel)]="pizza" ngDefaultControl>Preço: {{pizza.preco | currency : "BRL"}}</p>
+
+        <button (click)="adicionarAoCarrinho()" class="btn btn-success">Adicionar Pizza Ao Carrinho</button>
+      </div>
+
 
   </div>
 
 </div>
-

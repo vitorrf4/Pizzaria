@@ -1,26 +1,30 @@
 <header class="bg-warning py-3 text-center">
   <h1 class="mb-0 font-weight-bold">Pizzaria Angular</h1>
 
-  <table>
-    <tr>
-      <td><button class="btn btn-danger" routerLink="/home/area-cliente">Área do Cliente</button></td>
-      <td><button class="btn btn-danger" routerLink="/home/pedidos">Comprovantes</button></td>
-      <td><button class="btn btn-danger" routerLink="/home/acompanhamentos">Acompanhamentos</button></td>
-      <td><button class="btn btn-danger" routerLink="/home/sabores">Pizzas</button></td>
-      <td>
-        <button class="btn btn-danger" routerLink="/home/carrinho">
-          Carrinho
-          <span *ngIf="quantidadeItensCarrinho.value > 0" class="d-inline badge bg-dark">
+  <div class="table-div">
+    <table >
+      <tr>
+        <td><button class="btn btn-danger" routerLink="/home/area-cliente">Área do Cliente</button></td>
+        <td><button class="btn btn-danger" routerLink="/home/pedidos">Comprovantes</button></td>
+        <td><button class="btn btn-danger" routerLink="/home/acompanhamentos">Acompanhamentos</button></td>
+        <td><button class="btn btn-danger" routerLink="/home/sabores">Pizzas</button></td>
+        <td>
+          <button class="btn btn-danger" routerLink="/home/carrinho">
+            Carrinho
+            <span *ngIf="quantidadeItensCarrinho.value > 0" class="d-inline badge bg-dark">
               {{quantidadeItensCarrinho.value}}
             </span>
-        </button>
-      </td>
-      <td><button class="btn btn-danger" (click)="deslogar()">SAIR</button></td>
-    </tr>
-  </table>
+          </button>
+        </td>
+        <td><button class="btn btn-danger" (click)="deslogar()">SAIR</button></td>
+      </tr>
+    </table>
+  </div>
 
 </header>
 
 <div class="division"></div>
 
-<router-outlet></router-outlet>
+<div class="router-body">
+  <router-outlet></router-outlet>
+</div>

@@ -18,8 +18,8 @@ export class PizzasComponent {
   saboresSelecionados : Sabor[] = [];
   maxQntdSabores : number[] = [];
   quantidadeSabores = 1;
-  pizza! : PizzaPedido;
   quantidadePizzas = 1;
+  pizza : PizzaPedido;
 
   constructor(private saborService: SaborService,
               private tamanhoService: TamanhoService,
@@ -32,10 +32,14 @@ export class PizzasComponent {
     this.tamanhoService.listar().subscribe(resposta => {
       this.tamanhosDB = resposta;
       this.ordernarTamanhosPorQntdFatias();
+
+      this.tamanhoSelecionado = this.tamanhosDB[0];
+      this.getMaxSabores();
     });
+
+    this.pizza = new PizzaPedido([], this.tamanhoSelecionado, 0);
   }
 
-  // FIX: resetar sabores selecionados depois de mudar o tamanho
   construirPizza() {
     if (this.saboresSelecionados.length > this.tamanhoSelecionado.maxSabores) {
       this.saboresSelecionados = [];
@@ -71,7 +75,7 @@ export class PizzasComponent {
   }
 
   adicionarAoCarrinho() {
-    if (this.pizza.sabores.length == 0) {
+    if (this.pizza.sabores.length <= 0 || this.pizza.quantidade <= 0) {
       alert("Pedido inválido");
       return;
     }

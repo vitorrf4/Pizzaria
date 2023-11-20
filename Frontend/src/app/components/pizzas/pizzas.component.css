@@ -1,13 +1,13 @@
 .flex-parent {
     display: flex;
-    width: 50%;
-}
-  
-.flex-child {
-    flex: 1;
-    margin: 10px;
 }
 
-.flex-child:first-child {
-    margin-right: 20px;
-} 
+.flex-child {
+    flex: 3;
+    margin: 10px;
+    text-align: left;
+}
+
+.flex-child:nth-child(2) {
+    margin-left: 100px;
+}
