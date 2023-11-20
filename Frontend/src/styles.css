@@ -1,5 +1,6 @@
 body {
   background-color: #ffd366;
+  font-size: min(20px);
 }
 .card {
   background-color: #ffc02a;
