@@ -1,16 +1,12 @@
-<div class="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
-  <form style="width: 23rem;" [formGroup]="formularioCliente" (ngSubmit)="logarCliente()">
 
-  <h3 class="fw-normal mb-3 pb-3">Login</h3>
+<form style="width: 23rem;" [formGroup]="formularioCliente" (ngSubmit)="logarCliente()">
 
-  <div class="form-outline mb-4">
-    <input type="text" class="form-control form-control-lg" formControlName="cpf" required />
-    <label class="form-label">CPF</label>
-  </div>
+<h3>Login</h3>
 
-  <div class="pt-1 mb-4">
-    <button class="btn btn-info btn-lg btn-block" type="submit">Entrar</button>
-  </div>
+<input type="text" class="form-control form-control-lg" formControlName="cpf" required />
+<label class="form-label">CPF</label>
 
-  </form>
-</div>
+<button class="btn btn-info btn-lg btn-block" type="submit">Entrar</button>
+
+</form>
+

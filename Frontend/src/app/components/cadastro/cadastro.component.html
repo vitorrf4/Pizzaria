@@ -1,59 +1,58 @@
- <form style="width: 23rem;" [formGroup]="formularioCliente">
-    <h3 class="fw-normal mb-3 pb-3">Cadastro</h3>
+<form style="width: 23rem;" [formGroup]="formularioCliente" >
+  <h3 >Cadastro</h3>
 
-    <div class="form-outline mb-4">
-      <input type="text" class="form-control form-control" formControlName="cpf" required />
-      <label class="form-label">CPF</label>
-    </div>
+  <div class="form-outline ">
+    <input type="text" class="form-control form-control" formControlName="cpf" required/>
+    <label class="form-label">CPF</label>
+  </div>
 
-    <div class="form-outline mb-4">
-      <input type="text" class="form-control form-control" formControlName="nome" required />
-      <label class="form-label">Nome</label>
-    </div>
+  <div class="form-outline">
+    <input type="text" class="form-control form-control" formControlName="nome" required />
+    <label class="form-label">Nome</label>
+  </div>
 
-    <div class="form-outline mb-4">
-      <input type="text" class="form-control form-control" formControlName="telefone" required />
-      <label class="form-label">Telefone</label>
-    </div>
+  <div class="form-outline">
+    <input type="text" class="form-control form-control" formControlName="telefone" required />
+    <label class="form-label">Telefone</label>
+  </div>
 
-    <div class="form-outline mb-4">
-      <input type="date" class="form-control form-control" formControlName="dataAniversario" required />
-      <label class="form-label">Data de Nascimento</label>
-    </div>
-  </form>
+  <div class="form-outline">
+    <input type="date" class="form-control form-control" formControlName="dataAniversario" required />
+    <label class="form-label">Data de Nascimento</label>
+  </div>
+</form>
 
 <form [formGroup]="formularioEndereco" style="width: 23rem;">
   <fieldset>
     <legend>Endereço</legend>
-    <div class="form-outline mb-4">
-      <input type="text" class="form-control form-control d-inline" style="width: 40%" formControlName="cep" required />
+    <div class="form-outline">
+      <input type="text" class="form-control form-control d-inline" style="width: 16rem" formControlName="cep" required />
       <button (click)="buscarCEP()" class="btn btn-info d-inline ml-2">Buscar CEP</button>
       <label class="form-label d-block">CEP</label>
     </div>
 
-    <div class="form-outline mb-4">
+    <div class="form-outline d-inline">
       <input type="text" class="form-control form-control" formControlName="rua" required />
       <label class="form-label">Rua</label>
     </div>
 
-    <div class="form-outline mb-4">
+    <div class="form-outline d-inline">
+      <input type="number" class="form-control form-control" formControlName="numero" required />
+      <label class="form-label">Numero</label>
+    </div>
+
+    <div class="form-outline ">
       <input type="text" class="form-control form-control" formControlName="regiao" required />
       <label class="form-label">Regiao</label>
     </div>
 
-    <div class="form-outline mb-4">
-      <input type="text" class="form-control form-control" formControlName="numero" required />
-      <label class="form-label">Numero</label>
-    </div>
 
-    <div class="form-outline mb-4">
+    <div class="form-outline">
       <input type="text" class="form-control form-control" formControlName="complemento" />
       <label class="form-label">Complemento</label>
     </div>
 
-    <div class="pt-1 mb-4">
-      <button class="btn btn-info btn-lg" type="submit" (click)="cadastrarCliente()">Cadastrar</button>
-    </div>
+    <button class="btn btn-info btn-lg btn-block" type="submit" (click)="cadastrarCliente()">Cadastrar</button>
   </fieldset>
 
 </form>
