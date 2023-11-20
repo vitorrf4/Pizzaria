@@ -2,21 +2,21 @@
   <h2 class="mb-4">Meus Dados</h2>
   <div class="card">
     <div class="card-body">
-      <p class="mb-2">Cpf: {{cliente.cpf}}</p>
-      <p class="mb-2">Nome: {{cliente.nome}}</p>
-      <p class="mb-2">Telefone: {{cliente.telefone}}</p>
-      <p class="mb-2">Data de Nascimento: {{cliente.dataAniversario | date : "dd/MM/yyyy"}}</p>
+      <p class="mb-2"><strong>CPF:</strong>  {{cliente.cpf}}</p>
+      <p class="mb-2"><strong>Nome:</strong> {{cliente.nome}}</p>
+      <p class="mb-2"><strong>Telefone</strong> {{cliente.telefone}}</p>
+      <p class="mb-2"><strong>Data de nascimento:</strong> {{cliente.dataAniversario | date : "dd/MM/yyyy"}}</p>
     </div>
   </div>
 
   <h3 class="mt-4 mb-4">Endereço</h3>
   <div class="card">
     <div class="card-body">
-      <p class="mb-2">CEP: {{cliente.endereco.cep}}</p>
-      <p class="mb-2">{{cliente.endereco.rua}} N° {{cliente.endereco.numero}}</p>
-      <p class="mb-2">Bairro: {{cliente.endereco.regiao.nome}}</p>
+      <p class="mb-2"><strong>CEP:</strong> {{cliente.endereco.cep}}</p>
+      <p class="mb-2">{{cliente.endereco.rua}} <strong>N°</strong> {{cliente.endereco.numero}}</p>
+      <p class="mb-2"><strong>Bairro:</strong> {{cliente.endereco.regiao.nome}}</p>
       <!-- Mostra o complemento do endereco caso exista -->
-      <p *ngIf="cliente.endereco.complemento" class="mb-2">Complemento: {{cliente.endereco.complemento}}</p>
+      <p *ngIf="cliente.endereco.complemento" class="mb-2"><strong>Complemento:</strong> {{cliente.endereco.complemento}}</p>
     </div>
   </div>
 </div>

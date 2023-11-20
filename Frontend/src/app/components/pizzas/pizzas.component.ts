@@ -19,7 +19,7 @@ export class PizzasComponent {
   maxQntdSabores : number[] = [];
   quantidadeSabores = 1;
   quantidadePizzas = 1;
-  pizza : PizzaPedido;
+  pizza!: PizzaPedido;
 
   constructor(private saborService: SaborService,
               private tamanhoService: TamanhoService,
@@ -35,9 +35,8 @@ export class PizzasComponent {
 
       this.tamanhoSelecionado = this.tamanhosDB[0];
       this.getMaxSabores();
+      this.construirPizza();
     });
-
-    this.pizza = new PizzaPedido([], this.tamanhoSelecionado, 0);
   }
 
   construirPizza() {
@@ -89,18 +88,17 @@ export class PizzasComponent {
   }
 
   limparPedido() {
-    this.tamanhoSelecionado = new Tamanho();
+    this.tamanhoSelecionado = this.tamanhosDB[0];
     this.saboresSelecionados = [];
-
+    this.quantidadeSabores = 1;
+    this.pizza = new PizzaPedido([], this.tamanhoSelecionado, 1);
   }
 
   ordernarTamanhosPorQntdFatias() {
-    // funcao que orderna os tamanhos pela quantidade de fatias
     this.tamanhosDB.sort((tamanhoA, tamanhoB) => tamanhoA.qntdFatias - tamanhoB.qntdFatias)
   }
 
   ordernarSaboresPorPreco() {
-    // funcao que orderna os sabores pelo preço
     this.saboresDB.sort((saborA, saborB) => saborA.preco - saborB.preco)
   }
 }

@@ -1,29 +1,9 @@
 <div class="container">
-  <h2>Monte sua pizza</h2>
-  <div>
-
-  </div>
-  <label>Tamanho: </label>
-
-  <select [(ngModel)]="tamanhoSelecionado" (change)="getMaxSabores(); construirPizza()">
-    <option value="" disabled selected>Selecione um tamanho</option>
-    <option *ngFor="let tamanho of tamanhosDB" [ngValue]="tamanho" >{{tamanho.nome}}</option>
-  </select>
-
-  <span *ngIf="tamanhoSelecionado.maxSabores > 0" [(ngModel)]="tamanhoSelecionado" ngDefaultControl>
-    {{tamanhoSelecionado.qntdFatias}} fatias
-  </span>
-
-  <br>
-
-  <label>Quantidade de Sabores:</label>
-  <select [(ngModel)]="quantidadeSabores" (change)="construirPizza()">
-    <option *ngFor="let qntd of maxQntdSabores">{{qntd}}</option>
-  </select>
-  <div  class="flex-parent">
-
-
+  <div class="flex-parent">
+    <!-- Cardapio -->
       <div class="flex-child">
+        <h2>Cardápio</h2>
+
         <table class="table">
           <thead class="thead-dark">
             <tr>
@@ -33,30 +13,49 @@
             </tr>
           </thead>
           <tr *ngFor="let sabor of saboresDB">
-            <td>{{sabor.nome}}</td>
-            <td>{{sabor.preco * tamanhoSelecionado.multiplicadorPreco | currency : "BRL"}}</td>
+            <td class="font-weight-bold">{{sabor.nome}}</td>
+            <td class="font-weight-bold">{{sabor.preco * tamanhoSelecionado.multiplicadorPreco | currency : "BRL"}}</td>
             <td>
-              <button (click)="adicionarSabor(sabor); construirPizza()" class="btn btn-info">Selecionar</button>
+              <button (click)="adicionarSabor(sabor); construirPizza()" class="btn btn-primary">Selecionar</button>
             </td>
           </tr>
         </table>
       </div>
 
+    <!-- Monte sua Pizza -->
       <div class="flex-child">
+        <h2>Monte sua pizza</h2>
+        <label>Tamanho: </label>
+
+        <select [(ngModel)]="tamanhoSelecionado" (change)="getMaxSabores(); construirPizza()">
+          <option value="" disabled selected>Selecione um tamanho</option>
+          <option *ngFor="let tamanho of tamanhosDB" [ngValue]="tamanho" >{{tamanho.nome}}</option>
+        </select>
+
+        <p *ngIf="tamanhoSelecionado.maxSabores > 0" [(ngModel)]="tamanhoSelecionado" ngDefaultControl>
+          {{tamanhoSelecionado.qntdFatias}} fatias
+        </p>
+
+        <label>Quantidade de Sabores:</label>
+        <select [(ngModel)]="quantidadeSabores" (change)="construirPizza()">
+          <option *ngFor="let qntd of maxQntdSabores">{{qntd}}</option>
+        </select>
+
+        <!-- Pedido -->
         <h3>Seu Pedido</h3>
-        <p [(ngModel)]="pizza" ngDefaultControl>Pizza {{pizza.tamanho.nome}}</p>
+
+        <p>Pizza {{pizza.tamanho.nome}}</p>
         <div *ngFor="let pizza of pizza.sabores; let i = index">
-          <p>{{pizza.nome}} <button (click)="removerSabor(i);construirPizza()" class="btn btn-danger">Retirar</button> </p>
+          <p>{{pizza.nome}} <button (click)="removerSabor(i);construirPizza()" class="btn btn-danger">Remover</button> </p>
         </div>
+
         <label for="qntd" >Quantidade:</label>
         <input type="number" [(ngModel)]="quantidadePizzas" (change)="construirPizza()" style="width: 40px" id="qntd">
 
-        <p [(ngModel)]="pizza" ngDefaultControl>Preço: {{pizza.preco | currency : "BRL"}}</p>
+        <p>Preço: {{pizza.preco | currency : "BRL"}}</p>
 
         <button (click)="adicionarAoCarrinho()" class="btn btn-success">Adicionar Pizza Ao Carrinho</button>
       </div>
 
-
   </div>
-
 </div>

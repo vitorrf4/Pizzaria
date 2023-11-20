@@ -1,5 +1,4 @@
 .acompanhamentos-container {
-  margin-top: 20px;
   padding: 15px;
 }
 
@@ -9,6 +8,8 @@
   border: thin solid slategray;
   border-radius: 5px;
   width: 30%;
+  background-color: #ffc02a;
+  font-size: 20px;
 }
 
 .acompanhamento-quantity {
@@ -16,7 +17,6 @@
 }
 
 .acompanhamento-button {
-  background-color: #007069;
   color: #fff;
   border: none;
   padding: 5px 10px;

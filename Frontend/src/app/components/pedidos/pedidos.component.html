@@ -1,10 +1,9 @@
 <div class="container mt-4">
   <h2 class="mt-4 mb-4">Meus Pedidos</h2>
-  <ul *ngFor="let pedido of pedidos" class="list-group">
-    <li class="list-group-item">
+  <ul *ngFor="let pedido of pedidos" class="card">
+    <li >
       <label class="font-weight-bold">Pedido {{pedido.id}}</label>
 
-      <div class="card-body">
         <ul>
           <li *ngFor="let pizza of pedido.pizzas" class="mb-2">
             {{getDescricaoPizza(pizza)}} | Quantidade: {{pizza.quantidade}} | Preço: {{pizza.preco | currency : "BRL"}}
@@ -18,9 +17,7 @@
         </ul>
 
         <p class="mb-2">Data: {{pedido.horaPedido | date : "dd/MM/yyyy HH:mm"}}</p>
-        <p class="mb-2">Total do Pedido: R${{pedido.precoTotal | currency : "BRL"}}</p>
-
-      </div>
+        <p class="mb-2">Total do Pedido: {{pedido.precoTotal | currency : "BRL"}}</p>
     </li>
   </ul>
 </div>
