@@ -1,1 +1,16 @@
 https://charming-gold-hamster.slab.com/topics/pizzaria-yfijuorw
+
+C#
+  Controller - Estrutura https://charming-gold-hamster.slab.com/posts/controller-estrutura-v8sl2s0u
+  Controller - Metodos https://charming-gold-hamster.slab.com/posts/controller-metodos-je60rgy4
+  Async - https://charming-gold-hamster.slab.com/posts/async-2is001jy
+  DbContext - https://charming-gold-hamster.slab.com/posts/db-context-xm4zdi39
+  LINQ, Where e Include https://charming-gold-hamster.slab.com/posts/linq-where-e-include-ffrsth8o
+
+Angular
+  Rotas - https://charming-gold-hamster.slab.com/posts/6-rotas-49yobhsi
+  Models - https://charming-gold-hamster.slab.com/posts/1-models-o6xs43vd
+  Observables - https://charming-gold-hamster.slab.com/posts/2-observables-fxokuqcv
+  Subscribe - https://charming-gold-hamster.slab.com/posts/3-subscribe-qln55whs
+  Services - https://charming-gold-hamster.slab.com/posts/4-services-h0hlso36
+  Componentes - https://charming-gold-hamster.slab.com/posts/5-componentes-29v7tarm
