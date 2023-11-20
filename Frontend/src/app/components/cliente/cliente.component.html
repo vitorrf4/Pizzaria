@@ -1,36 +1,47 @@
-<h2>Meus Dados</h2>
-  <p>Cpf: {{cliente.cpf}} </p>
-  <p>Nome: {{cliente.nome}}</p>
-  <p>Telefone: {{cliente.telefone}}</p>
-  <p>Data de Nascimento: {{cliente.dataAniversario | date : "dd/MM/yyyy"}}</p>
-  
-<h3>Endereço</h3>
-  <p>CEP: {{cliente.endereco.cep}}</p>
-  <p>{{cliente.endereco.rua}} N° {{cliente.endereco.numero}}</p>
-  <p>Bairro: {{cliente.endereco.regiao.nome}}</p>
-  <!-- Mostra o complemento do endereco caso exista -->
-  <p *ngIf="cliente.endereco.complemento"> Complemento: {{cliente.endereco.complemento}}</p>
+<div class="container mt-4">
+  <!-- Meus Dados -->
+  <h2 class="mb-4">Meus Dados</h2>
+  <div class="card">
+    <div class="card-body">
+      <p class="mb-2">Cpf: {{cliente.cpf}}</p>
+      <p class="mb-2">Nome: {{cliente.nome}}</p>
+      <p class="mb-2">Telefone: {{cliente.telefone}}</p>
+      <p class="mb-2">Data de Nascimento: {{cliente.dataAniversario | date : "dd/MM/yyyy"}}</p>
+    </div>
+  </div>
 
-<h2>Meus Pedidos</h2>
-  <ul *ngFor="let pedido of pedidos" class="list-group ">
+  <!-- Endereço -->
+  <h3 class="mt-4 mb-4">Endereço</h3>
+  <div class="card">
+    <div class="card-body">
+      <p class="mb-2">CEP: {{cliente.endereco.cep}}</p>
+      <p class="mb-2">{{cliente.endereco.rua}} N° {{cliente.endereco.numero}}</p>
+      <p class="mb-2">Bairro: {{cliente.endereco.regiao.nome}}</p>
+      <!-- Mostra o complemento do endereco caso exista -->
+      <p *ngIf="cliente.endereco.complemento" class="mb-2">Complemento: {{cliente.endereco.complemento}}</p>
+    </div>
+  </div>
+
+  <!-- Meus Pedidos -->
+  <h2 class="mt-4 mb-4">Meus Pedidos</h2>
+  <ul *ngFor="let pedido of pedidos" class="list-group">
     <li class="list-group-item">
-      <label> Pedido {{pedido.id}} </label>
+      <label class="font-weight-bold">Pedido {{pedido.id}}</label>
 
       <ul>
-        <li *ngFor="let pizza of pedido.pizzas" > 
-            {{getDescricaoPizza(pizza)}} | Quantidade: {{pizza.quantidade}} | Preço: {{pizza.preco | currency : "BRL"}}
+        <li *ngFor="let pizza of pedido.pizzas">
+          {{getDescricaoPizza(pizza)}} | Quantidade: {{pizza.quantidade}} | Preço: {{pizza.preco | currency : "BRL"}}
         </li>
       </ul>
 
-      <ul *ngIf="pedido.acompanhamentos.length > 0" >
+      <ul *ngIf="pedido.acompanhamentos.length > 0">
         <li *ngFor="let acomp of pedido.acompanhamentos">
-              {{getDescricaoAcompanhamento(acomp)}} | Quantidade: {{acomp.quantidade}} | Preço: {{acomp.preco | currency : "BRL"}}
+          {{getDescricaoAcompanhamento(acomp)}} | Quantidade: {{acomp.quantidade}} | Preço: {{acomp.preco | currency : "BRL"}}
         </li>
       </ul>
-      
-      <p> Data: {{pedido.horaPedido | date : "dd/MM/yyyy HH:mm"}}</p>
-      <p> Total do Pedido: R${{pedido.precoTotal | currency : "BRL"}}</p>
 
+      <p class="mb-2">Data: {{pedido.horaPedido | date : "dd/MM/yyyy HH:mm"}}</p>
+      <p class="mb-2">Total do Pedido: R${{pedido.precoTotal | currency : "BRL"}}</p>
     </li>
   </ul>
-
+</div>
