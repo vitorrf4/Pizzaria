@@ -25,14 +25,6 @@ public class PizzariaDBContext : DbContext{
         optionsBuilder.EnableSensitiveDataLogging();
         
     }
-    
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        // modelBuilder.Entity<PizzaPedido>()
-        //     .HasMany(p => p.Sabores)
-        //     .WithMany();
-    }
-
 
     public void InicializaValores()
     {
