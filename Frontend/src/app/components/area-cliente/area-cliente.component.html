@@ -5,7 +5,6 @@
       <p class="mb-2"><strong>CPF:</strong>  {{cliente.cpf}}</p>
       <p class="mb-2"><strong>Nome:</strong> {{cliente.nome}}</p>
       <p class="mb-2"><strong>Telefone</strong> {{cliente.telefone}}</p>
-      <p class="mb-2"><strong>Data de nascimento:</strong> {{cliente.dataAniversario | date : "dd/MM/yyyy"}}</p>
     </div>
   </div>
 
@@ -15,8 +14,9 @@
       <p class="mb-2"><strong>CEP:</strong> {{cliente.endereco.cep}}</p>
       <p class="mb-2">{{cliente.endereco.rua}} <strong>N°</strong> {{cliente.endereco.numero}}</p>
       <p class="mb-2"><strong>Bairro:</strong> {{cliente.endereco.regiao.nome}}</p>
-      <!-- Mostra o complemento do endereco caso exista -->
-      <p *ngIf="cliente.endereco.complemento" class="mb-2"><strong>Complemento:</strong> {{cliente.endereco.complemento}}</p>
+      <p *ngIf="cliente.endereco.complemento" class="mb-2">
+        <strong>Complemento:</strong> {{cliente.endereco.complemento}}
+      </p>
     </div>
   </div>
 </div>

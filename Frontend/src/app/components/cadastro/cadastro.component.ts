@@ -25,12 +25,12 @@ export class CadastroComponent {
   }
 
   // mudar pra ngInit
+  // colocar endereco como formgroup do form cliente
   iniciaFormularios() {
     this.formularioCliente = new FormGroup({
       cpf: new FormControl(null),
       nome: new FormControl(null),
-      telefone: new FormControl(null),
-      dataAniversario: new FormControl(null)
+      telefone: new FormControl(null)
     });
 
     this.formularioEndereco = new FormGroup({
