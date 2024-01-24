@@ -1,19 +1,20 @@
 import { AcompanhamentoPedido } from "./AcompanhamentoPedido";
-import { Cliente } from "./Cliente";
+import { Endereco } from "./Endereco";
 import { PizzaPedido } from "./PizzaPedido";
-import { Promocao } from "./Promocao";
 
 export class PedidoFinal {
     id: number = 0;
-    cliente: Cliente;
+    clienteCpf: string = "";
+    endereco: Endereco;
     pizzas: PizzaPedido[];
     acompanhamentos: AcompanhamentoPedido[];
     precoTotal: number = 0;
     horaPedido : Date;
-    promocao: Promocao | undefined;
 
-    constructor(cliente?: Cliente, pizzas?: PizzaPedido[], acompanhamentos?: AcompanhamentoPedido[]) {
-      this.cliente = cliente || new Cliente();
+    constructor(clienteCpf?: string, endereco?: Endereco, 
+                pizzas?: PizzaPedido[], acompanhamentos?: AcompanhamentoPedido[]) {
+      this.clienteCpf = clienteCpf || "";
+      this.endereco = endereco || new Endereco();
       this.pizzas = pizzas || [];
       this.acompanhamentos = acompanhamentos || [];
       this.horaPedido = new Date();
