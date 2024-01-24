@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {ClienteService} from "../../services/cliente.service";
 import {Router} from "@angular/router";
 import {FormControl, FormGroup} from "@angular/forms";
@@ -9,11 +9,14 @@ import {LoginService} from "../../services/login.service";
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
-  formularioCliente: FormGroup;
+export class LoginComponent implements OnInit{
+  formularioCliente!: FormGroup;
 
-  constructor(private clienteService: ClienteService, private router: Router,
-              private loginService: LoginService) {
+  constructor(private clienteService: ClienteService, 
+              private router: Router,
+              private loginService: LoginService) { }
+
+  ngOnInit() {
     this.formularioCliente = new FormGroup({
       cpf: new FormControl(),
     });

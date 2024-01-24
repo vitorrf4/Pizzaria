@@ -38,7 +38,7 @@ export class CarrinhoComponent{
       return;
     }
 
-    const cliente = this.clienteService.clienteLogado;
+    const cliente = this.clienteService.getClienteLogado();
     const pizzas = this.carrinhoService.filtrarPizzasNoCarrinho();
     const acompanhamentos = this.carrinhoService.filtrarAcompanhamentosNoCarrinho();
 

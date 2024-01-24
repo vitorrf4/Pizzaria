@@ -16,7 +16,7 @@ export class PedidosComponent {
   pedidos: PedidoFinal[] = [];
 
   constructor(clienteService: ClienteService, loginService: LoginService) {
-    const cpf = loginService.clienteLogado.cpf;
+    const cpf = loginService.getClienteLogado().cpf;
 
     this.pedidos$ = clienteService.listarPedidosPorCliente(cpf);
     this.pedidos$.subscribe(resposta => {
