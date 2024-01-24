@@ -40,8 +40,8 @@ public class PizzariaDBContext : DbContext{
         var endereco2 = new Endereco("Rua 2", 2, "11111-11", boqueirao, "casa 5");
 
         // Cliente
-        var cliente1 = new Cliente("12345", "joao", "1111-1111" ,DateOnly.Parse("29/09/1973"), endereco1);
-        var cliente2 = new Cliente("67890", "maria", "2222-2222", DateOnly.Parse("12/05/2000"), endereco2);
+        var cliente1 = new Cliente("12345", "joao", "1111-1111",  endereco1);
+        var cliente2 = new Cliente("67890", "maria", "2222-2222", endereco2);
 
         // Sabor
         var frango = new Sabor("Frango", 15.0);

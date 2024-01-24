@@ -8,23 +8,20 @@ public class Cliente
     public string Cpf { get; set; } = "";
     public string Nome { get; set; } = "";
     public string Telefone { get; set; } = "";
-    // remover dataAniversario
-    public DateOnly DataAniversario { get; set; }
     public Endereco Endereco { get; set; } = new Endereco();
 
     public Cliente() { }
 
-    public Cliente(string cpf, string nome, string telefone, DateOnly dataAniversario, Endereco endereco)
+    public Cliente(string cpf, string nome, string telefone, Endereco endereco)
     {
         Cpf = cpf;
         Nome = nome;
         Telefone = telefone;
-        DataAniversario = dataAniversario;
         Endereco = endereco;
     }
 
     public override string ToString()
     {
-        return $"CPF: {Cpf} | Nome: {Nome} | Telefone: {Telefone} | DataAniversario Aniversário: {DataAniversario}";
+        return $"CPF: {Cpf} | Nome: {Nome} | Telefone: {Telefone}";
     }
 }
