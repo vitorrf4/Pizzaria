@@ -7,7 +7,7 @@ namespace pizzaria;
 [Route("endereco/")]
 public class EnderecoController : ControllerBase
 {
-    private PizzariaDBContext _context;
+    private readonly PizzariaDBContext _context;
 
     public EnderecoController(PizzariaDBContext context)
     {

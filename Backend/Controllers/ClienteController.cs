@@ -7,7 +7,7 @@ namespace pizzaria;
 [Route("cliente/")]
 public class ClienteController : ControllerBase
 {
-    private PizzariaDBContext _context;
+    private readonly PizzariaDBContext _context;
 
     public ClienteController(PizzariaDBContext context)
     {
@@ -42,7 +42,7 @@ public class ClienteController : ControllerBase
     public async Task<IActionResult> ListarPedidosPorCliente([FromRoute] string cpf)
     {
         var pedidos = await GetPedidosFinaisComTodasAsPropriedades()
-            .Where(p => p.Cliente.Cpf == cpf)
+            .Where(p => p.ClienteCpf == cpf)
             .ToListAsync();
 
         return Ok(pedidos);
@@ -110,7 +110,7 @@ public class ClienteController : ControllerBase
     private IQueryable<PedidoFinal> GetPedidosFinaisComTodasAsPropriedades()
     {
         return _context.PedidoFinal
-            .Include(p => p.Cliente.Endereco.Regiao)
+            // .Include(p => p.ClienteCpf.Endereco.Regiao)
             .Include(p => p.Acompanhamentos).ThenInclude(a => a.Acompanhamento)
             .Include(p => p.Pizzas).ThenInclude(p => p.Tamanho)
             .Include(p => p.Pizzas).ThenInclude(p => p.Sabores);

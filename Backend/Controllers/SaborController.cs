@@ -7,7 +7,7 @@ namespace pizzaria;
 [Route("sabor/")]
 public class SaborController : ControllerBase
 {
-    private PizzariaDBContext _context;
+    private readonly PizzariaDBContext _context;
 
     public SaborController(PizzariaDBContext context) 
     {

@@ -7,7 +7,7 @@ namespace pizzaria;
 [Route("pedido-final/")]
 public class PedidoFinalController : ControllerBase
 {
-    private PizzariaDBContext _context;
+    private readonly PizzariaDBContext _context;
 
     public PedidoFinalController(PizzariaDBContext context)
     {
@@ -96,7 +96,7 @@ public class PedidoFinalController : ControllerBase
     private IQueryable<PedidoFinal> GetPedidosFinaisComTodasAsPropriedades()
     {
         return _context.PedidoFinal
-            .Include(p => p.Cliente.Endereco.Regiao)
+            // .Include(p => p.ClienteCpf.Endereco.Regiao)
             .Include(p => p.Acompanhamentos).ThenInclude(a => a.Acompanhamento)
             .Include(p => p.Pizzas).ThenInclude(p => p.Tamanho)
             .Include(p => p.Pizzas).ThenInclude(p => p.Sabores);

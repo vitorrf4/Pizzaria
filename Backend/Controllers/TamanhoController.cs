@@ -7,7 +7,7 @@ namespace pizzaria;
 [Route("tamanho/")]
 public class TamanhoController : ControllerBase
 {
-    private PizzariaDBContext _context;
+    private readonly PizzariaDBContext _context;
 
     public TamanhoController(PizzariaDBContext context) 
     {

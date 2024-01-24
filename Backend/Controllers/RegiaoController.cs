@@ -8,7 +8,7 @@ namespace Pizzaria;
 [ApiController]
 public class RegiaoController : ControllerBase
 {
-    public PizzariaDBContext _context;
+    private readonly PizzariaDBContext _context;
 
     public RegiaoController(PizzariaDBContext context)
     {

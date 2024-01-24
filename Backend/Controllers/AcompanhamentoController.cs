@@ -7,7 +7,7 @@ namespace pizzaria;
 [Route("acompanhamento/")]
 public class AcompanhamentoController : ControllerBase
 {
-    private PizzariaDBContext _context;
+    private readonly PizzariaDBContext _context;
 
     public AcompanhamentoController(PizzariaDBContext context) 
     {
