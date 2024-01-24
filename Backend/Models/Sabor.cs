@@ -24,6 +24,6 @@ public class Sabor
 
     public override string ToString()
     {
-        return $"ID: {Id} | Nome: {Nome} | Preço: {Preco}";
+        return $"Nome: {Nome} | Preço: {Preco}";
     }
 }

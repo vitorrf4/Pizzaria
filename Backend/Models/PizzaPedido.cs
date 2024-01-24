@@ -44,17 +44,17 @@ public class PizzaPedido
 
     override public string ToString()
     {
-        Console.Write($"Sabores: ");
+        var String = "Sabores: ";
         for (int i = 0; i < Sabores.Count; i++)
         {
-            Console.Write(Sabores[i].Nome);
+            String += Sabores[i].Nome;
             if (i != (Sabores.Count - 1))
-                Console.Write(", ");
+                String += ", ";
         }
 
-        Console.Write($" | Tamanho: {Tamanho.Nome} | ");
-        Console.Write($"Preço: R${Preco}");
+        String += $" | Tamanho: {Tamanho.Nome} | ";
+        String += $"Preço: R${Preco}";
 
-        return "";
+        return String;
     }
 }

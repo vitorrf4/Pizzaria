@@ -31,11 +31,9 @@ public class AcompanhamentoPedido
 
     public override string ToString()
     {
-        // TODO: Return as string
-        Console.Write($"Acompanhamento: {Acompanhamento.Nome} | ");
-        Console.Write($"Preço Unitário: R${Acompanhamento.Preco} | ");
-        Console.Write($"Quantidade: {Quantidade} | ");
-        Console.Write($"Preço Total do Acompanhamento: R${Preco}");
-        return "";
+        return $"Acompanhamento: {Acompanhamento.Nome} | " +
+                $"Preço Unitário: R${Acompanhamento.Preco} | " +
+                $"Quantidade: {Quantidade} | " +
+                $"Preço Total do Acompanhamento: R${Preco}";
     }
 }
