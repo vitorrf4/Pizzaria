@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
 
 namespace pizzaria;
 
@@ -12,8 +11,6 @@ public class AcompanhamentoPedido
     public Acompanhamento Acompanhamento { get; set; } = new Acompanhamento();
     public int Quantidade { get; set; }
     public double Preco { get; set; }
-    [JsonIgnore]
-    public PedidoFinal? PedidoFinal { get; set; }
 
     public AcompanhamentoPedido() { }
 
