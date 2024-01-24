@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ClienteService} from "../../services/cliente.service";
 import {Cliente} from "../../models/Cliente";
 import {LoginService} from "../../services/login.service";
@@ -8,11 +8,14 @@ import {LoginService} from "../../services/login.service";
   templateUrl: './area-cliente.component.html',
   styleUrls: ['./area-cliente.component.css']
 })
-export class AreaClienteComponent {
+export class AreaClienteComponent implements OnInit{
   cliente: Cliente = new Cliente();
 
-  constructor(private clienteService: ClienteService, loginService: LoginService) {
-    const cpf = loginService.getClienteLogado().cpf;
+  constructor(private clienteService: ClienteService, 
+              private loginService: LoginService) {}
+
+  ngOnInit() {
+    const cpf = this.loginService.getClienteLogado().cpf;
 
     this.clienteService.listarCpf(cpf).subscribe(resposta => {
       this.cliente = resposta;

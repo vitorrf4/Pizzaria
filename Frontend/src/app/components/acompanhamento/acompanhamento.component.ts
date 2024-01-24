@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Acompanhamento} from "../../models/Acompanhamento";
 import {AcompanhamentoService} from "../../services/acompanhamento.service";
 import {AcompanhamentoPedido} from "../../models/AcompanhamentoPedido";
@@ -9,14 +9,17 @@ import {CarrinhoService} from "../../services/carrinho.service";
   templateUrl: './acompanhamento.component.html',
   styleUrls: ['./acompanhamento.component.css']
 })
-export class AcompanhamentoComponent {
+export class AcompanhamentoComponent implements OnInit{
   acompanhamentos: Acompanhamento[] = []
   quantidadeArray: number[] = [];
 
-  constructor(private service: AcompanhamentoService, private carrinhoService: CarrinhoService) {
+  constructor(private service: AcompanhamentoService, 
+              private carrinhoService: CarrinhoService) { }
+
+  ngOnInit() {
     this.service.listar().subscribe(resposta => {
       this.acompanhamentos = resposta;
-    })
+    });
   }
 
   adicionarAoCarrinho(acompanhamento : Acompanhamento, quantidade: number) {
@@ -26,7 +29,6 @@ export class AcompanhamentoComponent {
     }
 
     const acompanhamentoPedido = new AcompanhamentoPedido(acompanhamento, quantidade);
-
     this.carrinhoService.adicionarNoCarrinho(acompanhamentoPedido)
   }
 }

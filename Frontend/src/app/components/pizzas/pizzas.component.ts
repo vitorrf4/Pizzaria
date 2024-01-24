@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Sabor} from "../../models/Sabor";
 import {SaborService} from "../../services/sabor.service";
 import {Tamanho} from "../../models/Tamanho";
@@ -11,7 +11,7 @@ import {CarrinhoService} from "../../services/carrinho.service";
   templateUrl: './pizzas.component.html',
   styleUrls: ['./pizzas.component.css']
 })
-export class PizzasComponent {
+export class PizzasComponent implements OnInit {
   saboresDB: Sabor[] = [];
   tamanhosDB : Tamanho[] = [];
   tamanhoSelecionado = new Tamanho();
@@ -19,11 +19,13 @@ export class PizzasComponent {
   maxQntdSabores : number[] = [];
   quantidadeSabores = 1;
   quantidadePizzas = 1;
-  pizza: PizzaPedido;
+  pizza!: PizzaPedido;
 
   constructor(private saborService: SaborService,
               private tamanhoService: TamanhoService,
-              private carrinhoService: CarrinhoService) {
+              private carrinhoService: CarrinhoService) { }
+
+  ngOnInit() {
     this.saborService.listar().subscribe(resposta => {
       this.saboresDB = resposta;
       this.saboresDB.sort((saborA, saborB) => saborA.preco - saborB.preco);

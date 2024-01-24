@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {Pedido} from "../../models/Pedido";
 import {CarrinhoService} from "../../services/carrinho.service";
 import {PedidoFinal} from "../../models/PedidoFinal";
@@ -13,8 +13,8 @@ import { Router} from "@angular/router";
   templateUrl: './carrinho.component.html',
   styleUrls: ['./carrinho.component.css']
 })
-export class CarrinhoComponent{
-  itensCarrinho : Pedido[];
+export class CarrinhoComponent implements OnInit{
+  itensCarrinho : Pedido[] = [];
   pedidoFinal: PedidoFinal = new PedidoFinal();
 
   constructor(private router : Router,
@@ -22,11 +22,12 @@ export class CarrinhoComponent{
               private clienteService: LoginService,
               private pizzaPedidoService: PizzaPedidoService,
               private pedidoFinalService: PedidoFinalService,) {
-    this.itensCarrinho = this.carrinhoService.itensCarrinho;
-
-    this.construirPedido();
   }
 
+  ngOnInit() {
+    this.itensCarrinho = this.carrinhoService.itensCarrinho;
+    this.construirPedido();
+  }
 
   removerDoCarrinho(index: number) {
     this.carrinhoService.removerDoCarrinho(index);

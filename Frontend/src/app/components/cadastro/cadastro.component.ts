@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Cliente} from "../../models/Cliente";
 import {Regiao} from "../../models/Regiao";
 import {ClienteService} from "../../services/cliente.service";
@@ -13,20 +13,17 @@ import { Endereco } from 'src/app/models/Endereco';
   templateUrl: './cadastro.component.html',
   styleUrls: ['./cadastro.component.css']
 })
-export class CadastroComponent {
+export class CadastroComponent implements OnInit{
   formularioCliente: any;
   formularioEndereco: any;
 
   constructor(private clienteService: ClienteService,
               private loginService: LoginService,
               private router: Router,
-              private cep: CepService) {
-    this.iniciaFormularios();
-  }
+              private cep: CepService) { }
 
-  // mudar pra ngInit
   // colocar endereco como formgroup do form cliente
-  iniciaFormularios() {
+  ngOnInit() {
     this.formularioCliente = new FormGroup({
       cpf: new FormControl(null),
       nome: new FormControl(null),
@@ -40,7 +37,6 @@ export class CadastroComponent {
       complemento: new FormControl(null),
       regiao: new FormControl(null)
     });
-
   }
 
   buscarCEP() {
@@ -86,8 +82,8 @@ export class CadastroComponent {
     });
   }
 
+  // FIX: this
   cadastroEstaValido(cliente: Cliente, endereco: Endereco): boolean {
-
     for (let campo of Object.entries(cliente)) {
       if (!campo[1]) {
         alert(`Preencha todos os campos`);
