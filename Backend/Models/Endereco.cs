@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
 
 namespace pizzaria;
 
@@ -14,9 +13,7 @@ public class Endereco
     public string Cep { get; set; } = "";
     public Regiao Regiao { get; set; } = new Regiao();
     public string ?Complemento { get; set; }
-    [JsonIgnore]
-    [ForeignKey("Cliente.Endereco")]
-    public Cliente ?Cliente { get; set; }
+    public string ClienteCpf { get; set; } = "";
     
     public Endereco() { } 
 
@@ -25,15 +22,15 @@ public class Endereco
         Rua = rua;
         Numero = numero;
         Cep = cep;
-        Complemento = complemento;
         Regiao = regiao;
+        Complemento = complemento;
     }
 
     public override string ToString()
     {
         return  $"Rua: {Rua} \n" +
                 $"Numero: {Numero} \n" +
-                $"Complemento: {Complemento} \n" +
+                $"Complemento: {Complemento ?? "Nenhum"} \n" +
                 $"CEP: {Cep} \n" +
                 $"Regiao: {Regiao} \n";
     }

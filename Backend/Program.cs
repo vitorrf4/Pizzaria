@@ -10,11 +10,8 @@ builder.Services.AddTransient<PizzariaDBContext>();
 builder.Services.AddCors();
 var app = builder.Build();
 
-using var scope = app.Services.CreateScope();
-
-var services = scope.ServiceProvider;
-
-var DbContext = services.GetRequiredService<PizzariaDBContext>();
+var scope = app.Services.CreateScope().ServiceProvider;
+var DbContext = scope.GetRequiredService<PizzariaDBContext>();
 
 DbContext.InicializaValores();
 
