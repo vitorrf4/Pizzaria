@@ -11,8 +11,8 @@
         <td>
           <button class="btn btn-danger" routerLink="/home/carrinho">
             Carrinho
-            <span *ngIf="quantidadeItensCarrinho.value > 0" class="d-inline badge bg-dark">
-              {{quantidadeItensCarrinho.value}}
+            <span *ngIf="quantidadeItensCarrinho$.value > 0" class="d-inline badge bg-dark">
+              {{quantidadeItensCarrinho$ | async}}
             </span>
           </button>
         </td>

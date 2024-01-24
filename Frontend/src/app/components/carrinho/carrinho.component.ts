@@ -27,6 +27,12 @@ export class CarrinhoComponent{
     this.construirPedido();
   }
 
+
+  removerDoCarrinho(index: number) {
+    this.carrinhoService.removerDoCarrinho(index);
+    this.construirPedido();
+  }
+
   construirPedido() {
     if (this.itensCarrinho.length <= 0) {
       return;
@@ -38,12 +44,7 @@ export class CarrinhoComponent{
 
     this.pedidoFinal = new PedidoFinal(cliente, pizzas, acompanhamentos);
   }
-
-  removerDoCarrinho(index: number) {
-    this.carrinhoService.removerDoCarrinho(index);
-    this.construirPedido();
-  }
-
+  
   finalizarPedido() {
     this.construirPedido();
     if (this.pedidoFinal.pizzas.length <= 0) {

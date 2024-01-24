@@ -12,13 +12,13 @@ import {BehaviorSubject} from "rxjs";
 })
 export class HomeComponent {
   cliente : Cliente;
-  quantidadeItensCarrinho: BehaviorSubject<number>;
+  quantidadeItensCarrinho$: BehaviorSubject<number>;
 
   constructor(private loginService: LoginService,
               private router: Router,
               carrinhoService: CarrinhoService) {
     this.cliente =  this.loginService.getClienteLogado();
-    this.quantidadeItensCarrinho = carrinhoService.quantidadeItensCarrinho;
+    this.quantidadeItensCarrinho$ = carrinhoService.quantidadeItensCarrinho;
   }
 
   // logout

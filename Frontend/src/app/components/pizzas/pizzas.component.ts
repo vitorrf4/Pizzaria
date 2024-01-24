@@ -26,19 +26,19 @@ export class PizzasComponent {
               private carrinhoService: CarrinhoService) {
     this.saborService.listar().subscribe(resposta => {
       this.saboresDB = resposta;
-      this.ordernarSaboresPorPreco();
+      this.saboresDB.sort((saborA, saborB) => saborA.preco - saborB.preco);
     });
 
     this.tamanhoService.listar().subscribe(resposta => {
       this.tamanhosDB = resposta;
-      this.ordernarTamanhosPorQntdFatias();
+      this.tamanhosDB.sort((tamanhoA, tamanhoB) => tamanhoA.qntdFatias - tamanhoB.qntdFatias);
 
       this.tamanhoSelecionado = this.tamanhosDB[0];
       this.getMaxSabores();
       this.construirPizza();
     });
 
-    this.pizza = new PizzaPedido(this.saboresSelecionados, this.tamanhoSelecionado, 1);
+    this.pizza = new PizzaPedido([], this.tamanhoSelecionado, 1);
   }
 
   construirPizza() {
@@ -94,13 +94,5 @@ export class PizzasComponent {
     this.saboresSelecionados = [];
     this.quantidadeSabores = 1;
     this.pizza = new PizzaPedido([], this.tamanhoSelecionado, 1);
-  }
-
-  ordernarTamanhosPorQntdFatias() {
-    this.tamanhosDB.sort((tamanhoA, tamanhoB) => tamanhoA.qntdFatias - tamanhoB.qntdFatias)
-  }
-
-  ordernarSaboresPorPreco() {
-    this.saboresDB.sort((saborA, saborB) => saborA.preco - saborB.preco)
   }
 }
