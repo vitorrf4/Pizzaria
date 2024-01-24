@@ -103,7 +103,6 @@ public class PedidoFinalController : ControllerBase
             .Include(p => p.Cliente.Endereco.Regiao)
             .Include(p => p.Acompanhamentos).ThenInclude(a => a.Acompanhamento)
             .Include(p => p.Pizzas).ThenInclude(p => p.Tamanho)
-            .Include(p => p.Pizzas).ThenInclude(p => p.Sabores)
-            .Include(p => p.Promocao);
+            .Include(p => p.Pizzas).ThenInclude(p => p.Sabores);
     }
 }

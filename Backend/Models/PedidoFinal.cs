@@ -13,7 +13,6 @@ public class PedidoFinal
     public List<AcompanhamentoPedido> ?Acompanhamentos { get; set; }
     public double PrecoTotal { get; private set; }
     public DateTime HoraPedido { get; set; }
-    public Promocao ?Promocao { get; private set; }
 
     public PedidoFinal() 
     {
@@ -40,12 +39,6 @@ public class PedidoFinal
             
         int aniversarioCliente = Cliente.DataAniversario.DayOfYear;
         int dataPedido = DateOnly.FromDateTime(HoraPedido).DayOfYear;
-
-        if (aniversarioCliente == dataPedido)
-        {
-            Promocao = new Promocao(Id, 10);
-            precoTotal = precoTotal - (precoTotal * (Promocao.Desconto / 100));
-        }
 
         PrecoTotal = precoTotal;
         return PrecoTotal;

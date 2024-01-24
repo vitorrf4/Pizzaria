@@ -12,7 +12,6 @@ public class PizzariaDBContext : DbContext{
     public DbSet<Regiao> Regiao { get; set; }
     public DbSet<AcompanhamentoPedido> AcompanhamentoPedido { get; set; }
     public DbSet<Endereco> Endereco { get; set; }
-    public DbSet<Promocao> Promocao { get; set; }
 
     public PizzariaDBContext() 
     {
