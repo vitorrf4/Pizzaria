@@ -13,19 +13,19 @@ export class RegiaoService {
   constructor(private http: HttpClient) { }
 
   listar(): Observable<Regiao[]> {
-    return this.http.get<Regiao[]>(`${this.apiUrl}/regiao/listar`)
+    return this.http.get<Regiao[]>(`${this.apiUrl}/regiao`);
   }
 
   listarId(id: number): Observable<Regiao[]> {
-    return this.http.get<Regiao[]>(`${this.apiUrl}/regiao/listar/` + id)
+    return this.http.get<Regiao[]>(`${this.apiUrl}/regiao/` + id);
   }
 
   cadastrar(regiao: Regiao): Observable<Regiao[]>{
-    return this.http.post<Regiao[]>(`${this.apiUrl}/regiao/cadastrar/`, regiao)
+    return this.http.post<Regiao[]>(`${this.apiUrl}/regiao/`, regiao);
   }
 
   alterar(regiao: Regiao): Observable<Regiao[]>{
-    return this.http.put<Regiao[]>(`${this.apiUrl}/regiao/alterar/`, regiao)
+    return this.http.put<Regiao[]>(`${this.apiUrl}/regiao/`, regiao);
   }
 
 

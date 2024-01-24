@@ -14,19 +14,19 @@ export class ClienteService {
   constructor(private http: HttpClient) { }
 
   listar(): Observable<Cliente[]> {
-    return this.http.get<Cliente[]>(`${this.apiUrl}/cliente/listar`);
+    return this.http.get<Cliente[]>(`${this.apiUrl}/cliente`);
   }
 
   listarCpf(cpf: string) {
-    return this.http.get<Cliente>(`${this.apiUrl}/cliente/listar/` + cpf);
+    return this.http.get<Cliente>(`${this.apiUrl}/cliente/` + cpf);
   }
 
   cadastrar(cliente: Cliente) {
-    return this.http.post<Cliente>(`${this.apiUrl}/cliente/cadastrar/`, cliente);
+    return this.http.post<Cliente>(`${this.apiUrl}/cliente/`, cliente);
   }
 
   alterar(cliente: Cliente) {
-    return this.http.put(`${this.apiUrl}/cliente/alterar/`, cliente);
+    return this.http.put(`${this.apiUrl}/cliente/`, cliente);
   }
 
   listarPedidosPorCliente(cpf: string) {

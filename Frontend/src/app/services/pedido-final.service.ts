@@ -13,19 +13,19 @@ export class PedidoFinalService {
   constructor(private http: HttpClient) { }
 
   listar(): Observable<PedidoFinal[]> {
-    return this.http.get<PedidoFinal[]>(`${this.apiUrl}/pedido-final/listar`)
+    return this.http.get<PedidoFinal[]>(`${this.apiUrl}/pedido-final`);
   }
 
   listarId(id: number) {
-    return this.http.get<PedidoFinal>(`${this.apiUrl}/pedido-final/listar/` + id)
+    return this.http.get<PedidoFinal>(`${this.apiUrl}/pedido-final/` + id);
   }
 
   cadastrar(pedidoFinal: PedidoFinal) {
-    return this.http.post<PedidoFinal>(`${this.apiUrl}/pedido-final/cadastrar/`, pedidoFinal)
+    return this.http.post<PedidoFinal>(`${this.apiUrl}/pedido-final/`, pedidoFinal);
   }
 
   alterar(pedidoFinal: PedidoFinal) {
-    return this.http.put(`${this.apiUrl}/pedido-final/alterar/`, pedidoFinal)
+    return this.http.put(`${this.apiUrl}/pedido-final/`, pedidoFinal);
   }
 
 }
