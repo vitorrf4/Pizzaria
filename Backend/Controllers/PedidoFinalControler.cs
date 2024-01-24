@@ -39,8 +39,7 @@ public class PedidoFinalController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Cadastrar(PedidoFinal pedidoFinal)
     {       
-        if (!MudarTrackingDosCampos(pedidoFinal))
-            return BadRequest();
+        MudarTrackingDosCampos(pedidoFinal);
 
         pedidoFinal.CalcularPrecoTotal();
         pedidoFinal.HoraPedido = DateTime.Now;
@@ -57,20 +56,8 @@ public class PedidoFinalController : ControllerBase
             if (!p.Entry.IsKeySet)
                 p.Entry.State = EntityState.Added;                                                                       
             else
-                p.Entry.State = EntityState.Detached;
+                p.Entry.State = EntityState.Unchanged;
         });
-
-        // Para que as pizzas se juntem ao pedido final Precisamos fazer 
-        // outro loop para deixar as pizzas como Unchanged ao inves de detached.
-        // Ainda verificamos se alguma das pizzas tem um id invalido, se sim
-        // retornamos um false aqui e um erro 400 para o usuario na funcao principal
-        foreach (var p in  pedidoFinal.Pizzas) 
-        {
-            if (p.Id <= 0)
-                return false;
-
-            _context.Entry(p).State = EntityState.Unchanged;
-        }
 
         return true;
     }

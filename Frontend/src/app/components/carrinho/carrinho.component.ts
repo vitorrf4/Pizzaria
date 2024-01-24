@@ -4,8 +4,6 @@ import {CarrinhoService} from "../../services/carrinho.service";
 import {PedidoFinal} from "../../models/PedidoFinal";
 import {LoginService} from "../../services/login.service";
 import {PedidoFinalService} from "../../services/pedido-final.service";
-import { PizzaPedidoService } from 'src/app/services/pizza-pedido.service';
-import { forkJoin, map } from 'rxjs';
 import { Router} from "@angular/router";
 
 @Component({
@@ -20,7 +18,6 @@ export class CarrinhoComponent implements OnInit{
   constructor(private router : Router,
               private carrinhoService: CarrinhoService,
               private clienteService: LoginService,
-              private pizzaPedidoService: PizzaPedidoService,
               private pedidoFinalService: PedidoFinalService,) {
   }
 
@@ -53,21 +50,7 @@ export class CarrinhoComponent implements OnInit{
       return;
     }
 
-    // Cadastra todas as pizzas individualmente e só depois cadastra o pedido final
-    forkJoin(this.salvarPizzas()).subscribe(pizzasComId => {
-      this.pedidoFinal.pizzas = pizzasComId;
-      this.salvarPedidoFinal();
-    });
-  }
-
-  salvarPizzas() {
-    const pizzaObservables = this.pedidoFinal.pizzas.map(pizza => {
-      return this.pizzaPedidoService.cadastrar(pizza).pipe(
-        map(pizzaCadastrada => { return pizzaCadastrada; })
-      );
-    });
-
-    return pizzaObservables;
+    this.salvarPedidoFinal();
   }
 
   salvarPedidoFinal() {
@@ -80,7 +63,6 @@ export class CarrinhoComponent implements OnInit{
       error: err => console.log(err)
     });
   }
-
 
   limparCarrinho() {
     this.carrinhoService.limparCarrinho();
