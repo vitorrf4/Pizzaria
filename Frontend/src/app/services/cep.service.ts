@@ -8,6 +8,6 @@ export class CepService {
   constructor(private http: HttpClient) { }
 
   buscarCep(cep: String) {
-    return this.http.get<{logradouro: string, bairro: string}>(`https://viacep.com.br/ws/${cep}/json/`);
+    return this.http.get<any>(`https://viacep.com.br/ws/${cep}/json`);
   }
 }

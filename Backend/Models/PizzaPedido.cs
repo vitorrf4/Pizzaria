@@ -13,8 +13,6 @@ public class PizzaPedido
     public Tamanho Tamanho { get; set; } = new Tamanho();
     public double Preco { get; set; }
     public int Quantidade { get; set;}
-    [JsonIgnore]
-    public PedidoFinal? PedidoFinal { get; set; }
 
     public PizzaPedido() { }
 

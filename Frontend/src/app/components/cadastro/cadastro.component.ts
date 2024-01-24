@@ -44,13 +44,15 @@ export class CadastroComponent implements OnInit{
 
     this.cep.buscarCep(cep).subscribe({
       next : res => {
-        if (!res.logradouro) {
+        const { logradouro, bairro} = res;
+
+        if (!logradouro) {
           alert("CEP não encontrado");
           return;
         }
 
-        this.formularioEndereco.get("rua").setValue(res.logradouro);
-        this.formularioEndereco.get("regiao").setValue(res.bairro);
+        this.formularioEndereco.get("rua").setValue(logradouro);
+        this.formularioEndereco.get("regiao").setValue(bairro);
       },
       error: () => {
         alert("CEP inválido");
