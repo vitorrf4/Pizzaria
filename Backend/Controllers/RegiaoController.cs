@@ -1,11 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using pizzaria;
 
 namespace Pizzaria;
 
-[Route("[controller]")]
+[Route("regiao")]
 [ApiController]
 public class RegiaoController : ControllerBase
 {
