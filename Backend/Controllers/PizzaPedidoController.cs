@@ -15,7 +15,6 @@ public class PizzaPedidoController : ControllerBase
     }
 
     [HttpGet]
-    [Route("buscar")]
     public async Task<ActionResult<IEnumerable<Cliente>>> ListarTodos()
     {   
         var pedidos = await _context.PizzaPedido
@@ -26,8 +25,7 @@ public class PizzaPedidoController : ControllerBase
         return Ok(pedidos); 
     }
 
-    [HttpGet]
-    [Route("buscar/{id}")]
+    [HttpGet("{id}")]
     public async Task<ActionResult<PizzaPedido>> BuscarPorId(int id)
     {
         var pedido = await _context.PizzaPedido
@@ -43,7 +41,6 @@ public class PizzaPedidoController : ControllerBase
     }
 
     [HttpPost]
-    [Route("cadastrar")]
     public async Task<ActionResult<PizzaPedido>> Cadastrar(PizzaPedido pedido)
     {
         _context.Tamanho.Attach(pedido.Tamanho);
@@ -57,7 +54,6 @@ public class PizzaPedidoController : ControllerBase
     }
 
     [HttpPut]
-    [Route("alterar")]
     public async Task<ActionResult> Alterar(PizzaPedido pedido)
     {
         _context.PizzaPedido.Update(pedido);
@@ -66,8 +62,7 @@ public class PizzaPedidoController : ControllerBase
         return Ok();
     }
 
-    [HttpDelete]
-    [Route("deletar/{id}")]
+    [HttpDelete("{id}")]
     public async Task<ActionResult> Deletar(int id)
     {
         var pedido = await _context.PizzaPedido.FindAsync(id);

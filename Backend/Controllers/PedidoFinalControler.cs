@@ -15,7 +15,6 @@ public class PedidoFinalController : ControllerBase
     }
 
     [HttpGet]
-    [Route("listar")]
     public async Task<ActionResult<IEnumerable<PedidoFinal>>> Listar()
     {
         var pedidoFinal = await GetPedidosFinaisComTodasAsPropriedades()
@@ -24,8 +23,7 @@ public class PedidoFinalController : ControllerBase
         return pedidoFinal;
     }
 
-    [HttpGet]
-    [Route("listar/{id}")]
+    [HttpGet("{id}")]
     public async Task<ActionResult<PedidoFinal>> Buscar([FromRoute] int id)
     {
         var pedidoFinal = await GetPedidosFinaisComTodasAsPropriedades()
@@ -39,7 +37,6 @@ public class PedidoFinalController : ControllerBase
     }
 
     [HttpPost]
-    [Route("cadastrar")]
     public async Task<IActionResult> Cadastrar(PedidoFinal pedidoFinal)
     {       
         if (!MudarTrackingDosCampos(pedidoFinal))
@@ -78,8 +75,7 @@ public class PedidoFinalController : ControllerBase
         return true;
     }
 
-    [HttpDelete]
-    [Route("excluir/{id}")]
+    [HttpDelete("{id}")]
     public async Task<IActionResult> Excluir([FromRoute] int id)
     {
         var pedidoFinal = await GetPedidosFinaisComTodasAsPropriedades()

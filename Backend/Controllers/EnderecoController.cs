@@ -14,8 +14,7 @@ public class EnderecoController : ControllerBase
         _context = context;
     }
 
-    [HttpGet()]
-    [Route("listar")]
+    [HttpGet]
     public async Task<ActionResult<IEnumerable<Endereco>>> Listar()
     {
         var enderecos = await _context.Endereco
@@ -25,8 +24,7 @@ public class EnderecoController : ControllerBase
         return Ok(enderecos);
     }
 
-    [HttpGet]
-    [Route("listar/{id}")]
+    [HttpGet("{id}")]
     public async Task<ActionResult<Endereco>> Buscar([FromRoute] int id)
     {
         var endereco = await _context.Endereco
@@ -41,7 +39,6 @@ public class EnderecoController : ControllerBase
     }
 
     [HttpPost]
-    [Route("cadastrar")]
     public async Task<IActionResult> Cadastrar(Endereco endereco)
     {
         var regiaoDb = await _context.Regiao
@@ -58,7 +55,6 @@ public class EnderecoController : ControllerBase
     }
  
     [HttpPut]
-    [Route("alterar")]
     public async Task<IActionResult> Alterar(Endereco endereco)
     {
         _context.Endereco.Update(endereco);
@@ -67,8 +63,7 @@ public class EnderecoController : ControllerBase
         return Ok();
     }
 
-    [HttpDelete]
-    [Route("excluir")]
+    [HttpDelete("{id}")]
     public async Task<IActionResult> Excluir(int id)
     {
         var endereco = await _context.Endereco.FindAsync(id);

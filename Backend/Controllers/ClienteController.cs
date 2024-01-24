@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 
 namespace pizzaria;
@@ -16,7 +15,6 @@ public class ClienteController : ControllerBase
     }
 
     [HttpGet]
-    [Route("listar")]
     public async Task<ActionResult<IEnumerable<Cliente>>> ListarTodos()
     {
         var clientes = await _context.Cliente
@@ -26,8 +24,7 @@ public class ClienteController : ControllerBase
         return Ok(clientes);
     }
 
-    [HttpGet]
-    [Route("listar/{cpf}")]
+    [HttpGet("{cpf}")]
     public async Task<ActionResult<Cliente>> BuscarPorCPF(string cpf)
     {
         var cliente = await _context.Cliente
@@ -41,8 +38,7 @@ public class ClienteController : ControllerBase
         return Ok(cliente);
     }
 
-    [HttpGet]
-    [Route("{cpf}/pedidos")]
+    [HttpGet("{cpf}/pedidos")]
     public async Task<IActionResult> ListarPedidosPorCliente([FromRoute] string cpf)
     {
         var pedidos = await GetPedidosFinaisComTodasAsPropriedades()
@@ -53,7 +49,6 @@ public class ClienteController : ControllerBase
     }
 
     [HttpPost]
-    [Route("cadastrar")]
     public async Task<ActionResult<Cliente>> Cadastrar(Cliente cliente)
     {
         if (_context.Cliente.Contains(cliente)) 
@@ -83,7 +78,6 @@ public class ClienteController : ControllerBase
     }
 
     [HttpPut]
-    [Route("alterar")]
     public async Task<ActionResult> Alterar(Cliente cliente)
     {
         _context.Cliente.Update(cliente);
@@ -93,8 +87,7 @@ public class ClienteController : ControllerBase
     }
 
     // FIX: excluir nao funciona devido ao relacionamento
-    [HttpDelete]
-    [Route("excluir/{cpf}")]
+    [HttpDelete("{cpf}")]
     public async Task<ActionResult> Deletar(string cpf)
     {
         var cliente = await _context.Cliente

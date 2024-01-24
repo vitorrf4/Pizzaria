@@ -15,7 +15,6 @@ public class SaborController : ControllerBase
     }
 
     [HttpGet]
-    [Route("listar")]
     public async Task<ActionResult<IEnumerable<Sabor>>> Listar()
     {
         var sabores = await _context.Sabor.ToListAsync();
@@ -23,8 +22,7 @@ public class SaborController : ControllerBase
         return Ok(sabores);
     }
 
-    [HttpGet]
-    [Route("listar/{id}")]
+    [HttpGet("{id}")]
     public async Task<ActionResult<Sabor>> Buscar([FromRoute] int id)   
     {
         var sabor = await _context.Sabor.FindAsync(id);
@@ -35,7 +33,6 @@ public class SaborController : ControllerBase
     }
 
     [HttpPost]
-    [Route("cadastrar")]
     public async Task<IActionResult> Cadastrar(Sabor sabor)
     {
         await _context.AddAsync(sabor);
@@ -45,7 +42,6 @@ public class SaborController : ControllerBase
     }
 
     [HttpPut]
-    [Route("alterar")]
     public async Task<IActionResult> Alterar(Sabor sabor)
     {
         _context.Sabor.Update(sabor);
@@ -54,8 +50,7 @@ public class SaborController : ControllerBase
         return Ok();
     }
 
-    [HttpDelete]
-    [Route("excluir/{id}")]
+    [HttpDelete("{id}")]
     public async Task<IActionResult> Excluir(int id)
     {
         var sabor = await _context.Sabor.FindAsync(id);

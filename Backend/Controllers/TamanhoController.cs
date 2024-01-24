@@ -15,7 +15,6 @@ public class TamanhoController : ControllerBase
     }
 
     [HttpGet]
-    [Route("listar")]
     public async Task<ActionResult<IEnumerable<Tamanho>>> Listar()
     {
         var tamanhos = await _context.Tamanho.ToListAsync();
@@ -23,8 +22,7 @@ public class TamanhoController : ControllerBase
         return tamanhos;
     }
 
-    [HttpGet]
-    [Route("listar/{nome}")]
+    [HttpGet("{nome}")]
     public async Task<ActionResult<Tamanho>> Buscar([FromRoute] string nome)
     {
         var Tamanho = await _context.Tamanho.FindAsync(nome);
@@ -35,7 +33,6 @@ public class TamanhoController : ControllerBase
     }
 
     [HttpPost]
-    [Route("cadastrar")]
     public async Task<IActionResult> Cadastrar(Tamanho tamanho)
     {
         await _context.AddAsync(tamanho);
@@ -45,7 +42,6 @@ public class TamanhoController : ControllerBase
     }
 
     [HttpPut]
-    [Route("alterar")]
     public async Task<IActionResult> Alterar (Tamanho tamanho)
     {
         _context.Tamanho.Update(tamanho);
@@ -54,8 +50,7 @@ public class TamanhoController : ControllerBase
         return Ok();
     }
 
-    [HttpDelete]
-    [Route("excluir/{nome}")]
+    [HttpDelete("{nome}")]
     public async Task<IActionResult> Excluir(string nome)
     {
         var tamanho = await _context.Tamanho.FindAsync(nome);

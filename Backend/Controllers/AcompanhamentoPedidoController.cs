@@ -14,8 +14,7 @@ public class AcompanhamentoPedidoController : ControllerBase
         _context = context;
     }
 
-    [HttpGet()]
-    [Route("listar")]
+    [HttpGet]
     public async Task<ActionResult<IEnumerable<AcompanhamentoPedido>>> Listar()
     {
        var acompPedidos = await _context.AcompanhamentoPedido
@@ -25,8 +24,7 @@ public class AcompanhamentoPedidoController : ControllerBase
         return acompPedidos;
     }
 
-    [HttpGet]
-    [Route("listar/{id}")]
+    [HttpGet("{id}")]
     public async Task<ActionResult<AcompanhamentoPedido>> Buscar([FromRoute] int id)   
     {
         var acompPedido = await _context.AcompanhamentoPedido
@@ -41,7 +39,6 @@ public class AcompanhamentoPedidoController : ControllerBase
     }
 
     [HttpPost]
-    [Route("cadastrar")]
     public async Task<IActionResult> Cadastrar(AcompanhamentoPedido acompanhamentoPedido)
     {
         _context.Acompanhamento.Attach(acompanhamentoPedido.Acompanhamento);
@@ -55,7 +52,6 @@ public class AcompanhamentoPedidoController : ControllerBase
     }
 
     [HttpPut]
-    [Route("alterar")]
     public async Task<IActionResult> Alterar(AcompanhamentoPedido acompanhamentoPedido)
     {
         var acompanhamentoExisteNoBanco = await _context.AcompanhamentoPedido.ContainsAsync(acompanhamentoPedido);
@@ -71,8 +67,7 @@ public class AcompanhamentoPedidoController : ControllerBase
         return Ok();
     }
 
-    [HttpDelete]
-    [Route("excluir")]
+    [HttpDelete("{id}")]
     public async Task<IActionResult> Excluir(int id)
     {
         var acompanhamentoPedido = await _context.AcompanhamentoPedido.FindAsync(id);

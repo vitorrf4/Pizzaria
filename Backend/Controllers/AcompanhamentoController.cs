@@ -14,8 +14,7 @@ public class AcompanhamentoController : ControllerBase
         _context = context;
     }
 
-    [HttpGet()]
-    [Route("listar")]
+    [HttpGet]
     public async Task<ActionResult<IEnumerable<Acompanhamento>>> Listar()
     {
         var acompanhamentos = await _context.Acompanhamento.ToListAsync();
@@ -23,8 +22,7 @@ public class AcompanhamentoController : ControllerBase
         return acompanhamentos;
     }
 
-    [HttpGet]
-    [Route("listar/{id}")]
+    [HttpGet("{id}")]
     public async Task<ActionResult<Acompanhamento>> Buscar([FromRoute] int id)   
     {
         var Acompanhamento = await _context.Acompanhamento.FindAsync(id);
@@ -35,7 +33,6 @@ public class AcompanhamentoController : ControllerBase
     }
 
     [HttpPost]
-    [Route("cadastrar")]
     public async Task<IActionResult> Cadastrar(Acompanhamento acompanhamento)
     {
         await _context.AddAsync(acompanhamento);
@@ -45,7 +42,6 @@ public class AcompanhamentoController : ControllerBase
     }
 
     [HttpPut]
-    [Route("alterar")]
     public async Task<IActionResult> Alterar(Acompanhamento acompanhamento)
     {
         _context.Acompanhamento.Update(acompanhamento);
@@ -53,8 +49,7 @@ public class AcompanhamentoController : ControllerBase
         return Ok();
     }
 
-    [HttpDelete]
-    [Route("excluir")]
+    [HttpDelete("{id}")]
     public async Task<IActionResult> Excluir(int id)
     {
         var acompanhamento = await _context.Acompanhamento.FindAsync(id);

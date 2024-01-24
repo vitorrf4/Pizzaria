@@ -16,8 +16,7 @@ public class RegiaoController : ControllerBase
         _context = context;
     }
 
-    [HttpGet()]
-    [Route("listar")]
+    [HttpGet]
     public async Task<ActionResult<IEnumerable<Regiao>>> ListarTodos()
     {   
         var regioes = await _context.Regiao.ToListAsync();
@@ -25,8 +24,7 @@ public class RegiaoController : ControllerBase
         return Ok(regioes); 
     }
 
-    [HttpGet]
-    [Route("listar/{id}")]
+    [HttpGet("{id}")]
     public async Task<ActionResult<Regiao>> BuscarPorId([FromRoute] int id)
     {
         var regiao = await _context.Regiao.FindAsync(id);
@@ -38,7 +36,6 @@ public class RegiaoController : ControllerBase
     }
 
     [HttpPost]
-    [Route("cadastrar")]
     public async Task<ActionResult<Regiao>> Cadastrar(Regiao regiao)
     {
         if (_context.Regiao.Contains(regiao))
@@ -51,7 +48,6 @@ public class RegiaoController : ControllerBase
     }
 
     [HttpPut]
-    [Route("alterar")]
     public async Task<ActionResult> Alterar(Regiao regiao)
     {
         if (!_context.Regiao.Contains(regiao)) 
@@ -63,8 +59,7 @@ public class RegiaoController : ControllerBase
         return Ok();
     }
 
-    [HttpDelete]
-    [Route("deletar/{id}")]
+    [HttpDelete("{id}")]
     public async Task<ActionResult> Deletar(int id)
     {
         var regiao = await _context.Regiao.FindAsync(id);
