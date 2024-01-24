@@ -4,7 +4,7 @@ import { PizzaPedido } from "./PizzaPedido";
 
 export class PedidoFinal {
     id: number = 0;
-    clienteCpf: string = "";
+    clienteCpf: string;
     endereco: Endereco;
     pizzas: PizzaPedido[];
     acompanhamentos: AcompanhamentoPedido[];

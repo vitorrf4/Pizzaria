@@ -7,6 +7,7 @@ public class PizzaPedido
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int  Id { get; set; }
+    // mudar List pra HashSet
     public List<Sabor> Sabores { get; set; } = new List<Sabor>();
     public Tamanho Tamanho { get; set; } = new Tamanho();
     public double Preco { get; set; }
