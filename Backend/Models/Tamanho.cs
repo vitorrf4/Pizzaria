@@ -1,21 +1,16 @@
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace pizzaria;
 
 public class Tamanho
 {
     [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public string Nome { get; set; }
+    public string Nome { get; set; } = "";
     public int QntdFatias { get; set; }
-    public double MultiplicadorPreco { get; set; }
+    public double MultiplicadorPreco { get; set; } = 1;
     public int MaxSabores { get; set; }
 
-    public Tamanho() 
-    { 
-        Nome = "";
-    }
+    public Tamanho() { }
 
     public Tamanho(string nome, int qntdFatias, int maxSabores, double preco)
     { 

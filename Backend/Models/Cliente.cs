@@ -1,24 +1,18 @@
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace pizzaria;
 
 public class Cliente 
 {
     [Key]
-    public string Cpf { get; set; }
-    public string Nome { get; set; }
-    public string Telefone { get; set; }
+    public string Cpf { get; set; } = "";
+    public string Nome { get; set; } = "";
+    public string Telefone { get; set; } = "";
+    // remover dataAniversario
     public DateOnly DataAniversario { get; set; }
-    public Endereco Endereco { get; set; }
+    public Endereco Endereco { get; set; } = new Endereco();
 
-    public Cliente() 
-    {
-        Cpf = "";
-        Nome = "";
-        Telefone = "";
-        Endereco = new Endereco();
-     }
+    public Cliente() { }
 
     public Cliente(string cpf, string nome, string telefone, DateOnly dataAniversario, Endereco endereco)
     {

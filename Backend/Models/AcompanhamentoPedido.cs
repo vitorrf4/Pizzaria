@@ -9,18 +9,13 @@ public class AcompanhamentoPedido
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
-    public Acompanhamento Acompanhamento { get; set; }
+    public Acompanhamento Acompanhamento { get; set; } = new Acompanhamento();
     public int Quantidade { get; set; }
     public double Preco { get; set; }
     [JsonIgnore]
     public PedidoFinal? PedidoFinal { get; set; }
 
-    public AcompanhamentoPedido() 
-    {
-        Acompanhamento = new Acompanhamento();
-        Quantidade = 0;
-        Preco = 0;
-    }
+    public AcompanhamentoPedido() { }
 
     public AcompanhamentoPedido(Acompanhamento acompanhamento, int quantidade)
     {
@@ -36,6 +31,7 @@ public class AcompanhamentoPedido
 
     public override string ToString()
     {
+        // TODO: Return as string
         Console.Write($"Acompanhamento: {Acompanhamento.Nome} | ");
         Console.Write($"Preço Unitário: R${Acompanhamento.Preco} | ");
         Console.Write($"Quantidade: {Quantidade} | ");

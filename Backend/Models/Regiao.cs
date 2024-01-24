@@ -9,14 +9,11 @@ public class Regiao
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
-    public string Nome { get; set; }
+    public string Nome { get; set; } = "";
     [JsonIgnore]
     public List<Endereco> ?Enderecos { get; set; }
      
-    public Regiao() 
-    { 
-        Nome = "";
-    }
+    public Regiao() { }
 
     public Regiao(string nome)
     {

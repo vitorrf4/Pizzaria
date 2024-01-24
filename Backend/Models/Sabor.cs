@@ -9,16 +9,12 @@ public class Sabor
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
-    public string Nome { get; set; }
+    public string Nome { get; set; } = "";
     public double Preco { get; set; }
     [JsonIgnore]
     public List<PizzaPedido>? Pedidos { get; set; } = new();
 
-    public Sabor() 
-    {
-        Nome = "";
-        // Pedidos = new List<PizzaPedido>();
-    }
+    public Sabor() { }
 
     public Sabor(string nome, double preco)
     {

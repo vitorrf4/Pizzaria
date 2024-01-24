@@ -9,22 +9,16 @@ public class Endereco
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
-    public string Rua { get; set; }
+    public string Rua { get; set; } = "";
     public int Numero { get; set; }
-    public string Cep { get; set; }
-    public Regiao Regiao { get; set; }
+    public string Cep { get; set; } = "";
+    public Regiao Regiao { get; set; } = new Regiao();
     public string ?Complemento { get; set; }
     [JsonIgnore]
     [ForeignKey("Cliente.Endereco")]
     public Cliente ?Cliente { get; set; }
     
-    public Endereco() 
-    {
-        Rua = "";
-        Numero = 0;
-        Cep = "";
-        Regiao = new Regiao();
-    } 
+    public Endereco() { } 
 
     public Endereco(string rua, int numero, string cep, Regiao regiao, string ?complemento = null)
     {

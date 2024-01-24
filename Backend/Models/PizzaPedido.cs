@@ -9,20 +9,16 @@ public class PizzaPedido
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int  Id { get; set; }
-    public List<Sabor>? Sabores { get; set; }
-    public Tamanho Tamanho { get; set; }
+    public List<Sabor> Sabores { get; set; } = new List<Sabor>();
+    public Tamanho Tamanho { get; set; } = new Tamanho();
     public double Preco { get; set; }
     public int Quantidade { get; set;}
     [JsonIgnore]
     public PedidoFinal? PedidoFinal { get; set; }
 
-    public PizzaPedido() 
-    {
-        Sabores = new List<Sabor>();
-        Tamanho = new Tamanho();
-    }
+    public PizzaPedido() { }
 
-    public PizzaPedido(List<Sabor> sabores, Tamanho tamanho, int quantidade)
+    public PizzaPedido(List<Sabor> sabores, Tamanho tamanho, int quantidade = 1)
     {
         Sabores = sabores;
         Tamanho = tamanho;
@@ -33,18 +29,16 @@ public class PizzaPedido
     public double CalcularPreco()
     {
         // Fórmula do preco = ((sabor1 + sabor2...saborN) / quantidade de sabores) + (preco * (preco do tamanho / 100))
-
         double precoTotal = 0.0;
 
         Sabores.ForEach(sabor => precoTotal += sabor.Preco);
 
         if (Sabores.Count > 1)
-            precoTotal = precoTotal / Sabores.Count;
-        
+            precoTotal /= Sabores.Count;
 
         precoTotal *= Tamanho.MultiplicadorPreco;
-
         Preco = precoTotal * Quantidade;
+
         return Preco;
     }
 

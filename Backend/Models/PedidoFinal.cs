@@ -8,40 +8,31 @@ public class PedidoFinal
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
-    public Cliente Cliente { get; set; }
-    public List<PizzaPedido> ?Pizzas { get; set; }
-    public List<AcompanhamentoPedido> ?Acompanhamentos { get; set; }
+    public Cliente Cliente { get; set; } = new Cliente();
     public double PrecoTotal { get; private set; }
     public DateTime HoraPedido { get; set; }
+    public List<PizzaPedido> Pizzas { get; set; }= new List<PizzaPedido>();
+    public List<AcompanhamentoPedido> Acompanhamentos { get; set; } = new List<AcompanhamentoPedido>();
 
-    public PedidoFinal() 
-    {
-        Cliente = new Cliente();
-        Pizzas = new List<PizzaPedido>();
-    }
+    public PedidoFinal() { }
 
     public PedidoFinal(Cliente cliente, List<PizzaPedido> pizzas, List<AcompanhamentoPedido> ?acompanhamentos)
     {
         Cliente = cliente;
         Pizzas = pizzas;
-        Acompanhamentos = acompanhamentos;
+        Acompanhamentos = acompanhamentos ?? new List<AcompanhamentoPedido>();
         HoraPedido = DateTime.Now;
         CalcularPrecoTotal();
     }
 
-    public double CalcularPrecoTotal()
+    public void CalcularPrecoTotal()
     {
         double precoTotal = 0;
 
         Pizzas.ForEach(pizza => precoTotal += pizza.Preco);
-        
         Acompanhamentos?.ForEach(acomp =>  precoTotal += acomp.Preco);
-            
-        int aniversarioCliente = Cliente.DataAniversario.DayOfYear;
-        int dataPedido = DateOnly.FromDateTime(HoraPedido).DayOfYear;
 
         PrecoTotal = precoTotal;
-        return PrecoTotal;
     }
 
     public override string ToString()
