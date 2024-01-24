@@ -1,27 +1,30 @@
 <div class="container mt-4">
   <h2 class="mt-4 mb-4">Meus Pedidos</h2>
 
-  <!-- ngIf appearing for one second before initialization -->
-  <h2 *ngIf="pedidos.length <= 0">Nenhum pedido realizado ainda, veja nosso <a routerLink="/home/sabores">cardápio!</a> </h2>
+  <div *ngIf="!(pedidos$ | async); else loaded">
+    Carregando...
+  </div>
 
-  <ul *ngFor="let pedido of pedidos" class="card">
-    <li >
-      <label class="font-weight-bold">Pedido {{pedido.id}}</label>
-
-        <ul>
-          <li *ngFor="let pizza of pedido.pizzas" class="mb-2">
-            {{getDescricaoPizza(pizza)}} | Quantidade: {{pizza.quantidade}} | Preço: {{pizza.preco | currency : "BRL"}}
-          </li>
-        </ul>
-
-        <ul *ngIf="pedido.acompanhamentos.length > 0">
-          <li *ngFor="let acomp of pedido.acompanhamentos" class="mb-2">
-            {{getDescricaoAcompanhamento(acomp)}} | Quantidade: {{acomp.quantidade}} | Preço: {{acomp.preco | currency : "BRL"}}
-          </li>
-        </ul>
-
-        <p class="mb-2">Data: {{pedido.horaPedido | date : "dd/MM/yyyy HH:mm"}}</p>
-        <p class="mb-2 font-weight-bold">Total do Pedido: {{pedido.precoTotal | currency : "BRL"}}</p>
-    </li>
-  </ul>
+  <ng-template #loaded>
+    <h2 *ngIf="pedidos.length <= 0">
+      Nenhum pedido realizado ainda, veja nosso <a routerLink="/home/sabores">cardápio!</a> 
+    </h2>
+  
+    <ul *ngFor="let pedido of pedidos" class="card">
+      <li>
+        <label class="font-weight-bold">Pedido {{pedido.id}}</label>
+  
+          <ul>
+            <li *ngFor="let pizza of pedido.pizzas" class="mb-2">
+              {{getDescricaoPizza(pizza)}} | Quantidade: {{pizza.quantidade}} | Preço: {{pizza.preco | currency : "BRL"}}
+            </li>
+            <li *ngFor="let acomp of pedido.acompanhamentos" class="mb-2">
+              {{getDescricaoAcompanhamento(acomp)}} | Quantidade: {{acomp.quantidade}} | Preço: {{acomp.preco | currency : "BRL"}}
+            </li>
+          </ul>
+          
+          <p class="mb-2">Data: {{pedido.horaPedido | date : "dd/MM/yyyy HH:mm"}}</p>
+          <p class="mb-2 font-weight-bold">Total do Pedido: {{pedido.precoTotal | currency : "BRL"}}</p>
+    </ul>
+  </ng-template>
 </div>

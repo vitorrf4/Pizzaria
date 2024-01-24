@@ -4,6 +4,7 @@ import {ClienteService} from "../../services/cliente.service";
 import {LoginService} from "../../services/login.service";
 import {PizzaPedido} from "../../models/PizzaPedido";
 import {AcompanhamentoPedido} from "../../models/AcompanhamentoPedido";
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-pedidos',
@@ -11,15 +12,17 @@ import {AcompanhamentoPedido} from "../../models/AcompanhamentoPedido";
   styleUrls: ['./pedidos.component.css']
 })
 export class PedidosComponent {
+  pedidos$: Observable<PedidoFinal[]>;
   pedidos: PedidoFinal[] = [];
 
   constructor(clienteService: ClienteService, loginService: LoginService) {
     const cpf = loginService.clienteLogado.cpf;
 
-    clienteService.listarPedidosPorCliente(cpf).subscribe(resposta => {
+    this.pedidos$ = clienteService.listarPedidosPorCliente(cpf);
+    this.pedidos$.subscribe(resposta => {
       this.pedidos = resposta;
-      this.ordernarPedidoPorData();
-    })
+      this.pedidos.sort((a, b) => b.id - a.id);
+    });
   }
 
   getDescricaoPizza(pizza: PizzaPedido): string {
@@ -32,9 +35,5 @@ export class PedidosComponent {
     acomp = new AcompanhamentoPedido(acomp.acompanhamento, acomp.quantidade);
 
     return acomp.getDescricao();
-  }
-
-  ordernarPedidoPorData() {
-    this.pedidos.sort((a, b) => b.id - a.id);
   }
 }
