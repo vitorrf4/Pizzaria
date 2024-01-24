@@ -11,7 +11,6 @@ import {CarrinhoService} from "../../services/carrinho.service";
 })
 export class AcompanhamentoComponent {
   acompanhamentos: Acompanhamento[] = []
-  // Array que guarda a quantidade colocada no input de cada acompanhamento
   quantidadeArray: number[] = [];
 
   constructor(private service: AcompanhamentoService, private carrinhoService: CarrinhoService) {

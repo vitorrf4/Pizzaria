@@ -8,9 +8,6 @@ export class LoginService {
   clienteLogado: Cliente;
 
   constructor() {
-    // Quando o programa é iniciado, ele pega o valor "cliente" salvo na sessão do browser, transforma
-    // para um JSON e o atribue para a variavel clienteLogado que pode ser usado
-    // pelos outros componentes.
     this.clienteLogado = JSON.parse(sessionStorage.getItem("cliente")!);
   }
 

@@ -19,7 +19,7 @@ export class PizzasComponent {
   maxQntdSabores : number[] = [];
   quantidadeSabores = 1;
   quantidadePizzas = 1;
-  pizza!: PizzaPedido;
+  pizza: PizzaPedido;
 
   constructor(private saborService: SaborService,
               private tamanhoService: TamanhoService,
@@ -37,6 +37,8 @@ export class PizzasComponent {
       this.getMaxSabores();
       this.construirPizza();
     });
+
+    this.pizza = new PizzaPedido(this.saboresSelecionados, this.tamanhoSelecionado, 1);
   }
 
   construirPizza() {
@@ -62,7 +64,7 @@ export class PizzasComponent {
     }
 
     if (this.saboresSelecionados.includes(sabor)) {
-      alert(`${sabor.nome} ja foi selecionado`);
+      alert(`${sabor.nome} já está presente na pizza`);
       return;
     }
 

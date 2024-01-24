@@ -24,6 +24,7 @@ export class CadastroComponent {
     this.iniciaFormularios();
   }
 
+  // mudar pra ngInit
   iniciaFormularios() {
     this.formularioCliente = new FormGroup({
       cpf: new FormControl(null),

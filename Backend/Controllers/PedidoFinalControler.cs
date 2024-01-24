@@ -55,9 +55,6 @@ public class PedidoFinalController : ControllerBase
     }
 
     private bool MudarTrackingDosCampos(PedidoFinal pedidoFinal) {
-        // Codigo que checa se as entidades do pedidoFinal tem uma chave primaria
-        // ja definida, se sim, marca a entidade como Detached, nao sera adicionado no banco
-        // caso nao tenha, sera adicionada 
         _context.ChangeTracker.TrackGraph(pedidoFinal, p =>
         {
             if (!p.Entry.IsKeySet)
@@ -102,8 +99,6 @@ public class PedidoFinalController : ControllerBase
 
     private IQueryable<PedidoFinal> GetPedidosFinaisComTodasAsPropriedades()
     {
-        // Campos que sao objetos nao sao retornados automaticamente do banco,
-        // precisamos do Include() para que eles sejam incluidos
         return _context.PedidoFinal
             .Include(p => p.Cliente.Endereco.Regiao)
             .Include(p => p.Acompanhamentos).ThenInclude(a => a.Acompanhamento)

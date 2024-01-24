@@ -3,16 +3,16 @@ using Microsoft.EntityFrameworkCore;
 namespace pizzaria;
 
 public class PizzariaDBContext : DbContext{
-    public DbSet<Cliente>? Cliente { get; set; }
-    public DbSet<PizzaPedido>? PizzaPedido { get; set; }
-    public DbSet<PedidoFinal>? PedidoFinal { get; set; }
-    public DbSet<Acompanhamento>? Acompanhamento { get; set; }
-    public DbSet<Tamanho>? Tamanho { get; set; }
-    public DbSet<Sabor>? Sabor { get; set; }
-    public DbSet<Regiao>? Regiao { get; set; }
-    public DbSet<AcompanhamentoPedido>? AcompanhamentoPedido { get; set; }
-    public DbSet<Endereco>? Endereco { get; set; }
-    public DbSet<Promocao>? Promocao { get; set; }
+    public DbSet<Cliente> Cliente { get; set; }
+    public DbSet<PizzaPedido> PizzaPedido { get; set; }
+    public DbSet<PedidoFinal> PedidoFinal { get; set; }
+    public DbSet<Acompanhamento> Acompanhamento { get; set; }
+    public DbSet<Tamanho> Tamanho { get; set; }
+    public DbSet<Sabor> Sabor { get; set; }
+    public DbSet<Regiao> Regiao { get; set; }
+    public DbSet<AcompanhamentoPedido> AcompanhamentoPedido { get; set; }
+    public DbSet<Endereco> Endereco { get; set; }
+    public DbSet<Promocao> Promocao { get; set; }
 
     public PizzariaDBContext() 
     {
@@ -23,7 +23,6 @@ public class PizzariaDBContext : DbContext{
     {
         optionsBuilder.UseSqlite(connectionString: "DataSource=pizzaria.db;Cache=shared");
         optionsBuilder.EnableSensitiveDataLogging();
-        
     }
 
     public void InicializaValores()

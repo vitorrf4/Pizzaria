@@ -3,7 +3,6 @@ import {Pedido} from "../models/Pedido";
 import {BehaviorSubject} from "rxjs";
 import {PizzaPedido} from "../models/PizzaPedido";
 import {AcompanhamentoPedido} from "../models/AcompanhamentoPedido";
-import {Acompanhamento} from "../models/Acompanhamento";
 
 @Injectable({
   providedIn: 'root'

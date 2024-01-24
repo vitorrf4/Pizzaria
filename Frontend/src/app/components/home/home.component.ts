@@ -12,9 +12,6 @@ import {BehaviorSubject} from "rxjs";
 })
 export class HomeComponent {
   cliente : Cliente;
-  // O tipo BehaviorSubject liga uma variavel a outra, toda vez que uma variavel mudar
-  // a outra atualizara automaticamente, nesse caso quando qualquer item for adicionado
-  // ao carrinho, a quantidade mostrada no componente será atualizada
   quantidadeItensCarrinho: BehaviorSubject<number>;
 
   constructor(private loginService: LoginService,
@@ -24,6 +21,7 @@ export class HomeComponent {
     this.quantidadeItensCarrinho = carrinhoService.quantidadeItensCarrinho;
   }
 
+  // logout
   deslogar() {
     this.loginService.deslogarCliente();
     this.router.navigateByUrl("login").then();

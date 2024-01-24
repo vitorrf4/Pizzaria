@@ -24,7 +24,7 @@ const routes: Routes = [
       { path: "sabores", component: PizzasComponent },
       { path: "carrinho", component: CarrinhoComponent },
     ]},
-  { path: "**", redirectTo: "/login" } // Rota padrão para tratamento de rotas não reconhecidas
+  { path: "**", redirectTo: "/login" }
 ];
 
 @NgModule({

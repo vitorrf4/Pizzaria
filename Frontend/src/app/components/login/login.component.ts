@@ -26,9 +26,7 @@ export class LoginComponent {
       alert("Cpf está vazio");
       return;
     }
-
-    // Busca o cpf no banco de dados e caso exista, salva o cliente
-    // na sessão, e navega para a página "home"
+    
     this.clienteService.listarCpf(cpf).subscribe({
       next: cliente => {
         this.loginService.salvarClienteLogado(cliente);
