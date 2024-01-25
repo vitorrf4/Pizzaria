@@ -59,12 +59,10 @@ public class PedidoFinalController : ControllerBase
         {
             if (!p.Entry.IsKeySet)
                 p.Entry.State = EntityState.Added;                                                                       
-            else if (p.Entry.Metadata.DisplayName() == "Sabor") {
+            else if (p.Entry.Metadata.DisplayName() == "Sabor")
                 p.Entry.State = EntityState.Detached;
-            }
-            else {
+            else 
                 p.Entry.State = EntityState.Unchanged;   
-            }
         });
 
         return true;
