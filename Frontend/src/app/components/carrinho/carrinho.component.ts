@@ -13,7 +13,7 @@ import { Router} from "@angular/router";
 })
 export class CarrinhoComponent implements OnInit {
   itensCarrinho: Pedido[] = [];
-  pedidoFinal: PedidoFinal = new PedidoFinal();
+  pedidoFinal: PedidoFinal | null = null;
 
   constructor(private router : Router,
               private carrinhoService: CarrinhoService,
@@ -28,10 +28,6 @@ export class CarrinhoComponent implements OnInit {
   }
 
   construirPedido() {
-    if (this.itensCarrinho.length <= 0) {
-      return;
-    }
-
     const cliente = this.clienteService.getClienteLogado();
     const pizzas = this.carrinhoService.filtrarPizzasNoCarrinho();
     const acompanhamentos = this.carrinhoService.filtrarAcompanhamentosNoCarrinho();
@@ -44,8 +40,7 @@ export class CarrinhoComponent implements OnInit {
   }
 
   finalizarPedido() {
-    this.construirPedido();
-    if (this.pedidoFinal.pizzas.length <= 0) {
+    if (!this.pedidoFinal || this.pedidoFinal.pizzas.length <= 0) {
       alert("Inclua pelo menos uma pizza no seu pedido");
       return;
     }
