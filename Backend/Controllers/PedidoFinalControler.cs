@@ -39,24 +39,32 @@ public class PedidoFinalController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Cadastrar(PedidoFinal pedidoFinal)
     {       
-        MudarTrackingDosCampos(pedidoFinal);
-
         pedidoFinal.CalcularPrecoTotal();
         pedidoFinal.HoraPedido = DateTime.Now;
 
-        await _context.PedidoFinal.AddAsync(pedidoFinal);
+        MudarTrackingDosCampos(pedidoFinal);
         await _context.SaveChangesAsync();
 
         return Created("", pedidoFinal);
     }
 
     private bool MudarTrackingDosCampos(PedidoFinal pedidoFinal) {
+        foreach (var p in pedidoFinal.Pizzas) {
+            _context.Attach(p);
+            _context.SaveChanges();
+            _context.ChangeTracker.Clear();
+        }
+
         _context.ChangeTracker.TrackGraph(pedidoFinal, p =>
         {
             if (!p.Entry.IsKeySet)
                 p.Entry.State = EntityState.Added;                                                                       
-            else
-                p.Entry.State = EntityState.Unchanged;
+            else if (p.Entry.Metadata.DisplayName() == "Sabor") {
+                p.Entry.State = EntityState.Detached;
+            }
+            else {
+                p.Entry.State = EntityState.Unchanged;   
+            }
         });
 
         return true;
