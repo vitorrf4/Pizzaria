@@ -6,26 +6,25 @@ export class PizzaPedido implements Pedido {
   id: number = 0;
   sabores: Sabor[] = [];
   tamanho: Tamanho = new Tamanho();
-  preco: number = 0;
-  quantidade: number;
+  quantidade: number = 1;
 
   constructor(sabores: Sabor[], tamanho: Tamanho, quantidade: number) {
     this.sabores = sabores;
     this.tamanho = tamanho;
     this.quantidade = quantidade;
-    this.calcularPreco();
   }
 
-  calcularPreco() {
-    this.preco = 0;
+  get preco() {
+    let total = 0;
     
-    this.sabores.forEach(sabor => this.preco += sabor.preco);
-    this.preco *= this.tamanho.multiplicadorPreco;
+    this.sabores.forEach(sabor => total += sabor.preco);
+    total *= this.tamanho.multiplicadorPreco;
 
-    if (this.sabores.length > 1) 
-      this.preco = this.preco / this.sabores.length;
+    if (this.sabores.length > 1) {
+      total /= this.sabores.length;
+    }
 
-    this.preco *= this.quantidade;
+    return total *= this.quantidade;
   }
 
   getDescricao(): string {
@@ -41,5 +40,15 @@ export class PizzaPedido implements Pedido {
     }
 
     return tamanho + nomesSabores;
+  }
+  
+  toJSON() {
+    return {
+      id: this.id,
+      sabores: this.sabores,
+      tamanho: this.tamanho,
+      quantidade: this.quantidade,
+      preco: this.preco
+    }
   }
 }

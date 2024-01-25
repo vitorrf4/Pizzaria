@@ -1,11 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {Pedido} from "../../models/Pedido";
 import {CarrinhoService} from "../../services/carrinho.service";
 import {PedidoFinal} from "../../models/PedidoFinal";
 import {LoginService} from "../../services/login.service";
 import {PedidoFinalService} from "../../services/pedido-final.service";
 import { Router} from "@angular/router";
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-carrinho',

@@ -1,12 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {Cliente} from "../../models/Cliente";
-import {Regiao} from "../../models/Regiao";
 import {ClienteService} from "../../services/cliente.service";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {LoginService} from "../../services/login.service";
 import {CepService} from "../../services/cep.service";
-import { Endereco } from 'src/app/models/Endereco';
 
 @Component({
   selector: 'app-cadastro',
@@ -48,8 +46,7 @@ export class CadastroComponent implements OnInit{
 
     this.cep.buscarCep(cep).subscribe({
       next : res => {
-        const { logradouro, bairro} = res;
-
+        const { logradouro, bairro } = res;
         if (!logradouro) {
           alert("CEP não encontrado");
           return;
@@ -58,9 +55,7 @@ export class CadastroComponent implements OnInit{
         this.form.get("endereco.rua")?.setValue(logradouro);
         this.form.get("endereco.regiao.nome")?.setValue(bairro);
       },
-      error: () => {
-        alert("CEP inválido");
-      }
+      error: () => alert("CEP inválido")
     });
   }
 
@@ -83,6 +78,7 @@ export class CadastroComponent implements OnInit{
   cadastroEstaValido(): boolean {
     if (this.form.invalid) {
       alert("Todos os campos devem ser preenchidos");
+      return false;
     }
 
     return true;

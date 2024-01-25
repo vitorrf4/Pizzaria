@@ -83,7 +83,6 @@ export class PizzasComponent implements OnInit {
       return;
     }
 
-    this.pizza.calcularPreco();
     this.carrinhoService.adicionarNoCarrinho(this.pizza);
 
     alert("Pizza adicionada!");
