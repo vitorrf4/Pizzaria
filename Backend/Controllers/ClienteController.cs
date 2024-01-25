@@ -54,9 +54,6 @@ public class ClienteController : ControllerBase
         if (_context.Cliente.Contains(cliente)) 
             return Conflict("Um cliente com esse CPF já está cadastrado");
 
-        // Verifica se a regiao ja esta cadastrada, se sim, simplesmente
-        // adiciona a regiao pra dentro do cliente, caso contrário, a função
-        // não faz nada e a região será criada junto com o cliente na função principal 
         VerificaRegiao(cliente);
 
         await _context.AddAsync(cliente);
@@ -98,19 +95,17 @@ public class ClienteController : ControllerBase
         if (cliente == null) 
             return NotFound("Cliente não encontrado");
 
-        if (cliente.Endereco != null) 
-            _context.Endereco.Remove(cliente.Endereco);
-
+        _context.Endereco.Remove(cliente.Endereco);
         _context.Cliente.Remove(cliente);
-        await _context.SaveChangesAsync();
 
+        await _context.SaveChangesAsync();
         return NoContent();
     }
- 
+
     private IQueryable<PedidoFinal> GetPedidosFinaisComTodasAsPropriedades()
     {
         return _context.PedidoFinal
-            // .Include(p => p.ClienteCpf.Endereco.Regiao)
+            .Include(p => p.Endereco)
             .Include(p => p.Acompanhamentos).ThenInclude(a => a.Acompanhamento)
             .Include(p => p.Pizzas).ThenInclude(p => p.Tamanho)
             .Include(p => p.Pizzas).ThenInclude(p => p.Sabores);

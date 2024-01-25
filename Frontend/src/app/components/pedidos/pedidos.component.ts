@@ -12,8 +12,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./pedidos.component.css']
 })
 export class PedidosComponent implements OnInit {
-  pedidos$!: Observable<PedidoFinal[]>;
-  pedidos: PedidoFinal[] = [];
+  pedidos!: PedidoFinal[];
 
   constructor(private clienteService: ClienteService,
               private loginService: LoginService) { }
@@ -21,9 +20,7 @@ export class PedidosComponent implements OnInit {
   ngOnInit() {
     const cpf = this.loginService.getClienteLogado().cpf;
 
-    this.pedidos$ = this.clienteService.listarPedidosPorCliente(cpf);
-    // FIX: being called twice
-    this.pedidos$.subscribe(resposta => {
+    this.clienteService.listarPedidosPorCliente(cpf).subscribe(resposta => {
       this.pedidos = resposta;
       this.pedidos.sort((a, b) => b.id - a.id);
     });

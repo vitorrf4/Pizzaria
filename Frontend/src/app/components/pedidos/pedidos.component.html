@@ -1,7 +1,7 @@
 <div class="container mt-4">
   <h2 class="mt-4 mb-4">Meus Pedidos</h2>
 
-  <div *ngIf="!(pedidos$ | async); else loaded">
+  <div *ngIf="!pedidos; else loaded">
     Carregando...
   </div>
 
