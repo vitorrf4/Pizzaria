@@ -1,3 +1,5 @@
+<p>{{debug | json}}</p>
+
 <div class="container">
   <div class="flex-parent">
     <!-- Cardapio -->
@@ -16,7 +18,7 @@
             <td class="font-weight-bold">{{sabor.nome}}</td>
             <td class="font-weight-bold">{{sabor.preco * tamanhoSelecionado.multiplicadorPreco | currency : "BRL"}}</td>
             <td>
-              <button (click)="adicionarSabor(sabor); construirPizza()" class="btn btn-primary">Selecionar</button>
+              <button (click)="adicionarSabor(sabor); construirPizza()" class="btn btn-primary">+</button>
             </td>
           </tr>
         </table>
@@ -27,7 +29,7 @@
         <h2>Monte sua pizza</h2>
         <label>Tamanho: </label>
 
-        <select [(ngModel)]="tamanhoSelecionado" (change)="getMaxSabores(); construirPizza()">
+        <select [(ngModel)]="tamanhoSelecionado" (change)="construirPizza()">
           <option value="" disabled selected>Selecione um tamanho</option>
           <option *ngFor="let tamanho of tamanhosDB" [ngValue]="tamanho" >{{tamanho.nome}}</option>
         </select>
@@ -46,7 +48,7 @@
 
         <p>Pizza {{pizza.tamanho.nome}}</p>
         <div *ngFor="let pizza of pizza.sabores; let i = index">
-          <p>{{pizza.nome}} <button (click)="removerSabor(i);construirPizza()" class="btn btn-danger">Remover</button> </p>
+          <p>{{pizza.nome}} <button (click)="removerSabor(i);construirPizza()" class="btn btn-danger">X</button> </p>
         </div>
 
         <label for="qntd" >Quantidade:</label>

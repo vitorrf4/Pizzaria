@@ -5,6 +5,7 @@ import {Tamanho} from "../../models/Tamanho";
 import {TamanhoService} from "../../services/tamanho.service";
 import {PizzaPedido} from "../../models/PizzaPedido";
 import {CarrinhoService} from "../../services/carrinho.service";
+import { Observable, range } from 'rxjs';
 
 @Component({
   selector: 'app-sabor',
@@ -16,7 +17,6 @@ export class PizzasComponent implements OnInit {
   tamanhosDB : Tamanho[] = [];
   tamanhoSelecionado = new Tamanho();
   saboresSelecionados : Sabor[] = [];
-  maxQntdSabores : number[] = [];
   quantidadeSabores = 1;
   quantidadePizzas = 1;
   pizza!: PizzaPedido;
@@ -24,6 +24,30 @@ export class PizzasComponent implements OnInit {
   constructor(private saborService: SaborService,
               private tamanhoService: TamanhoService,
               private carrinhoService: CarrinhoService) { }
+
+  get debug() {
+    return this.pizza;
+  }
+
+  // 1 - get saboresDb and sort
+  // 2 - get tamanhosDb and sort
+  // 3 - set tamanhoSelecionado as broto
+  // 4 - create pizza
+
+  // Usuario pode:
+  // Adicionar sabor
+  // Mudar tamanho da pizza
+  // Mudar quantidade da pizza
+  // Mudar quantidade de sabores
+  // Remover sabor
+
+  // Nao permitir:
+  // Adicionar um sabor duas vezes
+  // Adicionar mais sabores do que o tamanho permite
+  // Adicionar pizza com quantidade ou sabor < 1
+
+  // PS:
+  // Resetar sabores selecionados ao mudar para um tamanho menor que o selecionado
 
   ngOnInit() {
     this.saborService.listar().subscribe(resposta => {
@@ -36,7 +60,6 @@ export class PizzasComponent implements OnInit {
       this.tamanhosDB.sort((tamanhoA, tamanhoB) => tamanhoA.qntdFatias - tamanhoB.qntdFatias);
 
       this.tamanhoSelecionado = this.tamanhosDB[0];
-      this.getMaxSabores();
       this.construirPizza();
     });
 
@@ -51,12 +74,13 @@ export class PizzasComponent implements OnInit {
     this.pizza = new PizzaPedido(this.saboresSelecionados, this.tamanhoSelecionado, this.quantidadePizzas);
   }
 
-  getMaxSabores() {
-    this.maxQntdSabores = [];
-
+  get maxQntdSabores() {
+    const max = [];
     for (let i = 1; i <= this.tamanhoSelecionado.maxSabores; i++) {
-      this.maxQntdSabores.push(i);
+      max.push(i);
     }
+    
+    return max;
   }
 
   adicionarSabor(sabor: Sabor) {
