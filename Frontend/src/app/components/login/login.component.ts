@@ -31,9 +31,9 @@ export class LoginComponent implements OnInit{
     }
     
     this.clienteService.listarCpf(cpf).subscribe({
-      next: cliente => {
+      next: async cliente => {
         this.loginService.salvarClienteLogado(cliente);
-        this.router.navigateByUrl("/home/area-cliente").then();
+        await this.router.navigateByUrl("/home/area-cliente");
       },
       error: err => {
         console.log(err);

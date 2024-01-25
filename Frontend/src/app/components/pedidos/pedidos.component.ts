@@ -4,7 +4,6 @@ import {ClienteService} from "../../services/cliente.service";
 import {LoginService} from "../../services/login.service";
 import {PizzaPedido} from "../../models/PizzaPedido";
 import {AcompanhamentoPedido} from "../../models/AcompanhamentoPedido";
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-pedidos',

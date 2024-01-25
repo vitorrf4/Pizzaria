@@ -23,8 +23,8 @@ export class HomeComponent implements OnInit {
     this.quantidadeItensCarrinho$ = this.carrinhoService.quantidadeItensCarrinho;
   }
 
-  logout() {
+  async logout() {
     this.loginService.deslogarCliente();
-    this.router.navigateByUrl("login").then();
+    await this.router.navigateByUrl("login");
   }
 }
