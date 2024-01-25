@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Cliente} from "../../models/Cliente";
 import {Regiao} from "../../models/Regiao";
 import {ClienteService} from "../../services/cliente.service";
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {LoginService} from "../../services/login.service";
 import {CepService} from "../../services/cep.service";
@@ -14,33 +14,37 @@ import { Endereco } from 'src/app/models/Endereco';
   styleUrls: ['./cadastro.component.css']
 })
 export class CadastroComponent implements OnInit{
-  formularioCliente: any;
-  formularioEndereco: any;
+  form!: FormGroup;
 
   constructor(private clienteService: ClienteService,
               private loginService: LoginService,
               private router: Router,
-              private cep: CepService) { }
+              private cep: CepService,
+              private formBuilder: FormBuilder) { }
 
-  // colocar endereco como formgroup do form cliente
+  get debug() {
+    return this.form.invalid;
+  }
+
   ngOnInit() {
-    this.formularioCliente = new FormGroup({
-      cpf: new FormControl(null),
-      nome: new FormControl(null),
-      telefone: new FormControl(null)
-    });
-
-    this.formularioEndereco = new FormGroup({
-      rua: new FormControl(null),
-      numero: new FormControl(null),
-      cep: new FormControl(null),
-      complemento: new FormControl(null),
-      regiao: new FormControl(null)
+    this.form = this.formBuilder.group({
+      cpf: ["", Validators.required],
+      nome: ["", Validators.required],
+      telefone: ["", Validators.required],
+      endereco: this.formBuilder.group({
+        rua: ["", Validators.required],
+        numero: ["", Validators.required],
+        cep: ["", Validators.required],
+        complemento: ["", Validators.required],
+        regiao: this.formBuilder.group({
+          nome: [""]
+        })
+      })
     });
   }
 
   buscarCEP() {
-    const cep = this.formularioEndereco.value.cep;
+    const cep = this.form.get("endereco.cep")?.value;
 
     this.cep.buscarCep(cep).subscribe({
       next : res => {
@@ -51,27 +55,19 @@ export class CadastroComponent implements OnInit{
           return;
         }
 
-        this.formularioEndereco.get("rua").setValue(logradouro);
-        this.formularioEndereco.get("regiao").setValue(bairro);
+        this.form.get("endereco.rua")?.setValue(logradouro);
+        this.form.get("endereco.regiao.nome")?.setValue(bairro);
       },
       error: () => {
         alert("CEP inválido");
       }
     });
-
   }
 
   cadastrarCliente() {
-    const cliente : Cliente = this.formularioCliente.value;
-    const endereco = this.formularioEndereco.value;
+    const cliente: Cliente = this.form.value;
 
-    if (!this.cadastroEstaValido(cliente, endereco)) {
-      return;
-    }
-
-    let nomeRegiao = this.formularioEndereco.value.regiao;
-    cliente.endereco = endereco;
-    cliente.endereco.regiao = new Regiao(nomeRegiao);
+    if (!this.cadastroEstaValido()) return;
 
     this.clienteService.cadastrar(cliente).subscribe({
       next: clienteCriado => {
@@ -84,20 +80,9 @@ export class CadastroComponent implements OnInit{
     });
   }
 
-  // FIX: this
-  cadastroEstaValido(cliente: Cliente, endereco: Endereco): boolean {
-    for (let campo of Object.entries(cliente)) {
-      if (!campo[1]) {
-        alert(`Preencha todos os campos`);
-        return false;
-      }
-    }
-
-    for (let campo of Object.entries(endereco)) {
-      if (!campo[1] && campo[0] != "complemento") {
-        alert("Preencha todos os campos");
-        return false;
-      }
+  cadastroEstaValido(): boolean {
+    if (this.form.invalid) {
+      alert("Todos os campos devem ser preenchidos");
     }
 
     return true;

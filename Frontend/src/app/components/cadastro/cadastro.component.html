@@ -1,53 +1,53 @@
-<form style="width: 23rem;" [formGroup]="formularioCliente" >
+<form style="width: 23rem;" [formGroup]="form" >
   <h3>Cliente</h3>
 
   <div class="form-outline ">
-    <input type="text" class="form-control form-control" formControlName="cpf" required/>
     <label class="form-label">CPF</label>
+    <input type="text" class="form-control" formControlName="cpf" required/>
   </div>
 
   <div class="form-outline">
-    <input type="text" class="form-control form-control" formControlName="nome" required />
     <label class="form-label">Nome</label>
+    <input type="text" class="form-control" formControlName="nome" required />
   </div>
 
   <div class="form-outline">
-    <input type="text" class="form-control form-control" formControlName="telefone" required />
     <label class="form-label">Telefone</label>
+    <input type="text" class="form-control" formControlName="telefone" required />
   </div>
-</form>
 
-<form [formGroup]="formularioEndereco" style="width: 23rem;">
-  <fieldset>
+  <fieldset formGroupName="endereco">
     <h3>Endereço</h3>
     <div class="form-outline">
-      <input type="text" class="form-control form-control d-inline" style="width: 16rem" formControlName="cep" required />
-      <button (click)="buscarCEP()" class="btn btn-info d-inline ml-2">Buscar CEP</button>
       <label class="form-label d-block">CEP</label>
+      <input type="text" class="form-control d-inline" style="width: 16rem" formControlName="cep" required />
+      <button (click)="buscarCEP()" class="btn btn-info d-inline ml-2">Buscar CEP</button>
     </div>
 
-    <div class="form-outline d-inline">
-      <input type="text" class="form-control form-control" formControlName="regiao" required />
+    <div class="form-outline d-inline" formGroupName="regiao">
       <label class="form-label">Regiao</label>
+      <input type="text" class="form-control"  formControlName="nome" required />
     </div>
     
     <div class="form-outline d-inline">
-      <input type="text" class="form-control form-control" formControlName="rua" required />
       <label class="form-label">Rua</label>
+      <input type="text" class="form-control" formControlName="rua" required />
     </div>
 
     <div class="form-outline d-inline">
-      <input type="number" class="form-control form-control" formControlName="numero" required />
       <label class="form-label">Numero</label>
+      <input type="number" class="form-control" formControlName="numero" required />
     </div>
 
 
     <div class="form-outline">
-      <input type="text" class="form-control form-control" formControlName="complemento" />
       <label class="form-label">Complemento</label>
+      <input type="text" class="form-control" formControlName="complemento" />
     </div>
 
     <button class="btn btn-info btn-lg btn-block" type="submit" (click)="cadastrarCliente()">Cadastrar</button>
   </fieldset>
 
 </form>
+
+<p>{{debug | json}}</p>
