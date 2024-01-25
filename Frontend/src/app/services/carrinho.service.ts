@@ -9,24 +9,34 @@ import {AcompanhamentoPedido} from "../models/AcompanhamentoPedido";
 })
 export class CarrinhoService {
   quantidadeItensCarrinho = new BehaviorSubject<number>(0);
-  itensCarrinho: Pedido[]  = [];
+  itensCarrinho$ = new BehaviorSubject<Pedido[]>([]);
 
   constructor() {
-    this.quantidadeItensCarrinho.next(this.itensCarrinho.length);
+    this.itensCarrinho$.subscribe(() => {
+      this.quantidadeItensCarrinho.next(this.itensCarrinho.length);
+    });
+  }
+
+  get itensCarrinho() {
+    return this.itensCarrinho$.value;
   }
 
   adicionarNoCarrinho(pedido: Pedido) {
-    this.itensCarrinho.push(pedido);
-    this.quantidadeItensCarrinho.next(this.quantidadeItensCarrinho.value + 1);
+    const novoCarrinho = this.itensCarrinho;
+    novoCarrinho.push(pedido);
+
+    this.itensCarrinho$.next(novoCarrinho);
   }
 
   removerDoCarrinho(index: number) {
-    this.itensCarrinho.splice(index, 1);
-    this.quantidadeItensCarrinho.next(this.quantidadeItensCarrinho.value - 1);
+    const novoCarrinho = this.itensCarrinho;
+    novoCarrinho.splice(index, 1);
+    
+    this.itensCarrinho$.next(novoCarrinho);
   }
 
   limparCarrinho() {
-    this.itensCarrinho = [];
+    this.itensCarrinho$.next([]);
     this.quantidadeItensCarrinho.next(0);
   }
 

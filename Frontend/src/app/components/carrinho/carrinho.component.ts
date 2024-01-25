@@ -1,34 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {Pedido} from "../../models/Pedido";
 import {CarrinhoService} from "../../services/carrinho.service";
 import {PedidoFinal} from "../../models/PedidoFinal";
 import {LoginService} from "../../services/login.service";
 import {PedidoFinalService} from "../../services/pedido-final.service";
 import { Router} from "@angular/router";
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-carrinho',
   templateUrl: './carrinho.component.html',
   styleUrls: ['./carrinho.component.css']
 })
-export class CarrinhoComponent implements OnInit{
-  itensCarrinho : Pedido[] = [];
+export class CarrinhoComponent implements OnInit {
+  itensCarrinho: Pedido[] = [];
   pedidoFinal: PedidoFinal = new PedidoFinal();
 
   constructor(private router : Router,
               private carrinhoService: CarrinhoService,
               private clienteService: LoginService,
-              private pedidoFinalService: PedidoFinalService,) {
-  }
+              private pedidoFinalService: PedidoFinalService) { }
 
   ngOnInit() {
-    this.itensCarrinho = this.carrinhoService.itensCarrinho;
-    this.construirPedido();
-  }
-
-  removerDoCarrinho(index: number) {
-    this.carrinhoService.removerDoCarrinho(index);
-    this.construirPedido();
+   this.carrinhoService.itensCarrinho$.subscribe(i => {
+      this.itensCarrinho = i;
+      this.construirPedido();
+    });
   }
 
   construirPedido() {
@@ -42,7 +39,11 @@ export class CarrinhoComponent implements OnInit{
 
     this.pedidoFinal = new PedidoFinal(cliente.cpf, cliente.endereco, pizzas, acompanhamentos);
   }
-  
+ 
+  removerDoCarrinho(index: number) {
+    this.carrinhoService.removerDoCarrinho(index);
+  }
+
   finalizarPedido() {
     this.construirPedido();
     if (this.pedidoFinal.pizzas.length <= 0) {
@@ -50,10 +51,6 @@ export class CarrinhoComponent implements OnInit{
       return;
     }
 
-    this.salvarPedidoFinal();
-  }
-
-  salvarPedidoFinal() {
     this.pedidoFinalService.cadastrar(this.pedidoFinal).subscribe({
       next: () => {
         alert("Pedido finalizado com sucesso");
@@ -66,6 +63,5 @@ export class CarrinhoComponent implements OnInit{
 
   limparCarrinho() {
     this.carrinhoService.limparCarrinho();
-    this.itensCarrinho = [];
   }
 }
