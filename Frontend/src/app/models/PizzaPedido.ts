@@ -42,12 +42,4 @@ export class PizzaPedido implements Pedido {
 
     return tamanho + nomesSabores;
   }
-
-  getPreco(): number {
-    return this.preco;
-  }
-
-  getQuantidade(): number {
-    return this.quantidade;
-  }
 }

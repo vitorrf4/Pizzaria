@@ -8,14 +8,14 @@
       <h2 class="card-header font-weight-bold">Pedido </h2>
       <div *ngFor="let item of itensCarrinho;let i = index;">
         <p class="card-body">
-          {{item.getDescricao()}} | Quantidade: {{item.getQuantidade()}} | 
-          Total: {{item.getPreco() | currency : "BRL"}}
+          {{item.getDescricao()}} | Quantidade: {{item.quantidade}} | 
+          Total: {{item.preco | currency : "BRL"}}
           <button (click)="removerDoCarrinho(i)" class="btn btn-danger">Remover</button>
         </p>
       </div>
 
       <div class="card-footer">
-        <h5 >Total do Pedido: {{pedidoFinal.precoTotal | currency : "BRL"}}</h5>
+        <h5>Total do Pedido: {{pedidoFinal.precoTotal | currency : "BRL"}}</h5>
 
         <button (click)="finalizarPedido()" class="btn-success btn card-body">
           Finalizar Pedido

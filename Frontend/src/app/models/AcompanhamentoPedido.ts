@@ -21,12 +21,4 @@ export class AcompanhamentoPedido implements Pedido {
     return this.acompanhamento.nome;
   }
 
-  getPreco(): number {
-    return this.preco;
-  }
-
-  getQuantidade(): number {
-    return this.quantidade;
-  }
-
 }

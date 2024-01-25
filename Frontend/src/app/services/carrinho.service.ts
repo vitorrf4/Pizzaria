@@ -21,7 +21,22 @@ export class CarrinhoService {
     return this.itensCarrinho$.value;
   }
 
+  private atualizarQuantidadePedido(pedido: Pedido, index: number) {
+    const itensAtualizado = this.itensCarrinho; 
+    itensAtualizado[index].quantidade += pedido.quantidade;
+
+    this.itensCarrinho$.next(itensAtualizado);
+  }
+
   adicionarNoCarrinho(pedido: Pedido) {
+    const indexCarrinho = this.itensCarrinho.findIndex(i => {
+      return i.getDescricao() == pedido.getDescricao();
+    });
+
+    if (indexCarrinho != -1) {
+      return this.atualizarQuantidadePedido(pedido, indexCarrinho);
+    }
+
     const novoCarrinho = this.itensCarrinho;
     novoCarrinho.push(pedido);
 
