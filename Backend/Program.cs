@@ -21,6 +21,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(); 
 }
 
+app.Use((context, next) =>
+{
+    context.Request.EnableBuffering();
+    return next();
+});
+app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.UseCors(opcoes => opcoes.AllowAnyOrigin().AllowAnyHeader());
 app.UseAuthorization();
 app.MapControllers();
