@@ -8,7 +8,7 @@ public class PedidoFinal
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
-    public string ClienteCpf { get; set; } = "";
+    public int ClienteId { get; set; }
     public Endereco Endereco { get; set; } = new Endereco();
     public double PrecoTotal { get; private set; }
     public DateTime HoraPedido { get; set; }
@@ -17,10 +17,10 @@ public class PedidoFinal
 
     public PedidoFinal() { }
 
-    public PedidoFinal(string clienteCpf, Endereco endereco, 
+    public PedidoFinal(int clienteId, Endereco endereco, 
                        List<PizzaPedido> pizzas, List<AcompanhamentoPedido> ?acompanhamentos)
     {
-        ClienteCpf = clienteCpf;
+        // ClienteId = clienteId;
         Endereco = endereco;
         Pizzas = pizzas;
         Acompanhamentos = acompanhamentos ?? new List<AcompanhamentoPedido>();
@@ -43,7 +43,7 @@ public class PedidoFinal
         int index = 1;
 
         Console.WriteLine($"Pedido #{Id}");
-        Console.WriteLine($"Cliente: {ClienteCpf}");
+        Console.WriteLine($"Cliente: {ClienteId}");
         Console.Write($"PIZZAS \n");
         Pizzas.ForEach(pizza => 
         {

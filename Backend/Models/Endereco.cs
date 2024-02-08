@@ -13,7 +13,7 @@ public class Endereco
     public string Cep { get; set; } = "";
     public Regiao Regiao { get; set; } = new Regiao();
     public string ?Complemento { get; set; }
-    public string ClienteCpf { get; set; } = "";
+    public int ClienteId { get; set; }
     
     public Endereco() { } 
 

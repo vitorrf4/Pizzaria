@@ -1,20 +1,16 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace pizzaria;
 
-public class Cliente 
+public class Cliente : Usuario
 {
-    [Key]
-    public string Cpf { get; set; } = "";
     public string Nome { get; set; } = "";
     public string Telefone { get; set; } = "";
     public Endereco Endereco { get; set; } = new Endereco();
 
-    public Cliente() { }
+    public Cliente(string email, string senha) : base(email, senha) { }
 
-    public Cliente(string cpf, string nome, string telefone, Endereco endereco)
+    public Cliente(string email, string senha, string nome, 
+                    string telefone, Endereco endereco) : base(email, senha)
     {
-        Cpf = cpf;
         Nome = nome;
         Telefone = telefone;
         Endereco = endereco;
@@ -22,6 +18,6 @@ public class Cliente
 
     public override string ToString()
     {
-        return $"CPF: {Cpf} | Nome: {Nome} | Telefone: {Telefone}";
+        return $"Email: {Email} | Nome: {Nome} | Telefone: {Telefone}";
     }
 }

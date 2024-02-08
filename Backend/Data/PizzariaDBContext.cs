@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 namespace pizzaria;
 
 public class PizzariaDBContext : DbContext{
+    public DbSet<Usuario> Usuario { get; set; }
     public DbSet<Cliente> Cliente { get; set; }
     public DbSet<PizzaPedido> PizzaPedido { get; set; }
     public DbSet<PedidoFinal> PedidoFinal { get; set; }
@@ -26,9 +27,15 @@ public class PizzariaDBContext : DbContext{
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Usuario>()
+                    .HasDiscriminator<string>("tipo_usuario")
+                    .HasValue<Usuario>("usuario")
+                    .HasValue<Cliente>("cliente");
+
         modelBuilder.Entity<PizzaPedido>()
                     .HasMany(p => p.Sabores)
                     .WithMany();
+                    
     }
 
     public void InicializaValores()
@@ -47,8 +54,8 @@ public class PizzariaDBContext : DbContext{
         var endereco2 = new Endereco("Rua 2", 2, "11111-11", boqueirao, "casa 5");
 
         // Cliente
-        var cliente1 = new Cliente("12345", "joao", "1111-1111",  endereco1);
-        var cliente2 = new Cliente("67890", "maria", "2222-2222", endereco2);
+        var cliente1 = new Cliente("joao@","teste1" , "joao", "1111-1111",  endereco1);
+        var cliente2 = new Cliente("maria@","teste2" ,"maria", "2222-2222", endereco2);
 
         // Sabor
         var frango = new Sabor("Frango", 15.0);
@@ -89,7 +96,7 @@ public class PizzariaDBContext : DbContext{
 
         // PedidoFinal
         var pedidoFinal = new PedidoFinal(
-            cliente1.Cpf, cliente1.Endereco,
+            cliente1.Id, cliente1.Endereco,
             new List<PizzaPedido>() { pizzaPedido, pizzaPedido2 },
             new List<AcompanhamentoPedido>() { acompanhamentoPedido1 });
          

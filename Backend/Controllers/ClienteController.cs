@@ -24,11 +24,11 @@ public class ClienteController : ControllerBase
         return Ok(clientes);
     }
 
-    [HttpGet("{cpf}")]
-    public async Task<ActionResult<Cliente>> BuscarPorCPF(string cpf)
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Cliente>> BuscarPorCPF(int id)
     {
         var cliente = await _context.Cliente
-            .Where(cliente => cliente.Cpf == cpf)
+            .Where(cliente => cliente.Id == id)
             .Include("Endereco.Regiao")
             .FirstOrDefaultAsync();
 
@@ -38,11 +38,11 @@ public class ClienteController : ControllerBase
         return Ok(cliente);
     }
 
-    [HttpGet("{cpf}/pedidos")]
-    public async Task<IActionResult> ListarPedidosPorCliente([FromRoute] string cpf)
+    [HttpGet("{id}/pedidos")]
+    public async Task<IActionResult> ListarPedidosPorCliente([FromRoute] int id)
     {
         var pedidos = await GetPedidosFinaisComTodasAsPropriedades()
-            .Where(p => p.ClienteCpf == cpf)
+            .Where(p => p.ClienteId == id)
             .ToListAsync();
 
         return Ok(pedidos);
@@ -84,11 +84,11 @@ public class ClienteController : ControllerBase
     }
 
     // FIX: excluir nao funciona devido ao relacionamento
-    [HttpDelete("{cpf}")]
-    public async Task<ActionResult> Deletar(string cpf)
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> Deletar(int id)
     {
         var cliente = await _context.Cliente
-            .Where(cliente => cliente.Cpf == cpf)
+            .Where(cliente => cliente.Id == id)
             .Include(c => c.Endereco)
             .FirstOrDefaultAsync();
 
