@@ -20,7 +20,7 @@ public class PedidoFinal
     public PedidoFinal(int clienteId, Endereco endereco, 
                        List<PizzaPedido> pizzas, List<AcompanhamentoPedido> ?acompanhamentos)
     {
-        // ClienteId = clienteId;
+        ClienteId = clienteId;
         Endereco = endereco;
         Pizzas = pizzas;
         Acompanhamentos = acompanhamentos ?? new List<AcompanhamentoPedido>();

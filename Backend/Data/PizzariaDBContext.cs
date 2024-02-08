@@ -35,7 +35,11 @@ public class PizzariaDBContext : DbContext{
         modelBuilder.Entity<PizzaPedido>()
                     .HasMany(p => p.Sabores)
                     .WithMany();
-                    
+
+        modelBuilder.Entity<PedidoFinal>()
+                    .HasOne<Cliente>()
+                    .WithMany()
+                    .HasForeignKey(c => c.ClienteId);
     }
 
     public void InicializaValores()
@@ -96,7 +100,7 @@ public class PizzariaDBContext : DbContext{
 
         // PedidoFinal
         var pedidoFinal = new PedidoFinal(
-            cliente1.Id, cliente1.Endereco,
+            1, cliente1.Endereco,
             new List<PizzaPedido>() { pizzaPedido, pizzaPedido2 },
             new List<AcompanhamentoPedido>() { acompanhamentoPedido1 });
          

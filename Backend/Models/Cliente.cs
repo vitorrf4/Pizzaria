@@ -6,7 +6,7 @@ public class Cliente : Usuario
     public string Telefone { get; set; } = "";
     public Endereco Endereco { get; set; } = new Endereco();
 
-    public Cliente(string email, string senha) : base(email, senha) { }
+    public Cliente() { }
 
     public Cliente(string email, string senha, string nome, 
                     string telefone, Endereco endereco) : base(email, senha)

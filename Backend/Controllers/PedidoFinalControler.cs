@@ -89,7 +89,7 @@ public class PedidoFinalController : ControllerBase
     private IQueryable<PedidoFinal> GetPedidosFinaisComTodasAsPropriedades()
     {
         return _context.PedidoFinal
-            .Include(p => p.Endereco)
+            .Include(p => p.Endereco).ThenInclude(e => e.Regiao)
             .Include(p => p.Acompanhamentos).ThenInclude(a => a.Acompanhamento)
             .Include(p => p.Pizzas).ThenInclude(p => p.Tamanho)
             .Include(p => p.Pizzas).ThenInclude(p => p.Sabores);
