@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {Cliente} from "../../models/Cliente";
-import {ClienteService} from "../../services/cliente.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {LoginService} from "../../services/login.service";
 import {CepService} from "../../services/cep.service";
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-cadastro',
@@ -14,28 +14,27 @@ import {CepService} from "../../services/cep.service";
 export class CadastroComponent implements OnInit{
   form!: FormGroup;
 
-  constructor(private clienteService: ClienteService,
+  constructor(private authService: AuthService,
               private loginService: LoginService,
               private router: Router,
               private cep: CepService,
               private formBuilder: FormBuilder) { }
 
-  get debug() {
-    return this.form.invalid;
-  }
+  get debug() {return this.form.invalid};
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      cpf: ["", Validators.required],
+      email: ["", Validators.required],
+      senha: ["", Validators.required],
       nome: ["", Validators.required],
       telefone: ["", Validators.required],
       endereco: this.formBuilder.group({
         rua: ["", Validators.required],
         numero: ["", Validators.required],
         cep: ["", Validators.required],
-        complemento: ["", Validators.required],
+        complemento: [""],
         regiao: this.formBuilder.group({
-          nome: [""]
+          nome: ["", Validators.required]
         })
       })
     });
@@ -64,7 +63,7 @@ export class CadastroComponent implements OnInit{
 
     if (!this.cadastroEstaValido()) return;
 
-    this.clienteService.cadastrar(cliente).subscribe({
+    this.authService.cadastro(cliente).subscribe({
       next: clienteCriado => {
         alert("Cliente cadastrado com sucesso");
 

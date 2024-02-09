@@ -5,7 +5,6 @@ import {Tamanho} from "../../models/Tamanho";
 import {TamanhoService} from "../../services/tamanho.service";
 import {PizzaPedido} from "../../models/PizzaPedido";
 import {CarrinhoService} from "../../services/carrinho.service";
-import { Observable, range } from 'rxjs';
 
 @Component({
   selector: 'app-sabor',

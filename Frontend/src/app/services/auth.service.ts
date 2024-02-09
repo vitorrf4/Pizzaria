@@ -16,6 +16,6 @@ export class AuthService {
   }
 
   cadastro(cliente: Cliente) {
-    return this.http.post(`${this.apiUrl}/auth/login`, cliente);
+    return this.http.post<Cliente>(`${this.apiUrl}/auth/cadastro`, cliente);
   }
 }
