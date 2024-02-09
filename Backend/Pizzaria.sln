@@ -4,6 +4,8 @@ VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pizzaria", "Pizzaria.csproj", "{1BE3519B-A819-44B9-B781-BF95AF0F1DA1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pizzaria.Tests", "..\Pizzaria.Tests\Pizzaria.Tests.csproj", "{77B84743-2AA8-4D26-8B55-1723E856D1B3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -14,6 +16,10 @@ Global
 		{1BE3519B-A819-44B9-B781-BF95AF0F1DA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1BE3519B-A819-44B9-B781-BF95AF0F1DA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1BE3519B-A819-44B9-B781-BF95AF0F1DA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77B84743-2AA8-4D26-8B55-1723E856D1B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77B84743-2AA8-4D26-8B55-1723E856D1B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77B84743-2AA8-4D26-8B55-1723E856D1B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77B84743-2AA8-4D26-8B55-1723E856D1B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

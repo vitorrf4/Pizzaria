@@ -26,10 +26,8 @@ public class PizzaPedido
 
     public double CalcularPreco()
     {
-        // Fórmula do preco = ((sabor1 + sabor2...saborN) / quantidade de sabores) + (preco * (preco do tamanho / 100))
-        var precoTotal = 0.0;
-
-        Sabores.ForEach(sabor => precoTotal += sabor.Preco);
+        // Fórmula do preco = ((sabor1 + sabor2...saborN) / quantidade de sabores) + (preco * preco do tamanho) * quantidade
+        var precoTotal = Sabores.Sum(sabor => sabor.Preco);
 
         if (Sabores.Count > 1)
             precoTotal /= Sabores.Count;
