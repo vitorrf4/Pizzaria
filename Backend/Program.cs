@@ -1,5 +1,6 @@
 using Pizzaria.Data;
 using Pizzaria.Middleware;
+using Pizzaria.Services;
 
 var builder = WebApplication.CreateBuilder(args); 
 
@@ -7,6 +8,7 @@ builder.Services.AddControllers();
 builder.Services.AddSwaggerGen(); 
 builder.Services.AddDbContext<PizzariaDbContext>();
 builder.Services.AddTransient<PizzariaDbContext>();
+builder.Services.AddTransient<PedidoFinalService>();
 
 builder.Services.AddCors();
 var app = builder.Build();

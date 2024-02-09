@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Pizzaria.Data;
 using Pizzaria.Models;
+using Pizzaria.Services;
 
 namespace Pizzaria.Controllers;
 
@@ -9,89 +8,41 @@ namespace Pizzaria.Controllers;
 [Route("pedido-final/")]
 public class PedidoFinalController : ControllerBase
 {
-    private readonly PizzariaDbContext _context;
+    private readonly PedidoFinalService _service;
 
-    public PedidoFinalController(PizzariaDbContext context)
+    public PedidoFinalController(PedidoFinalService service)
     {
-        _context = context;
+        _service = service;
     }
-
+    
     [HttpGet]
     public async Task<ActionResult<IEnumerable<PedidoFinal>>> Listar()
     {
-        var pedidoFinal = await GetPedidosFinaisComTodasAsPropriedades()
-                                .ToListAsync();
+        var pedidos = await _service.Listar();
 
-        return pedidoFinal;
+        return Ok(pedidos);
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<PedidoFinal>> Buscar([FromRoute] int id)
     {
-        var pedidoFinal = await GetPedidosFinaisComTodasAsPropriedades()
-                                .Where(p => p.Id == id)
-                                .FirstOrDefaultAsync();
-
-        if (pedidoFinal == null)
-            return NotFound();
-
-        return Ok(pedidoFinal);
+        var pedidoFinal = await _service.BuscarPorId(id);
+        
+        return pedidoFinal != null ? Ok(pedidoFinal) : NotFound();
     }
 
     [HttpPost]
     public async Task<IActionResult> Cadastrar(PedidoFinal pedidoFinal)
-    {       
-        pedidoFinal.CalcularPrecoTotal();
-        pedidoFinal.HoraPedido = DateTime.Now;
+    {
+        var foiCadastrado = await _service.Cadastrar(pedidoFinal);
 
-        MudarTrackingDosCampos(pedidoFinal);
-        await _context.SaveChangesAsync();
-
-        return Created("", pedidoFinal);
+        return foiCadastrado ? Created($"/{pedidoFinal.Id}", pedidoFinal) : BadRequest();
     }
-
-    private void MudarTrackingDosCampos(PedidoFinal pedidoFinal) {
-        foreach (var p in pedidoFinal.Pizzas) {
-            _context.Attach(p);
-            _context.SaveChanges();
-            _context.ChangeTracker.Clear();
-        }
-
-        _context.ChangeTracker.TrackGraph(pedidoFinal, p =>
-        {
-            if (!p.Entry.IsKeySet)
-                p.Entry.State = EntityState.Added;                                                                       
-            else if (p.Entry.Metadata.DisplayName() == "Sabor")
-                p.Entry.State = EntityState.Detached;
-            else 
-                p.Entry.State = EntityState.Unchanged;   
-        });
-    }
-
+    
     [HttpDelete("{id}")]
     public async Task<IActionResult> Excluir([FromRoute] int id)
     {
-        var pedidoFinal = await GetPedidosFinaisComTodasAsPropriedades()
-                                .Where(p => p.Id == id)
-                                .FirstOrDefaultAsync();
-        if (pedidoFinal == null) 
-            return NotFound();
-
-        pedidoFinal.Pizzas.ForEach(p => _context.PizzaPedido.RemoveRange(p));
-        pedidoFinal.Acompanhamentos.ForEach(a => _context.AcompanhamentoPedido.RemoveRange(a));
-        _context.Remove(pedidoFinal);
-        
-        await _context.SaveChangesAsync();
-
-        return NoContent();
-    }
-
-    private IQueryable<PedidoFinal> GetPedidosFinaisComTodasAsPropriedades()
-    {
-        return _context.PedidoFinal
-            .Include(p => p.Endereco).ThenInclude(e => e.Regiao)
-            .Include(p => p.Acompanhamentos).ThenInclude(a => a.Acompanhamento)
-            .Include(p => p.Pizzas).ThenInclude(p => p.Tamanho)
-            .Include(p => p.Pizzas).ThenInclude(p => p.Sabores);
+        var foiDeletado = await _service.Excluir(id);
+        return foiDeletado ? NoContent() : NotFound();  
     }
 }
