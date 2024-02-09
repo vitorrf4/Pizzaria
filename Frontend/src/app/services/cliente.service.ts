@@ -17,8 +17,8 @@ export class ClienteService {
     return this.http.get<Cliente[]>(`${this.apiUrl}/cliente`);
   }
 
-  listarCpf(cpf: string) {
-    return this.http.get<Cliente>(`${this.apiUrl}/cliente/` + cpf);
+  listarCpf(id: number) {
+    return this.http.get<Cliente>(`${this.apiUrl}/cliente/` + id);
   }
 
   cadastrar(cliente: Cliente) {
@@ -29,7 +29,7 @@ export class ClienteService {
     return this.http.put(`${this.apiUrl}/cliente/`, cliente);
   }
 
-  listarPedidosPorCliente(cpf: string) {
-    return this.http.get<PedidoFinal[]>(`${this.apiUrl}/cliente/${cpf}/pedidos`);
+  listarPedidosPorCliente(id: number) {
+    return this.http.get<PedidoFinal[]>(`${this.apiUrl}/cliente/${id}/pedidos`);
   }
 }

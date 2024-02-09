@@ -15,7 +15,7 @@ export class LoginService {
     }
   }
 
-  getClienteLogado() {
+  getClienteLogado() : Cliente {
     return this.clienteLogado;
   }
 

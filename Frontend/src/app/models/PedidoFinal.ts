@@ -4,16 +4,16 @@ import { PizzaPedido } from "./PizzaPedido";
 
 export class PedidoFinal {
     id: number = 0;
-    clienteCpf: string;
+    clienteId: number;
     endereco: Endereco;
     pizzas: PizzaPedido[] = [];
     acompanhamentos: AcompanhamentoPedido[] = [];
     precoTotal: number = 0;
     horaPedido : Date;
 
-    constructor(clienteCpf: string, endereco: Endereco, 
+    constructor(clienteId: number, endereco: Endereco, 
                 pizzas: PizzaPedido[], acompanhamentos: AcompanhamentoPedido[]) {
-      this.clienteCpf = clienteCpf;
+      this.clienteId = clienteId;
       this.endereco = endereco;
       this.pizzas = pizzas;
       this.acompanhamentos = acompanhamentos;

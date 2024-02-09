@@ -32,7 +32,7 @@ export class CarrinhoComponent implements OnInit {
     const pizzas = this.carrinhoService.filtrarPizzasNoCarrinho();
     const acompanhamentos = this.carrinhoService.filtrarAcompanhamentosNoCarrinho();
 
-    this.pedidoFinal = new PedidoFinal(cliente.cpf, cliente.endereco, pizzas, acompanhamentos);
+    this.pedidoFinal = new PedidoFinal(cliente.id, cliente.endereco, pizzas, acompanhamentos);
   }
  
   removerDoCarrinho(index: number) {

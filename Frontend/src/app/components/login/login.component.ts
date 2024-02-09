@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {ClienteService} from "../../services/cliente.service";
 import {Router} from "@angular/router";
 import {FormControl, FormGroup} from "@angular/forms";
 import {LoginService} from "../../services/login.service";
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -12,25 +12,27 @@ import {LoginService} from "../../services/login.service";
 export class LoginComponent implements OnInit{
   formularioCliente!: FormGroup;
 
-  constructor(private clienteService: ClienteService, 
+  constructor(private authService: AuthService, 
               private router: Router,
               private loginService: LoginService) { }
 
   ngOnInit() {
     this.formularioCliente = new FormGroup({
-      cpf: new FormControl(),
+      email: new FormControl(),
+      senha: new FormControl(),
     });
   }
 
   logarCliente() {
-    const cpf = this.formularioCliente.value.cpf;
+    const email = this.formularioCliente.value.email;
+    const senha = this.formularioCliente.value.senha;
 
-    if (!cpf) {
+    if (!email || !senha) {
       alert("Cpf está vazio");
       return;
     }
     
-    this.clienteService.listarCpf(cpf).subscribe({
+    this.authService.login(email, senha).subscribe({
       next: async cliente => {
         this.loginService.salvarClienteLogado(cliente);
         await this.router.navigateByUrl("/home/area-cliente");

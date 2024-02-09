@@ -17,9 +17,9 @@ export class PedidosComponent implements OnInit {
               private loginService: LoginService) { }
 
   ngOnInit() {
-    const cpf = this.loginService.getClienteLogado().cpf;
+    const id = this.loginService.getClienteLogado().id;
 
-    this.clienteService.listarPedidosPorCliente(cpf).subscribe(resposta => {
+    this.clienteService.listarPedidosPorCliente(id).subscribe(resposta => {
       this.pedidos = resposta;
       this.pedidos.sort((a, b) => b.id - a.id);
     });

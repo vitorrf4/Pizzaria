@@ -14,7 +14,7 @@ public class AuthController : ControllerBase
         _context = context;
     }
 
-    [HttpPost("/login")]
+    [HttpPost("login")]
     public async Task<ActionResult<Cliente>> Login([FromBody] LoginDTO loginDTO)
     {
         var cliente = await _context.Cliente
@@ -29,7 +29,7 @@ public class AuthController : ControllerBase
         return Ok(cliente);
     }
 
-    [HttpPost("/cadastro")]
+    [HttpPost("cadastro")]
     public async Task<ActionResult<Cliente>> Cadastrar(Cliente cliente)
     {
         if (_context.Cliente.Contains(cliente)) 

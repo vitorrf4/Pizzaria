@@ -15,7 +15,7 @@ export class AreaClienteComponent implements OnInit{
               private loginService: LoginService) {}
 
   ngOnInit() {
-    const cpf = this.loginService.getClienteLogado().cpf;
+    const cpf = this.loginService.getClienteLogado().id;
 
     this.clienteService.listarCpf(cpf).subscribe(resposta => {
       this.cliente = resposta;
