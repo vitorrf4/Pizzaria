@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using pizzaria;
 using Pizzaria.Models;
 
 namespace Pizzaria.Data;

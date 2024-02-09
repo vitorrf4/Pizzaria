@@ -1,5 +1,3 @@
-using pizzaria;
-
 namespace Pizzaria.Models;
 
 public class Cliente : Usuario

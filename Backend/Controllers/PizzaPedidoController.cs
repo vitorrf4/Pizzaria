@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using pizzaria;
 using Pizzaria.Data;
 using Pizzaria.Models;
 

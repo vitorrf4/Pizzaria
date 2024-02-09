@@ -1,17 +1,17 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Pizzaria.Models;
 
-namespace pizzaria;
+namespace Pizzaria.Models;
+
 public class PizzaPedido 
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int  Id { get; set; }
-    // mudar List pra HashSet
-    public List<Sabor> Sabores { get; set; } = new List<Sabor>();
-    public Tamanho Tamanho { get; set; } = new Tamanho();
-    public double Preco { get; private set; }
+    // TODO: mudar List pra HashSet
+    public List<Sabor> Sabores { get; set; } = new();
+    public Tamanho Tamanho { get; set; } = new();
+    public double Preco { get; set; }
     public int Quantidade { get; set;}
 
     public PizzaPedido() { }
@@ -27,7 +27,7 @@ public class PizzaPedido
     public double CalcularPreco()
     {
         // Fórmula do preco = ((sabor1 + sabor2...saborN) / quantidade de sabores) + (preco * (preco do tamanho / 100))
-        double precoTotal = 0.0;
+        var precoTotal = 0.0;
 
         Sabores.ForEach(sabor => precoTotal += sabor.Preco);
 
@@ -40,19 +40,19 @@ public class PizzaPedido
         return Preco;
     }
 
-    override public string ToString()
+    public override string ToString()
     {
-        var String = "Sabores: ";
-        for (int i = 0; i < Sabores.Count; i++)
+        var sabores = "Sabores: ";
+        for (var i = 0; i < Sabores.Count; i++)
         {
-            String += Sabores[i].Nome;
+            sabores += Sabores[i].Nome;
             if (i != (Sabores.Count - 1))
-                String += ", ";
+                sabores += ", ";
         }
 
-        String += $" | Tamanho: {Tamanho.Nome} | ";
-        String += $"Preço: R${Preco}";
+        sabores += $" | Tamanho: {Tamanho.Nome} | ";
+        sabores += $"Preço: R${Preco}";
 
-        return String;
+        return sabores;
     }
 }
