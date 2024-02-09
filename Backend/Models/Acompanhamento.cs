@@ -1,15 +1,15 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace pizzaria;
+namespace Pizzaria.Models;
 
 public class Acompanhamento
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int Id { get; set; }
+    public int Id { get; init; }
     public string Nome { get; set; } = "";
-    public double Preco { get; set; }
+    public double Preco { get; init; }
 
     public Acompanhamento() { } 
 

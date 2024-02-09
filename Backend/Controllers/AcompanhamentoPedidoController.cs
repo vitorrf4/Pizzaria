@@ -1,15 +1,17 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Pizzaria.Data;
+using Pizzaria.Models;
 
-namespace pizzaria;
+namespace Pizzaria.Controllers;
 
 [ApiController]
 [Route("acompanhamento-pedido/")]
 public class AcompanhamentoPedidoController : ControllerBase
 {
-    private readonly PizzariaDBContext _context;
+    private readonly PizzariaDbContext _context;
 
-    public AcompanhamentoPedidoController(PizzariaDBContext context) 
+    public AcompanhamentoPedidoController(PizzariaDbContext context) 
     {
         _context = context;
     }

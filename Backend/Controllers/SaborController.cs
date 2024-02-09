@@ -1,15 +1,17 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Pizzaria.Data;
+using Pizzaria.Models;
 
-namespace pizzaria;
+namespace Pizzaria.Controllers;
 
 [ApiController]
 [Route("sabor/")]
 public class SaborController : ControllerBase
 {
-    private readonly PizzariaDBContext _context;
+    private readonly PizzariaDbContext _context;
 
-    public SaborController(PizzariaDBContext context) 
+    public SaborController(PizzariaDbContext context) 
     {
         _context = context;
     }

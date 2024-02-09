@@ -1,15 +1,17 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Pizzaria.Data;
+using Pizzaria.Models;
 
-namespace pizzaria;
+namespace Pizzaria.Controllers;
 
 [ApiController]
 [Route("tamanho/")]
 public class TamanhoController : ControllerBase
 {
-    private readonly PizzariaDBContext _context;
+    private readonly PizzariaDbContext _context;
 
-    public TamanhoController(PizzariaDBContext context) 
+    public TamanhoController(PizzariaDbContext context) 
     {
         _context = context;
     }
@@ -25,11 +27,11 @@ public class TamanhoController : ControllerBase
     [HttpGet("{nome}")]
     public async Task<ActionResult<Tamanho>> Buscar([FromRoute] string nome)
     {
-        var Tamanho = await _context.Tamanho.FindAsync(nome);
-        if (Tamanho == null)
+        var tamanho = await _context.Tamanho.FindAsync(nome);
+        if (tamanho == null)
             return NotFound();
         
-        return Ok(Tamanho);
+        return Ok(tamanho);
     }
 
     [HttpPost]

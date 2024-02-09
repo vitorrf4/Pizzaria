@@ -1,15 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using pizzaria;
+using Pizzaria.Data;
+using Pizzaria.Models;
 
-namespace pizzaria;
+namespace Pizzaria.Controllers;
 
 [ApiController]
 [Route("pizza-pedido")]
 public class PizzaPedidoController : ControllerBase
 {
-    private readonly PizzariaDBContext _context;
+    private readonly PizzariaDbContext _context;
 
-    public PizzaPedidoController(PizzariaDBContext context)
+    public PizzaPedidoController(PizzariaDbContext context)
     {
         _context = context;
     }

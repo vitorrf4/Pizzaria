@@ -1,15 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Pizzaria.Data;
+using Pizzaria.Models;
 
-namespace pizzaria;
+namespace Pizzaria.Controllers;
 
 [ApiController]
 [Route("endereco/")]
 public class EnderecoController : ControllerBase
 {
-    private readonly PizzariaDBContext _context;
+    private readonly PizzariaDbContext _context;
 
-    public EnderecoController(PizzariaDBContext context)
+    public EnderecoController(PizzariaDbContext context)
     {
         _context = context;
     }

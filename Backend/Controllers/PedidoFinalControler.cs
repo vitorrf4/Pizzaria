@@ -1,15 +1,17 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Pizzaria.Data;
+using Pizzaria.Models;
 
-namespace pizzaria;
+namespace Pizzaria.Controllers;
 
 [ApiController]
 [Route("pedido-final/")]
 public class PedidoFinalController : ControllerBase
 {
-    private readonly PizzariaDBContext _context;
+    private readonly PizzariaDbContext _context;
 
-    public PedidoFinalController(PizzariaDBContext context)
+    public PedidoFinalController(PizzariaDbContext context)
     {
         _context = context;
     }
@@ -48,7 +50,7 @@ public class PedidoFinalController : ControllerBase
         return Created("", pedidoFinal);
     }
 
-    private bool MudarTrackingDosCampos(PedidoFinal pedidoFinal) {
+    private void MudarTrackingDosCampos(PedidoFinal pedidoFinal) {
         foreach (var p in pedidoFinal.Pizzas) {
             _context.Attach(p);
             _context.SaveChanges();
@@ -64,8 +66,6 @@ public class PedidoFinalController : ControllerBase
             else 
                 p.Entry.State = EntityState.Unchanged;   
         });
-
-        return true;
     }
 
     [HttpDelete("{id}")]
@@ -78,7 +78,7 @@ public class PedidoFinalController : ControllerBase
             return NotFound();
 
         pedidoFinal.Pizzas.ForEach(p => _context.PizzaPedido.RemoveRange(p));
-        pedidoFinal.Acompanhamentos?.ForEach(a => _context.AcompanhamentoPedido.RemoveRange(a));
+        pedidoFinal.Acompanhamentos.ForEach(a => _context.AcompanhamentoPedido.RemoveRange(a));
         _context.Remove(pedidoFinal);
         
         await _context.SaveChangesAsync();

@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Pizzaria.Models;
 
 namespace pizzaria;
 public class PizzaPedido 
@@ -10,7 +11,7 @@ public class PizzaPedido
     // mudar List pra HashSet
     public List<Sabor> Sabores { get; set; } = new List<Sabor>();
     public Tamanho Tamanho { get; set; } = new Tamanho();
-    public double Preco { get; set; }
+    public double Preco { get; private set; }
     public int Quantidade { get; set;}
 
     public PizzaPedido() { }

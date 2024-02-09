@@ -1,20 +1,22 @@
 using Microsoft.EntityFrameworkCore;
+using pizzaria;
+using Pizzaria.Models;
 
-namespace pizzaria;
+namespace Pizzaria.Data;
 
-public class PizzariaDBContext : DbContext{
-    public DbSet<Usuario> Usuario { get; set; }
-    public DbSet<Cliente> Cliente { get; set; }
-    public DbSet<PizzaPedido> PizzaPedido { get; set; }
-    public DbSet<PedidoFinal> PedidoFinal { get; set; }
-    public DbSet<Acompanhamento> Acompanhamento { get; set; }
-    public DbSet<Tamanho> Tamanho { get; set; }
-    public DbSet<Sabor> Sabor { get; set; }
-    public DbSet<Regiao> Regiao { get; set; }
-    public DbSet<AcompanhamentoPedido> AcompanhamentoPedido { get; set; }
-    public DbSet<Endereco> Endereco { get; set; }
+public sealed class PizzariaDbContext : DbContext{
+    public required DbSet<Usuario> Usuario { get; init; }
+    public required DbSet<Cliente> Cliente { get; init; }
+    public required DbSet<PizzaPedido> PizzaPedido { get; init; }
+    public required DbSet<PedidoFinal> PedidoFinal { get; init; }
+    public required DbSet<Acompanhamento> Acompanhamento { get; init; }
+    public required DbSet<Tamanho> Tamanho { get; init; }
+    public required DbSet<Sabor> Sabor { get; init; }
+    public required DbSet<Regiao> Regiao { get; init; }
+    public required DbSet<AcompanhamentoPedido> AcompanhamentoPedido { get; init; }
+    public required DbSet<Endereco> Endereco { get; init; }
 
-    public PizzariaDBContext() 
+    public PizzariaDbContext() 
     {
         Database.EnsureCreated();
     }
@@ -96,7 +98,7 @@ public class PizzariaDBContext : DbContext{
         // PizzaPedido
         var sabores = new List<Sabor>() { frango };
         var pizzaPedido = new PizzaPedido(sabores, media, 3);
-        var pizzaPedido2 = new PizzaPedido(sabores, grande, 1);
+        var pizzaPedido2 = new PizzaPedido(sabores, grande);
 
         // PedidoFinal
         var pedidoFinal = new PedidoFinal(

@@ -1,15 +1,17 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Pizzaria.Data;
+using Pizzaria.Models;
 
-namespace pizzaria;
+namespace Pizzaria.Controllers;
 
 [ApiController]
 [Route("acompanhamento/")]
 public class AcompanhamentoController : ControllerBase
 {
-    private readonly PizzariaDBContext _context;
+    private readonly PizzariaDbContext _context;
 
-    public AcompanhamentoController(PizzariaDBContext context) 
+    public AcompanhamentoController(PizzariaDbContext context) 
     {
         _context = context;
     }
@@ -25,11 +27,11 @@ public class AcompanhamentoController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<Acompanhamento>> Buscar([FromRoute] int id)   
     {
-        var Acompanhamento = await _context.Acompanhamento.FindAsync(id);
-        if (Acompanhamento == null) 
+        var acompanhamento = await _context.Acompanhamento.FindAsync(id);
+        if (acompanhamento == null) 
             return NotFound();
         
-        return Ok(Acompanhamento);
+        return Ok(acompanhamento);
     }
 
     [HttpPost]

@@ -1,7 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using pizzaria;
 
-namespace pizzaria;
+namespace Pizzaria.Models;
 
 public class Endereco
 {
@@ -11,7 +12,7 @@ public class Endereco
     public string Rua { get; set; } = "";
     public int Numero { get; set; }
     public string Cep { get; set; } = "";
-    public Regiao Regiao { get; set; } = new Regiao();
+    public Regiao Regiao { get; set; } = new();
     public string ?Complemento { get; set; }
     public int ClienteId { get; set; }
     

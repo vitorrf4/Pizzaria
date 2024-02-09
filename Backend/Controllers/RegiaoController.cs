@@ -1,16 +1,17 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using pizzaria;
+using Pizzaria.Data;
+using Pizzaria.Models;
 
-namespace Pizzaria;
+namespace Pizzaria.Controllers;
 
 [Route("regiao")]
 [ApiController]
 public class RegiaoController : ControllerBase
 {
-    private readonly PizzariaDBContext _context;
+    private readonly PizzariaDbContext _context;
 
-    public RegiaoController(PizzariaDBContext context)
+    public RegiaoController(PizzariaDbContext context)
     {
         _context = context;
     }

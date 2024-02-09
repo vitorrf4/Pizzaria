@@ -1,7 +1,7 @@
 using System.Net;
 using System.Text;
 
-namespace pizzaria;
+namespace Pizzaria.Middleware;
 
 public class ExceptionHandlerMiddleware
 {
@@ -29,9 +29,9 @@ public class ExceptionHandlerMiddleware
     //TODO: Handle unique id exception, set specific response
     private async Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
-        string body = await GetRawBody(context);
-        string endpoint = context.Request.Path;
-        string method = context.Request.Method;
+        var body = await GetRawBody(context);
+        var endpoint = context.Request.Path;
+        var method = context.Request.Method;
 
         _logger.LogError(exception, "{Time} | Error at {method} {endpoint}\n" +
                                     "Body: {body}", DateTime.Now, method, endpoint, body);
@@ -41,7 +41,6 @@ public class ExceptionHandlerMiddleware
     }
 
     private async Task<string> GetRawBody(HttpContext context) {
-        string body;
         try
         {
             context.Request.Body.Seek(0, SeekOrigin.Begin);
@@ -50,8 +49,9 @@ public class ExceptionHandlerMiddleware
         {
             Console.WriteLine("Can't rewind body stream. " + ex.Message);
         }
-        using (var reader = new StreamReader(context.Request.Body, Encoding.UTF8))
-            body = await reader.ReadToEndAsync();
+
+        using var reader = new StreamReader(context.Request.Body, Encoding.UTF8);
+        var body = await reader.ReadToEndAsync();
 
         return body;
     }

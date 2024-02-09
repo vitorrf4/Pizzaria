@@ -1,15 +1,17 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Pizzaria.Data;
+using Pizzaria.Models;
 
-namespace pizzaria;
+namespace Pizzaria.Controllers;
 
 [ApiController] 
 [Route("cliente/")]
 public class ClienteController : ControllerBase
 {
-    private readonly PizzariaDBContext _context;
+    private readonly PizzariaDbContext _context;
 
-    public ClienteController(PizzariaDBContext context)
+    public ClienteController(PizzariaDbContext context)
     {
         _context = context;
     }
@@ -25,7 +27,7 @@ public class ClienteController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Cliente>> BuscarPorCPF(int id)
+    public async Task<ActionResult<Cliente>> BuscarPorCpf(int id)
     {
         var cliente = await _context.Cliente
             .Where(cliente => cliente.Id == id)

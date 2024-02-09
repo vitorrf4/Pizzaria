@@ -1,10 +1,12 @@
-namespace pizzaria;
+using pizzaria;
+
+namespace Pizzaria.Models;
 
 public class Cliente : Usuario
 {
     public string Nome { get; set; } = "";
     public string Telefone { get; set; } = "";
-    public Endereco Endereco { get; set; } = new Endereco();
+    public Endereco Endereco { get; set; } = new();
 
     public Cliente() { }
 

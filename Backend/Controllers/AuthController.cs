@@ -1,25 +1,28 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Pizzaria.Data;
+using Pizzaria.DTOs;
+using Pizzaria.Models;
 
-namespace pizzaria;
+namespace Pizzaria.Controllers;
 
 [ApiController] 
 [Route("auth/")]
 public class AuthController : ControllerBase
 {
-    private readonly PizzariaDBContext _context;
+    private readonly PizzariaDbContext _context;
 
-    public AuthController(PizzariaDBContext context)
+    public AuthController(PizzariaDbContext context)
     {
         _context = context;
     }
 
     [HttpPost("login")]
-    public async Task<ActionResult<Cliente>> Login([FromBody] LoginDTO loginDTO)
+    public async Task<ActionResult<Cliente>> Login([FromBody] LoginDto loginDto)
     {
         var cliente = await _context.Cliente
-            .Where(cliente => cliente.Email == loginDTO.Email 
-                    && cliente.Senha == loginDTO.Senha)
+            .Where(cliente => cliente.Email == loginDto.Email && 
+                              cliente.Senha == loginDto.Senha)
             .Include(c => c.Endereco).ThenInclude(e => e.Regiao)
             .FirstOrDefaultAsync();
 

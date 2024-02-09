@@ -1,19 +1,20 @@
-using pizzaria;
+using Pizzaria.Data;
+using Pizzaria.Middleware;
 
 var builder = WebApplication.CreateBuilder(args); 
 
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen(); 
-builder.Services.AddDbContext<PizzariaDBContext>();
-builder.Services.AddTransient<PizzariaDBContext>();
+builder.Services.AddDbContext<PizzariaDbContext>();
+builder.Services.AddTransient<PizzariaDbContext>();
 
 builder.Services.AddCors();
 var app = builder.Build();
 
 var scope = app.Services.CreateScope().ServiceProvider;
-var DbContext = scope.GetRequiredService<PizzariaDBContext>();
+var dbContext = scope.GetRequiredService<PizzariaDbContext>();
 
-DbContext.InicializaValores();
+dbContext.InicializaValores();
 
 if (app.Environment.IsDevelopment())
 {
