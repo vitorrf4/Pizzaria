@@ -1,8 +1,9 @@
 using Pizzaria.Data;
 using Pizzaria.Middleware;
 using Pizzaria.Services;
+using Pizzaria.Services.Interfaces;
 
-var builder = WebApplication.CreateBuilder(args); 
+var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen(); 

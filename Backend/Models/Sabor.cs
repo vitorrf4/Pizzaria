@@ -19,7 +19,7 @@ public class Sabor
 
     private Sabor() { }
 
-    public Sabor(string nome, double preco)
+    public Sabor(string nome, double preco = 15)
     {
         Nome = nome;
         Preco = preco;

@@ -37,10 +37,10 @@ public sealed class PizzariaDbContext : DbContext{
                     .HasMany(p => p.Sabores)
                     .WithMany();
 
-        modelBuilder.Entity<PedidoFinal>()
-                    .HasOne<Cliente>()
-                    .WithMany()
-                    .HasForeignKey(c => c.ClienteId);
+        // modelBuilder.Entity<PedidoFinal>()
+        //             .HasOne<Cliente>()
+        //             .WithMany()
+        //             .HasForeignKey(c => c.Cliente);
     }
 
     public void InicializaValores()
@@ -101,7 +101,7 @@ public sealed class PizzariaDbContext : DbContext{
 
         // PedidoFinal
         var pedidoFinal = new PedidoFinal(
-            1, cliente1.Endereco,
+            cliente1,
             new List<PizzaPedido>() { pizzaPedido, pizzaPedido2 },
             new List<AcompanhamentoPedido>() { acompanhamentoPedido1 });
          

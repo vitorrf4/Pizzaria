@@ -44,7 +44,7 @@ public class ClienteController : ControllerBase
     public async Task<IActionResult> ListarPedidosPorCliente([FromRoute] int id)
     {
         var pedidos = await GetPedidosFinaisComTodasAsPropriedades()
-            .Where(p => p.ClienteId == id)
+            .Where(p => p.Cliente.Id == id)
             .ToListAsync();
 
         return Ok(pedidos);
@@ -107,7 +107,7 @@ public class ClienteController : ControllerBase
     private IQueryable<PedidoFinal> GetPedidosFinaisComTodasAsPropriedades()
     {
         return _context.PedidoFinal
-            .Include(p => p.Endereco)
+            .Include(p => p.Cliente).ThenInclude(c => c.Endereco).ThenInclude(e => e.Regiao)
             .Include(p => p.Acompanhamentos).ThenInclude(a => a.Acompanhamento)
             .Include(p => p.Pizzas).ThenInclude(p => p.Tamanho)
             .Include(p => p.Pizzas).ThenInclude(p => p.Sabores);

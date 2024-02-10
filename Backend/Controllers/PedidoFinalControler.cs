@@ -1,7 +1,7 @@
-using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
+using Pizzaria.DTOs;
 using Pizzaria.Models;
-using Pizzaria.Services;
+using Pizzaria.Services.Interfaces;
 
 namespace Pizzaria.Controllers;
 
@@ -34,13 +34,13 @@ public class PedidoFinalController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult> Cadastrar([Required] [FromBody] PedidoFinal pedidoFinal)
+    public async Task<ActionResult> Cadastrar([FromBody] PedidoDto pedidoFinal)
     {
-        var foiCadastrado = await _service.Cadastrar(pedidoFinal);
+        var pedidoCadastrado = await _service.Cadastrar(pedidoFinal);
 
-        return foiCadastrado ? Created($"/{pedidoFinal.Id}", pedidoFinal) : BadRequest();
+        return pedidoCadastrado != null ? Created($"/{pedidoCadastrado.Id}", pedidoCadastrado) : BadRequest();
     }
-    
+     
     [HttpDelete("{id}")]
     public async Task<ActionResult> Excluir([FromRoute] int id)
     {

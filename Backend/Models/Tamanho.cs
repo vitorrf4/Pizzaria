@@ -22,6 +22,11 @@ public class Tamanho
 
     private Tamanho() { }
 
+    public Tamanho(string nome)
+    {
+        Nome = nome;
+    }
+
     public Tamanho(string nome, int qntdFatias, int maxSabores, double preco)
     { 
         Nome = nome;
