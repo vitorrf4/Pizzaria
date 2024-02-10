@@ -5,6 +5,8 @@ import {PedidoFinal} from "../../models/PedidoFinal";
 import {LoginService} from "../../services/login.service";
 import {PedidoFinalService} from "../../services/pedido-final.service";
 import { Router} from "@angular/router";
+import {PizzaPedidoDto} from "../../models/PizzaPedidoDto";
+import {PedidoDto} from "../../models/PedidoDTO";
 
 @Component({
   selector: 'app-carrinho',
@@ -34,7 +36,7 @@ export class CarrinhoComponent implements OnInit {
 
     this.pedidoFinal = new PedidoFinal(cliente.id, cliente.endereco, pizzas, acompanhamentos);
   }
- 
+
   removerDoCarrinho(index: number) {
     this.carrinhoService.removerDoCarrinho(index);
   }
@@ -45,7 +47,9 @@ export class CarrinhoComponent implements OnInit {
       return;
     }
 
-    this.pedidoFinalService.cadastrar(this.pedidoFinal).subscribe({
+    const pizzaPedidoDto = new PedidoDto(this.pedidoFinal);
+
+    this.pedidoFinalService.cadastrar(pizzaPedidoDto).subscribe({
       next: () => {
         alert("Pedido finalizado com sucesso");
         this.limparCarrinho();

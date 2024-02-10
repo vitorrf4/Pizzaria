@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { enviroment } from 'src/enviroments/enviroments';
 import { PedidoFinal } from 'src/app/models/PedidoFinal';
+import {PedidoDto} from "../models/PedidoDTO";
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class PedidoFinalService {
     return this.http.get<PedidoFinal>(`${this.apiUrl}/pedido-final/` + id);
   }
 
-  cadastrar(pedidoFinal: PedidoFinal) {
+  cadastrar(pedidoFinal: PedidoDto) {
     return this.http.post<PedidoFinal>(`${this.apiUrl}/pedido-final/`, pedidoFinal);
   }
 
