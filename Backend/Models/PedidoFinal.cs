@@ -1,33 +1,43 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using JetBrains.Annotations;
 
 namespace Pizzaria.Models;
 
+[PublicAPI]
 public class PedidoFinal 
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
+    [Required(ErrorMessage = "O ClienteId é obrigatório")]
     public int ClienteId { get; set; }
-    public Endereco Endereco { get; set; } = new();
+    [Required(ErrorMessage = "O endereço é obrigatório")]
+    public Endereco Endereco { get; set; }
     public double PrecoTotal { get; private set; }
-    public DateTime HoraPedido { get; set; }
+    public DateTime HoraPedido { get; init; }
+    [MinLength(1, ErrorMessage = "Pelo menos uma pizza é obrigatória")]
     public List<PizzaPedido> Pizzas { get; set; } = new();
     public List<AcompanhamentoPedido> Acompanhamentos { get; set; } = new();
 
-    public PedidoFinal() { }
+    private PedidoFinal() { }
 
-    public PedidoFinal(int clienteId, Endereco endereco, 
-                       List<PizzaPedido> pizzas, List<AcompanhamentoPedido> ?acompanhamentos)
+    public PedidoFinal(int clienteId, Endereco endereco, List<PizzaPedido> pizzas)
     {
         ClienteId = clienteId;
         Endereco = endereco;
         Pizzas = pizzas;
-        Acompanhamentos = acompanhamentos ?? new List<AcompanhamentoPedido>();
         HoraPedido = DateTime.Now;
         CalcularPrecoTotal();
     }
-
+    
+    public PedidoFinal(int clienteId, Endereco endereco, List<PizzaPedido> pizzas,
+        List<AcompanhamentoPedido> acompanhamentos) : this(clienteId, endereco, pizzas)
+    {
+        Acompanhamentos = acompanhamentos;
+        CalcularPrecoTotal();
+    }
+    
     public void CalcularPrecoTotal()
     {
         double precoTotal = 0;

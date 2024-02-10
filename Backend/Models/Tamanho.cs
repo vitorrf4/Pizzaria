@@ -1,16 +1,26 @@
 using System.ComponentModel.DataAnnotations;
+using JetBrains.Annotations;
 
 namespace Pizzaria.Models;
 
+[PublicAPI]
 public class Tamanho
 {
     [Key]
+    [Required(ErrorMessage = "O nome é obrigatório")]
+    [MaxLength(30, ErrorMessage = "O nome não deve ultrapassar 30 caracteres")]
     public string Nome { get; set; } = "";
-    public int QntdFatias { get; set; }
+    [Required(ErrorMessage = "O multiplicador de preço é obrigatório")]
+    [Range(1, 100, ErrorMessage = "O multiplicador deve ser no mínimo 1")]
     public double MultiplicadorPreco { get; set; } = 1;
+    [Required(ErrorMessage = "A quantidade de fatias é obrigatória")]
+    [Range(1, 50, ErrorMessage = "A quantidade de fatias deve estar entre 1 e 50")]
+    public int QntdFatias { get; set; }
+    [Required(ErrorMessage = "O máximo de sabores é obrigatório")]
+    [Range(1, 10, ErrorMessage = "O máximo de sabores deve estar entre 1 e 10")]
     public int MaxSabores { get; set; }
 
-    public Tamanho() { }
+    private Tamanho() { }
 
     public Tamanho(string nome, int qntdFatias, int maxSabores, double preco)
     { 

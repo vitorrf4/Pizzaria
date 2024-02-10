@@ -31,7 +31,7 @@ public class PedidoFinalService : IPedidoFinalService
     public async Task<bool> Cadastrar(PedidoFinal pedidoFinal)
     {       
         pedidoFinal.CalcularPrecoTotal();
-        pedidoFinal.HoraPedido = DateTime.Now;
+        // pedidoFinal.HoraPedido = DateTime.Now;
 
         MudarTrackingDosCampos(pedidoFinal);
 

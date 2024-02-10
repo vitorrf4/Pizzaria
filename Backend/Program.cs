@@ -8,7 +8,7 @@ builder.Services.AddControllers();
 builder.Services.AddSwaggerGen(); 
 builder.Services.AddDbContext<PizzariaDbContext>();
 builder.Services.AddTransient<PizzariaDbContext>();
-builder.Services.AddTransient<PedidoFinalService>();
+builder.Services.AddTransient<IPedidoFinalService, PedidoFinalService>();
 
 builder.Services.AddCors();
 var app = builder.Build();

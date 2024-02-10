@@ -99,7 +99,7 @@ public class PedidoFinalControllerTest
 
     private static PedidoFinal CreatePedidoFinal()
     {
-        return new PedidoFinal(1, new Endereco(), new List<PizzaPedido>(), null);
+        return new PedidoFinal(1, null, new List<PizzaPedido>());
     }
 
 }

@@ -1,18 +1,23 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using JetBrains.Annotations;
 
 namespace Pizzaria.Models;
 
+[PublicAPI]
 public class AcompanhamentoPedido
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
-    public Acompanhamento Acompanhamento { get; set; } = new();
+    [Required(ErrorMessage = "O acompanhamento é obrigatório")]
+    public Acompanhamento Acompanhamento { get; set; }
+    [Required(ErrorMessage = "A quantidade é obrigatória")]
+    [Range(1, 100, ErrorMessage = "A quantidade deve estar entre 1 e 100")]
     public int Quantidade { get; set; }
-    public double Preco { get; set; }
+    public double Preco { get; private set; }
 
-    public AcompanhamentoPedido() { }
+    private AcompanhamentoPedido() { }
 
     public AcompanhamentoPedido(Acompanhamento acompanhamento, int quantidade)
     {

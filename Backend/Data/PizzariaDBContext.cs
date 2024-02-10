@@ -55,8 +55,8 @@ public sealed class PizzariaDbContext : DbContext{
         var capaoRaso = new Regiao("Capão Raso");
 
         // Endereco
-        var endereco1 = new Endereco("Rua 1", 1, "11111-11", centro);
-        var endereco2 = new Endereco("Rua 2", 2, "11111-11", boqueirao, "casa 5");
+        var endereco1 = new Endereco("Rua 1", "1", "11111-11", centro);
+        var endereco2 = new Endereco("Rua 2", "2", "11111-11", boqueirao, "casa 5");
 
         // Cliente
         var cliente1 = new Cliente("joao@","teste1" , "joao", "1111-1111",  endereco1);

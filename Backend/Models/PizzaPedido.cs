@@ -1,20 +1,25 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using JetBrains.Annotations;
 
 namespace Pizzaria.Models;
 
+[PublicAPI]
 public class PizzaPedido 
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int  Id { get; set; }
     // TODO: mudar List pra HashSet
+    [MinLength(1, ErrorMessage = "A pizza deve ter no mínimo um sabor")]
     public List<Sabor> Sabores { get; set; } = new();
-    public Tamanho Tamanho { get; set; } = new();
-    public double Preco { get; set; }
-    public int Quantidade { get; set;}
+    [Required(ErrorMessage = "O tamanho é obrigatório")]
+    public Tamanho Tamanho { get; set; }
+    public double Preco { get; private set; }
+    [Range(1, 100, ErrorMessage = "A quantidade deve estar entre 1 e 100")]
+    public int Quantidade { get; set; }
 
-    public PizzaPedido() { }
+    private PizzaPedido() { }
 
     public PizzaPedido(List<Sabor> sabores, Tamanho tamanho, int quantidade = 1)
     {
@@ -24,9 +29,10 @@ public class PizzaPedido
         CalcularPreco();
     }
 
-    public double CalcularPreco()
+    public void CalcularPreco()
     {
-        // Fórmula do preco = ((sabor1 + sabor2...saborN) / quantidade de sabores) + (preco * preco do tamanho) * quantidade
+        // Fórmula do preco = (sabor1 + sabor2...saborN) / quantidade de sabores +
+        //                    (preco * preco do tamanho) * quantidade
         var precoTotal = Sabores.Sum(sabor => sabor.Preco);
 
         if (Sabores.Count > 1)
@@ -34,8 +40,6 @@ public class PizzaPedido
 
         precoTotal *= Tamanho.MultiplicadorPreco;
         Preco = precoTotal * Quantidade;
-
-        return Preco;
     }
 
     public override string ToString()
