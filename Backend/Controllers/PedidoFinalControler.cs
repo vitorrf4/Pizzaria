@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using Pizzaria.Models;
 using Pizzaria.Services;
@@ -6,11 +7,12 @@ namespace Pizzaria.Controllers;
 
 [ApiController]
 [Route("pedido-final/")]
+
 public class PedidoFinalController : ControllerBase
 {
-    private readonly PedidoFinalService _service;
-
-    public PedidoFinalController(PedidoFinalService service)
+    private readonly IPedidoFinalService _service;
+    
+    public PedidoFinalController(IPedidoFinalService service)
     {
         _service = service;
     }
@@ -32,7 +34,7 @@ public class PedidoFinalController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Cadastrar(PedidoFinal pedidoFinal)
+    public async Task<ActionResult> Cadastrar([Required] [FromBody] PedidoFinal pedidoFinal)
     {
         var foiCadastrado = await _service.Cadastrar(pedidoFinal);
 
@@ -40,7 +42,7 @@ public class PedidoFinalController : ControllerBase
     }
     
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Excluir([FromRoute] int id)
+    public async Task<ActionResult> Excluir([FromRoute] int id)
     {
         var foiDeletado = await _service.Excluir(id);
         return foiDeletado ? NoContent() : NotFound();  

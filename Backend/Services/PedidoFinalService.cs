@@ -4,7 +4,7 @@ using Pizzaria.Models;
 
 namespace Pizzaria.Services;
 
-public class PedidoFinalService
+public class PedidoFinalService : IPedidoFinalService
 {
     private readonly PizzariaDbContext _context;
 
