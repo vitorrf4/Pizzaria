@@ -30,33 +30,37 @@ public class PedidoFinalService : IPedidoFinalService
             .FirstOrDefaultAsync();
     }
 
-    public async Task<PedidoFinal?> Cadastrar(PedidoDto pedidoFinal)
+    public async Task<PedidoFinal?> Cadastrar(PedidoFinalDto pedidoFinalFinal)
     {
-        var pedido = await CriarPedido(pedidoFinal);
+        var pedido = await CriarPedido(pedidoFinalFinal);
         if (pedido == null)
             return null;
-        // _context.Attach(pedido.Cliente);
+        
         await _context.AddAsync(pedido);
-
-        // MudarTrackingDosCampos(pedido);
 
         var pedidoFoiSalvo = await Salvar(); 
         return pedidoFoiSalvo ? pedido : null;
     }
 
-    private async Task<PedidoFinal?> CriarPedido(PedidoDto pedidoDto)
+    private async Task<PedidoFinal?> CriarPedido(PedidoFinalDto pedidoFinalDto)
     {
+        var clienteDb = await _context.Cliente
+            .Where(c => c.Id == pedidoFinalDto.ClienteId)
+            .Include(c => c.Endereco).ThenInclude(e => e.Regiao)
+            .FirstOrDefaultAsync();
+        if (clienteDb == null)
+            return null;
+        
         var saboresDb = new List<Sabor>();
         var pizzas = new List<PizzaPedido>();
         
-        foreach (var pizza in pedidoDto.Pizzas)
+        foreach (var pizza in pedidoFinalDto.Pizzas)
         {
             foreach (var sabor in pizza.Sabores)
             {
                 var pizzaDb = await _context.Sabor
                     .Where(p => p.Nome.ToUpper() == sabor.ToUpper())
                     .FirstOrDefaultAsync();
-
                 if (pizzaDb == null)
                     return null;
                 
@@ -72,35 +76,20 @@ public class PedidoFinalService : IPedidoFinalService
             pizzas.Add(new PizzaPedido(saboresDb, tamanhoDb, pizza.Quantidade));
         }
 
-        var clienteDb = await _context.Cliente
-            .Where(c => c.Id == pedidoDto.ClienteId)
-            .Include(c => c.Endereco).ThenInclude(e => e.Regiao)
-            .FirstOrDefaultAsync();
-                        
+        var acompanhamentos = new List<AcompanhamentoPedido>();
+        foreach (var acomp in pedidoFinalDto.Acompanhamentos)
+        {
+            var acompDb = await _context.Acompanhamento
+                .Where(a => a.Nome.ToUpper() == acomp.Acompanhamento.ToUpper())
+                .FirstOrDefaultAsync();
+            if (acompDb == null)
+                return null;
             
-        if (clienteDb == null)
-            return null;
-
-        return new PedidoFinal(clienteDb, pizzas);
+            acompanhamentos.Add(new AcompanhamentoPedido(acompDb, acomp.Quantidade));
+        }
+        
+        return new PedidoFinal(clienteDb, pizzas, acompanhamentos);
     }
-
-    // private void MudarTrackingDosCampos(PedidoFinal pedidoFinal) {
-    //     foreach (var p in pedidoFinal.Pizzas) {
-    //         _context.Attach(p);
-    //         _context.SaveChanges();
-    //         _context.ChangeTracker.Clear();
-    //     }
-    //
-    //     _context.ChangeTracker.TrackGraph(pedidoFinal, p =>
-    //     {
-    //         if (!p.Entry.IsKeySet)
-    //             p.Entry.State = EntityState.Added;                                                                       
-    //         else if (p.Entry.Metadata.DisplayName() == "Sabor")
-    //             p.Entry.State = EntityState.Detached;
-    //         else 
-    //             p.Entry.State = EntityState.Unchanged;   
-    //     });
-    // }
 
     public async Task<bool> Excluir(int id)
     {

@@ -5,6 +5,7 @@ using Pizzaria.Models;
 
 namespace Pizzaria.Controllers;
 
+//TODO separar sabor e tamanho em endpoint de cardapio
 [ApiController]
 [Route("sabor/")]
 public class SaborController : ControllerBase

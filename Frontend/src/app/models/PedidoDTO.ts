@@ -1,10 +1,11 @@
 import {PizzaPedidoDto} from "./PizzaPedidoDto";
 import {PedidoFinal} from "./PedidoFinal";
+import {AcompanhamentoPedidoDto} from "./AcompanhamentoPedidoDto";
 
 export class PedidoDto {
   clienteId: number = 0;
   pizzas : PizzaPedidoDto[] = []
-  acompanhamentos : Map<string, number> = new Map<string, number>();
+  acompanhamentos : AcompanhamentoPedidoDto[] = [];
 
   constructor(pedidoFinal: PedidoFinal) {
     pedidoFinal.pizzas.forEach(p => {
@@ -13,7 +14,7 @@ export class PedidoDto {
       this.pizzas.push(pizzaPedidoDto);
     });
     pedidoFinal.acompanhamentos.forEach(a => {
-      this.acompanhamentos.set(a.acompanhamento.nome, a.quantidade);
+      this.acompanhamentos.push(new AcompanhamentoPedidoDto(a.acompanhamento.nome, a.quantidade));
     });
     this.clienteId = pedidoFinal.clienteId;
   }

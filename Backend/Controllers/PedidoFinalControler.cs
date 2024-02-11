@@ -34,9 +34,9 @@ public class PedidoFinalController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult> Cadastrar([FromBody] PedidoDto pedidoFinal)
+    public async Task<ActionResult> Cadastrar([FromBody] PedidoFinalDto pedidoFinalFinal)
     {
-        var pedidoCadastrado = await _service.Cadastrar(pedidoFinal);
+        var pedidoCadastrado = await _service.Cadastrar(pedidoFinalFinal);
 
         return pedidoCadastrado != null ? Created($"/{pedidoCadastrado.Id}", pedidoCadastrado) : BadRequest();
     }

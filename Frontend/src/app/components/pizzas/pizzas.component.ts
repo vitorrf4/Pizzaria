@@ -12,6 +12,7 @@ import {CarrinhoService} from "../../services/carrinho.service";
   styleUrls: ['./pizzas.component.css']
 })
 export class PizzasComponent implements OnInit {
+  //TODO change to builder service
   saboresDB: Sabor[] = [];
   tamanhosDB : Tamanho[] = [];
   tamanhoSelecionado = new Tamanho();
@@ -78,7 +79,7 @@ export class PizzasComponent implements OnInit {
     for (let i = 1; i <= this.tamanhoSelecionado.maxSabores; i++) {
       max.push(i);
     }
-    
+
     return max;
   }
 
