@@ -6,7 +6,7 @@ import {LoginService} from "../../services/login.service";
 import {PedidoFinalService} from "../../services/pedido-final.service";
 import { Router} from "@angular/router";
 import {PizzaPedidoDto} from "../../models/PizzaPedidoDto";
-import {PedidoDto} from "../../models/PedidoDTO";
+import {PedidoDto} from "../../models/PedidoDto";
 
 @Component({
   selector: 'app-carrinho',
@@ -34,7 +34,7 @@ export class CarrinhoComponent implements OnInit {
     const pizzas = this.carrinhoService.filtrarPizzasNoCarrinho();
     const acompanhamentos = this.carrinhoService.filtrarAcompanhamentosNoCarrinho();
 
-    this.pedidoFinal = new PedidoFinal(cliente.id, cliente.endereco, pizzas, acompanhamentos);
+    this.pedidoFinal = new PedidoFinal(cliente, pizzas, acompanhamentos);
   }
 
   removerDoCarrinho(index: number) {

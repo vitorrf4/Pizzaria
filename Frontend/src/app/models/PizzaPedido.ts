@@ -1,6 +1,7 @@
 import { Sabor } from "./Sabor";
 import { Tamanho } from "./Tamanho";
 import {Pedido} from "./Pedido";
+import {CalcularPrecoPizza} from "./CalcularPrecoPizza";
 
 export class PizzaPedido implements Pedido {
   id: number = 0;
@@ -15,16 +16,7 @@ export class PizzaPedido implements Pedido {
   }
 
   get preco() {
-    let total = 0;
-    
-    this.sabores.forEach(sabor => total += sabor.preco);
-    total *= this.tamanho.multiplicadorPreco;
-
-    if (this.sabores.length > 1) {
-      total /= this.sabores.length;
-    }
-
-    return total *= this.quantidade;
+    return CalcularPrecoPizza(this.sabores, this.tamanho, this.quantidade);
   }
 
   getDescricao(): string {
@@ -41,7 +33,7 @@ export class PizzaPedido implements Pedido {
 
     return tamanho + nomesSabores;
   }
-  
+
   toJSON() {
     return {
       id: this.id,

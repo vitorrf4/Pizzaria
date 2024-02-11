@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { enviroment } from 'src/enviroments/enviroments';
 import { PedidoFinal } from 'src/app/models/PedidoFinal';
-import {PedidoDto} from "../models/PedidoDTO";
+import {PedidoDto} from "../models/PedidoDto";
 
 @Injectable({
   providedIn: 'root'

@@ -16,6 +16,6 @@ export class PedidoDto {
     pedidoFinal.acompanhamentos.forEach(a => {
       this.acompanhamentos.push(new AcompanhamentoPedidoDto(a.acompanhamento.nome, a.quantidade));
     });
-    this.clienteId = pedidoFinal.clienteId;
+    this.clienteId = pedidoFinal.cliente.id;
   }
 }

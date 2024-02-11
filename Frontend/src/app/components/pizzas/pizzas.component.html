@@ -12,11 +12,13 @@
               <th scope="col"></th>
             </tr>
           </thead>
-          <tr *ngFor="let sabor of saboresDB">
+          <tr *ngFor="let sabor of sabores">
             <td class="font-weight-bold">{{sabor.nome}}</td>
-            <td class="font-weight-bold">{{sabor.preco * tamanhoSelecionado.multiplicadorPreco | currency : "BRL"}}</td>
+            <td class="font-weight-bold">
+              {{sabor.preco * pizza.tamanho.multiplicadorPreco | currency : "BRL"}}
+            </td>
             <td>
-              <button (click)="adicionarSabor(sabor); construirPizza()" class="btn btn-primary">+</button>
+              <button (click)="adicionarSabor(sabor)" class="btn btn-primary">+</button>
             </td>
           </tr>
         </table>
@@ -27,17 +29,16 @@
         <h2>Monte sua pizza</h2>
         <label>Tamanho: </label>
 
-        <select [(ngModel)]="tamanhoSelecionado" (change)="construirPizza()">
-          <option value="" disabled selected>Selecione um tamanho</option>
-          <option *ngFor="let tamanho of tamanhosDB" [ngValue]="tamanho" >{{tamanho.nome}}</option>
+        <select (change)="mudarTamanho(tamanhoSelecionado.value)" #tamanhoSelecionado>
+          <option *ngFor="let tamanho of tamanhos">{{tamanho.nome}}</option>
         </select>
 
-        <p *ngIf="tamanhoSelecionado.maxSabores > 0" [(ngModel)]="tamanhoSelecionado" ngDefaultControl>
-          {{tamanhoSelecionado.qntdFatias}} fatias
+        <p *ngIf="pizza.tamanho.maxSabores > 0" ngDefaultControl>
+          {{pizza.tamanho.qntdFatias}} fatias
         </p>
 
         <label>Quantidade de Sabores:</label>
-        <select [(ngModel)]="quantidadeSabores" (change)="construirPizza()">
+        <select #quantidadeSabores (change)="mudarQuantidadeSabores(quantidadeSabores.value)">
           <option *ngFor="let qntd of maxQntdSabores">{{qntd}}</option>
         </select>
 
@@ -45,12 +46,13 @@
         <h3>Seu Pedido</h3>
 
         <p>Pizza {{pizza.tamanho.nome}}</p>
-        <div *ngFor="let pizza of pizza.sabores; let i = index">
-          <p>{{pizza.nome}} <button (click)="removerSabor(i);construirPizza()" class="btn btn-danger">X</button> </p>
+        <div *ngFor="let p of pizza.sabores; let i = index">
+          <p>{{p.nome}} <button (click)="removerSabor(i)" class="btn btn-danger">X</button> </p>
         </div>
 
         <label for="qntd" >Quantidade:</label>
-        <input type="number" [(ngModel)]="quantidadePizzas" (change)="construirPizza()" style="width: 40px" id="qntd">
+        <input type="number" style="width: 40px" id="qntd" value="1"
+               #quantidade (change)="mudarQuantidadePizzas(quantidade.valueAsNumber)">
 
         <p>Preço: {{pizza.preco | currency : "BRL"}}</p>
 
