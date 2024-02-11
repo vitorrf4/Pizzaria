@@ -1,5 +1,5 @@
 import { Acompanhamento } from "./Acompanhamento";
-import {Pedido} from "./Pedido";
+import {Pedido} from "../interfaces/Pedido";
 
 export class AcompanhamentoPedido implements Pedido {
   id: number = 0;

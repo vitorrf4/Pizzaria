@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {Cliente} from "../../models/Cliente";
+import {Cliente} from "../../models/entities/Cliente";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {LoginService} from "../../services/login.service";
-import {CepService} from "../../services/cep.service";
-import { AuthService } from 'src/app/services/auth.service';
+import {CepService} from "../../services/api/cep.service";
+import { AuthService } from 'src/app/services/api/auth.service';
 
 @Component({
   selector: 'app-cadastro',

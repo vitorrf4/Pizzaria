@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { enviroment } from 'src/enviroments/enviroments';
-import { PedidoFinal } from 'src/app/models/PedidoFinal';
-import {PedidoDto} from "../models/PedidoDto";
+import { PedidoFinal } from 'src/app/models/entities/PedidoFinal';
+import {PedidoDto} from "../../models/dtos/PedidoDto";
 
 @Injectable({
   providedIn: 'root'

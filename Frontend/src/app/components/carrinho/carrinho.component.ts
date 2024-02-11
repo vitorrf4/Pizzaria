@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {Pedido} from "../../models/Pedido";
+import {Pedido} from "../../models/interfaces/Pedido";
 import {CarrinhoService} from "../../services/carrinho.service";
-import {PedidoFinal} from "../../models/PedidoFinal";
+import {PedidoFinal} from "../../models/entities/PedidoFinal";
 import {LoginService} from "../../services/login.service";
-import {PedidoFinalService} from "../../services/pedido-final.service";
+import {PedidoFinalService} from "../../services/api/pedido-final.service";
 import { Router} from "@angular/router";
-import {PizzaPedidoDto} from "../../models/PizzaPedidoDto";
-import {PedidoDto} from "../../models/PedidoDto";
+import {PizzaPedidoDto} from "../../models/dtos/PizzaPedidoDto";
+import {PedidoDto} from "../../models/dtos/PedidoDto";
 
 @Component({
   selector: 'app-carrinho',

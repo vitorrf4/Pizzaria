@@ -1,5 +1,5 @@
 import {PizzaPedidoDto} from "./PizzaPedidoDto";
-import {PedidoFinal} from "./PedidoFinal";
+import {PedidoFinal} from "../entities/PedidoFinal";
 import {AcompanhamentoPedidoDto} from "./AcompanhamentoPedidoDto";
 
 export class PedidoDto {

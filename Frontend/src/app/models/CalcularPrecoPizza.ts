@@ -1,5 +1,5 @@
-import {Sabor} from "./Sabor";
-import {Tamanho} from "./Tamanho";
+import {Sabor} from "./entities/Sabor";
+import {Tamanho} from "./entities/Tamanho";
 
 export function CalcularPrecoPizza(sabores: Sabor[], tamanho: Tamanho, quantidade: number): number {
   if (quantidade <= 0)

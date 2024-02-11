@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Acompanhamento} from "../../models/Acompanhamento";
-import {AcompanhamentoService} from "../../services/acompanhamento.service";
-import {AcompanhamentoPedido} from "../../models/AcompanhamentoPedido";
+import {Acompanhamento} from "../../models/entities/Acompanhamento";
+import {AcompanhamentoService} from "../../services/api/acompanhamento.service";
+import {AcompanhamentoPedido} from "../../models/entities/AcompanhamentoPedido";
 import {CarrinhoService} from "../../services/carrinho.service";
 
 @Component({
@@ -13,7 +13,7 @@ export class AcompanhamentoComponent implements OnInit{
   acompanhamentos: Acompanhamento[] = []
   quantidadeArray: number[] = [];
 
-  constructor(private service: AcompanhamentoService, 
+  constructor(private service: AcompanhamentoService,
               private carrinhoService: CarrinhoService) { }
 
   ngOnInit() {

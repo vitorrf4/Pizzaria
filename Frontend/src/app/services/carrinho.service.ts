@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import {Pedido} from "../models/Pedido";
+import {Pedido} from "../models/interfaces/Pedido";
 import {BehaviorSubject} from "rxjs";
-import {PizzaPedido} from "../models/PizzaPedido";
-import {AcompanhamentoPedido} from "../models/AcompanhamentoPedido";
+import {PizzaPedido} from "../models/entities/PizzaPedido";
+import {AcompanhamentoPedido} from "../models/entities/AcompanhamentoPedido";
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +22,7 @@ export class CarrinhoService {
   }
 
   private atualizarQuantidadePedido(pedido: Pedido, index: number) {
-    const itensAtualizado = this.itensCarrinho; 
+    const itensAtualizado = this.itensCarrinho;
     itensAtualizado[index].quantidade += pedido.quantidade;
 
     this.itensCarrinho$.next(itensAtualizado);
@@ -46,7 +46,7 @@ export class CarrinhoService {
   removerDoCarrinho(index: number) {
     const novoCarrinho = this.itensCarrinho;
     novoCarrinho.splice(index, 1);
-    
+
     this.itensCarrinho$.next(novoCarrinho);
   }
 

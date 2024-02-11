@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { enviroment } from 'src/enviroments/enviroments';
-import { Acompanhamento } from 'src/app/models/Acompanhamento';
+import { Acompanhamento } from 'src/app/models/entities/Acompanhamento';
 
 @Injectable({
   providedIn: 'root'

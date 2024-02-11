@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {Sabor} from "../../models/Sabor";
-import {SaborService} from "../../services/sabor.service";
-import {Tamanho} from "../../models/Tamanho";
-import {TamanhoService} from "../../services/tamanho.service";
-import {PizzaPedido} from "../../models/PizzaPedido";
+import {Sabor} from "../../models/entities/Sabor";
+import {SaborService} from "../../services/api/sabor.service";
+import {Tamanho} from "../../models/entities/Tamanho";
+import {TamanhoService} from "../../services/api/tamanho.service";
 import {CarrinhoService} from "../../services/carrinho.service";
 import {PizzaBuilderService} from "../../services/pizza-builder.service";
 

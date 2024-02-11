@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import {Sabor} from "../models/Sabor";
-import {Tamanho} from "../models/Tamanho";
-import {PizzaPedido} from "../models/PizzaPedido";
-import {ServiceResultado} from "../models/ServiceResultado";
+import {Sabor} from "../models/entities/Sabor";
+import {Tamanho} from "../models/entities/Tamanho";
+import {PizzaPedido} from "../models/entities/PizzaPedido";
+import {ServiceResultado} from "../models/interfaces/ServiceResultado";
 import {CalcularPrecoPizza} from "../models/CalcularPrecoPizza";
 
 @Injectable({

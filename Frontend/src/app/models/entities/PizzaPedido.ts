@@ -1,7 +1,7 @@
 import { Sabor } from "./Sabor";
 import { Tamanho } from "./Tamanho";
-import {Pedido} from "./Pedido";
-import {CalcularPrecoPizza} from "./CalcularPrecoPizza";
+import {Pedido} from "../interfaces/Pedido";
+import {CalcularPrecoPizza} from "../CalcularPrecoPizza";
 
 export class PizzaPedido implements Pedido {
   id: number = 0;

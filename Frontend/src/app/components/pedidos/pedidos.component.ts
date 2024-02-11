@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {PedidoFinal} from "../../models/PedidoFinal";
-import {ClienteService} from "../../services/cliente.service";
+import {PedidoFinal} from "../../models/entities/PedidoFinal";
+import {ClienteService} from "../../services/api/cliente.service";
 import {LoginService} from "../../services/login.service";
-import {PizzaPedido} from "../../models/PizzaPedido";
-import {AcompanhamentoPedido} from "../../models/AcompanhamentoPedido";
+import {PizzaPedido} from "../../models/entities/PizzaPedido";
+import {AcompanhamentoPedido} from "../../models/entities/AcompanhamentoPedido";
 
 @Component({
   selector: 'app-pedidos',

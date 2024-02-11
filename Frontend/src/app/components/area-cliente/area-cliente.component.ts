@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {ClienteService} from "../../services/cliente.service";
-import {Cliente} from "../../models/Cliente";
+import {ClienteService} from "../../services/api/cliente.service";
+import {Cliente} from "../../models/entities/Cliente";
 import {LoginService} from "../../services/login.service";
 
 @Component({
@@ -11,7 +11,7 @@ import {LoginService} from "../../services/login.service";
 export class AreaClienteComponent implements OnInit{
   cliente: Cliente = new Cliente();
 
-  constructor(private clienteService: ClienteService, 
+  constructor(private clienteService: ClienteService,
               private loginService: LoginService) {}
 
   ngOnInit() {

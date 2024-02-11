@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import {FormControl, FormGroup} from "@angular/forms";
 import {LoginService} from "../../services/login.service";
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/api/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +12,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class LoginComponent implements OnInit{
   formularioCliente!: FormGroup;
 
-  constructor(private authService: AuthService, 
+  constructor(private authService: AuthService,
               private router: Router,
               private loginService: LoginService) { }
 
@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit{
       alert("Cpf está vazio");
       return;
     }
-    
+
     this.authService.login(email, senha).subscribe({
       next: async cliente => {
         this.loginService.salvarClienteLogado(cliente);
