@@ -1,5 +1,8 @@
-﻿namespace Pizzaria.DTOs;
+﻿using JetBrains.Annotations;
 
+namespace Pizzaria.DTOs;
+
+[PublicAPI]
 public struct PedidoDto
 {
     public int ClienteId { get; set; }

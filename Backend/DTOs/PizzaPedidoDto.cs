@@ -1,5 +1,8 @@
-﻿namespace Pizzaria.DTOs;
+﻿using JetBrains.Annotations;
 
+namespace Pizzaria.DTOs;
+
+[PublicAPI]
 public struct PizzaPedidoDto
 {
     public List<string> Sabores { get; set; } = new();
