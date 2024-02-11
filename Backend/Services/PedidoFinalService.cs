@@ -44,6 +44,7 @@ public class PedidoFinalService : IPedidoFinalService
 
     private async Task<PedidoFinal?> CriarPedido(PedidoFinalDto pedidoFinalDto)
     {
+        //TODO fix database nao acha pedidos com acentos
         var clienteDb = await _context.Cliente
             .Where(c => c.Id == pedidoFinalDto.ClienteId)
             .Include(c => c.Endereco).ThenInclude(e => e.Regiao)
@@ -59,7 +60,7 @@ public class PedidoFinalService : IPedidoFinalService
             foreach (var sabor in pizza.Sabores)
             {
                 var pizzaDb = await _context.Sabor
-                    .Where(p => p.Nome.ToUpper() == sabor.ToUpper())
+                    .Where(p => p.Nome == sabor)
                     .FirstOrDefaultAsync();
                 if (pizzaDb == null)
                     return null;
@@ -68,7 +69,7 @@ public class PedidoFinalService : IPedidoFinalService
             }
 
             var tamanhoDb = await _context.Tamanho
-                .Where(t => t.Nome.ToUpper() == pizza.Tamanho.ToUpper())
+                .Where(t => t.Nome == pizza.Tamanho)
                 .FirstOrDefaultAsync();
             if (tamanhoDb == null)
                 return null;
@@ -80,7 +81,7 @@ public class PedidoFinalService : IPedidoFinalService
         foreach (var acomp in pedidoFinalDto.Acompanhamentos)
         {
             var acompDb = await _context.Acompanhamento
-                .Where(a => a.Nome.ToUpper() == acomp.Acompanhamento.ToUpper())
+                .Where(a => a.Nome == acomp.Acompanhamento)
                 .FirstOrDefaultAsync();
             if (acompDb == null)
                 return null;

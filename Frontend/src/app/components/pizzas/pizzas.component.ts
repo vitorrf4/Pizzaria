@@ -54,6 +54,7 @@ export class PizzasComponent implements OnInit {
   }
 
   mudarTamanho(tamanho: string) {
+    //TODO fix select de tamanho não volta pra broto após adicionar pizza
     const tamanhoDb = this.tamanhos.find(t => t.nome == tamanho) ?? this.tamanhos[0];
     this.pizzaBuilder.mudarTamanho(tamanhoDb);
   }
