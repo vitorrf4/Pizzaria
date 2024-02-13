@@ -7,8 +7,8 @@ public struct PedidoFinalDto
 {
     public int ClienteId { get; set; }
     public List<PizzaPedidoDto> Pizzas { get; init; }
-    public List<AcompanhamentoPedidoDto> Acompanhamentos { get; init; } = new();
-    
+    public List<AcompanhamentoPedidoDto>? Acompanhamentos { get; init; } = new();
+     
     public PedidoFinalDto(int clienteId, List<PizzaPedidoDto> pizzas) 
     {
         ClienteId = clienteId;

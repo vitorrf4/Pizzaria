@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using JetBrains.Annotations;
+using Newtonsoft.Json;
 
 namespace Pizzaria.Models;
 
@@ -15,6 +16,7 @@ public class PizzaPedido
     public List<Sabor> Sabores { get; set; } = new();
     [Required(ErrorMessage = "O tamanho é obrigatório")]
     public Tamanho Tamanho { get; set; }
+    [JsonProperty] // permite serializacao de private setters
     public double Preco { get; private set; }
     [Range(1, 100, ErrorMessage = "A quantidade deve estar entre 1 e 100")]
     public int Quantidade { get; set; }

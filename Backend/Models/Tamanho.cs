@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using JetBrains.Annotations;
 
 namespace Pizzaria.Models;
@@ -22,6 +23,7 @@ public class Tamanho
 
     private Tamanho() { }
 
+    [JsonConstructor]
     public Tamanho(string nome)
     {
         Nome = nome;

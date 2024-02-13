@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using JetBrains.Annotations;
 
 namespace Pizzaria.Models;
@@ -20,6 +21,7 @@ public class PedidoFinal
 
     private PedidoFinal() { }
 
+    [JsonConstructor]
     public PedidoFinal(Cliente cliente, List<PizzaPedido> pizzas)
     {
         Cliente = cliente;
@@ -48,20 +50,17 @@ public class PedidoFinal
     public override string ToString()
     {
         var index = 1;
+        var str = "";
         
-        Console.WriteLine($"Pedido #{Id}");
-        Console.WriteLine($"Cliente: {Cliente}");
-        Console.Write($"PIZZAS \n");
+        str += $"Pedido #{Id} | Cliente: {Cliente}\nPIZZAS \n";
         Pizzas.ForEach(pizza => 
         {
-            Console.WriteLine($"Pizza #{index}: ");
-            Console.WriteLine(pizza);
+            str += $"Pizza #{index}: {pizza}";
             index++;
         });
-        Acompanhamentos.ForEach(Console.WriteLine);
-        Console.Write($"Hora do Pedido: {HoraPedido} | ");
-        Console.Write($"Preço Total do Pedido: R${PrecoTotal}");
+        Acompanhamentos.ForEach(a => str += a.ToString());
+        str += $"Hora do Pedido: {HoraPedido} | Preço Total do Pedido: R${PrecoTotal}";
 
-        return "";
+        return str;
     }
 }
