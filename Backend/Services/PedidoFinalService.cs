@@ -77,6 +77,9 @@ public class PedidoFinalService : IPedidoFinalService
             pizzas.Add(new PizzaPedido(saboresDb, tamanhoDb, pizza.Quantidade));
         }
 
+        if (pedidoFinalDto.Acompanhamentos == null)
+            return new PedidoFinal(clienteDb, pizzas);
+            
         var acompanhamentos = new List<AcompanhamentoPedido>();
         foreach (var acomp in pedidoFinalDto.Acompanhamentos)
         {
