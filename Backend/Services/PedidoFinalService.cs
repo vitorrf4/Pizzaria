@@ -44,6 +44,7 @@ public class PedidoFinalService : IPedidoFinalService
 
     private async Task<PedidoFinal?> CriarPedido(PedidoFinalDto pedidoFinalDto)
     {
+        //TODO verificar se quantidade de sabores nao excede limite do tamanho 
         var clienteDb = await _context.Cliente
             .Where(c => c.Id == pedidoFinalDto.ClienteId)
             .Include(c => c.Endereco).ThenInclude(e => e.Regiao)
@@ -51,11 +52,11 @@ public class PedidoFinalService : IPedidoFinalService
         if (clienteDb == null)
             return null;
         
-        var saboresDb = new List<Sabor>();
         var pizzas = new List<PizzaPedido>();
         
         foreach (var pizza in pedidoFinalDto.Pizzas)
         {
+            var saboresDb = new List<Sabor>();
             foreach (var sabor in pizza.Sabores)
             {
                 var pizzaDb = await _context.Sabor
