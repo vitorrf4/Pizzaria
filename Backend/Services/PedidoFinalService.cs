@@ -44,7 +44,6 @@ public class PedidoFinalService : IPedidoFinalService
 
     private async Task<PedidoFinal?> CriarPedido(PedidoFinalDto pedidoFinalDto)
     {
-        //TODO fix database nao acha pedidos com acentos
         var clienteDb = await _context.Cliente
             .Where(c => c.Id == pedidoFinalDto.ClienteId)
             .Include(c => c.Endereco).ThenInclude(e => e.Regiao)
