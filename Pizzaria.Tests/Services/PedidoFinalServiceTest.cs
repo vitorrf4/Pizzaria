@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
@@ -38,18 +39,19 @@ public class PedidoFinalServiceTest : IClassFixture<WebApplicationFactory<Pedido
     [Fact]
     public async Task when_fazer_pedido_then_success()
     {
-        var pizzasDto = new PizzaPedidoDto(new List<string> { "Frango" }, "Grande", 1);
+        const string expectedSabor = "brocolis com bacon";
+        var pizzasDto = new PizzaPedidoDto(new List<string> { expectedSabor }, "grande", 1);
         var pedidoDto = new PedidoFinalDto(1, new List<PizzaPedidoDto>{pizzasDto});
         var request = JsonContent.Create(pedidoDto);
         
         var response = await _client.PostAsync("/pedido-final", request);
         var pedido = await response.Content.ReadFromJsonAsync<PedidoFinal>();
         var actualSabor = pedido.Pizzas[0].Sabores[0].Nome;
-        const string expectedSabor = "Frango"; 
         
+        var saboresSaoIguais = expectedSabor.Equals(actualSabor, StringComparison.CurrentCultureIgnoreCase);
         Assert.Equal(HttpStatusCode.Created, response.StatusCode);
         Assert.Single(pedidoDto.Pizzas);
-        Assert.Equal(expectedSabor, actualSabor);
+        Assert.True(saboresSaoIguais);
     }
 
     [Fact]
@@ -57,8 +59,8 @@ public class PedidoFinalServiceTest : IClassFixture<WebApplicationFactory<Pedido
     {
         List<PizzaPedidoDto> pizzasDto = new()
         {
-            new PizzaPedidoDto(new List<string> { "Frango" }, "Pequena", 1),
-            new PizzaPedidoDto(new List<string> { "Frango", "Calabresa" }, "Grande", 1)
+            new PizzaPedidoDto(new List<string> { "frango" }, "pequena", 1),
+            new PizzaPedidoDto(new List<string> { "frango", "calabresa" }, "grande", 1)
         };
         var pedidoDto = new PedidoFinalDto(1, pizzasDto);
         var request = JsonContent.Create(pedidoDto);

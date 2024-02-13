@@ -25,7 +25,12 @@ public sealed class PizzariaDbContext : DbContext{
         optionsBuilder.UseSqlite(connectionString: "DataSource=pizzaria.db;Cache=shared");
         optionsBuilder.EnableSensitiveDataLogging();
     }
-
+    
+    protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+    {
+        configurationBuilder.Properties<string>().UseCollation("NOCASE");
+    }
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Usuario>()
@@ -36,11 +41,6 @@ public sealed class PizzariaDbContext : DbContext{
         modelBuilder.Entity<PizzaPedido>()
                     .HasMany(p => p.Sabores)
                     .WithMany();
-
-        // modelBuilder.Entity<PedidoFinal>()
-        //             .HasOne<Cliente>()
-        //             .WithMany()
-        //             .HasForeignKey(c => c.Cliente);
     }
 
     public void InicializaValores()
@@ -63,10 +63,10 @@ public sealed class PizzariaDbContext : DbContext{
         var cliente2 = new Cliente("maria@","teste2" ,"maria", "2222-2222", endereco2);
 
         // Sabor
-        var frango = new Sabor("Frango", 15.0);
-        var portuguesa = new Sabor("Portuguesa", 15.0);
-        var muzzarela = new Sabor("Muzzarela", 15.0);
-        var calabresa = new Sabor("Calabresa", 15.0);
+        var frango = new Sabor("Frango");
+        var portuguesa = new Sabor("Portuguesa");
+        var muzzarela = new Sabor("Muzzarela");
+        var calabresa = new Sabor("Calabresa");
         var quatroQueijos = new Sabor("Quatro Queijos", 17.0);
         var brocolisBacon = new Sabor("Brocolis com Bacon", 17.0);
         var camarao = new Sabor("Camarão", 19.0);
@@ -95,15 +95,15 @@ public sealed class PizzariaDbContext : DbContext{
         var acompanhamentoPedido2 = new AcompanhamentoPedido(suco, 1);
 
         // PizzaPedido
-        var sabores = new List<Sabor>() { frango };
+        var sabores = new List<Sabor> { frango };
         var pizzaPedido = new PizzaPedido(sabores, media, 3);
         var pizzaPedido2 = new PizzaPedido(sabores, grande);
 
         // PedidoFinal
         var pedidoFinal = new PedidoFinal(
             cliente1,
-            new List<PizzaPedido>() { pizzaPedido, pizzaPedido2 },
-            new List<AcompanhamentoPedido>() { acompanhamentoPedido1 });
+            new List<PizzaPedido> { pizzaPedido, pizzaPedido2 },
+            new List<AcompanhamentoPedido> { acompanhamentoPedido1 });
          
         //Adiciona no Banco
         Acompanhamento.AddRange(refrigerante, suco, paoDeAlho, agua, chocolate);
