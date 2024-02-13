@@ -7,6 +7,7 @@ public interface IPedidoFinalService
 {
     public Task<IEnumerable<PedidoFinal>> Listar();
     public Task<PedidoFinal?> BuscarPorId(int id);
-    public Task<PedidoFinal?> Cadastrar(PedidoFinalDto pedidoFinalFinal);
+    public Task<Resultado<PedidoFinal>> CriarPedido(PedidoFinalDto pedidoFinalFinal);
+    public Task<bool> SalvarPedido(PedidoFinal pedidoFinal);
     public Task<bool> Excluir(int id);
 } 

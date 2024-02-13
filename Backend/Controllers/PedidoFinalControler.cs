@@ -7,7 +7,6 @@ namespace Pizzaria.Controllers;
 
 [ApiController]
 [Route("pedido-final/")]
-
 public class PedidoFinalController : ControllerBase
 {
     private readonly IPedidoFinalService _service;
@@ -28,19 +27,24 @@ public class PedidoFinalController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<PedidoFinal>> Buscar([FromRoute] int id)
     {
-        var pedidoFinal = await _service.BuscarPorId(id);
+        var pedido = await _service.BuscarPorId(id);
         
-        return pedidoFinal != null ? Ok(pedidoFinal) : NotFound();
+        return pedido != null ? Ok(pedido) : NotFound();
     }
 
     [HttpPost]
-    public async Task<ActionResult> Cadastrar([FromBody] PedidoFinalDto pedidoFinalFinal)
+    public async Task<ActionResult> Cadastrar([FromBody] PedidoFinalDto pedidoDto)
     {
-        var pedidoCadastrado = await _service.Cadastrar(pedidoFinalFinal);
+        var resultado = await _service.CriarPedido(pedidoDto);
+        if (resultado.TemErros)
+            return BadRequest(resultado.Mensagem);
 
-        return pedidoCadastrado != null ? Created($"/{pedidoCadastrado.Id}", pedidoCadastrado) : BadRequest();
+        var pedidoFoiSalvo = await _service.SalvarPedido(resultado.Data!);
+        return pedidoFoiSalvo
+            ? Created($"/pedido-final/{resultado.Data!.Id}", resultado.Data)
+            : StatusCode(500, "Erro ao salvar pedido");
     }
-     
+    
     [HttpDelete("{id}")]
     public async Task<ActionResult> Excluir([FromRoute] int id)
     {

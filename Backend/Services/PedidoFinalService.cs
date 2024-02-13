@@ -18,7 +18,8 @@ public class PedidoFinalService : IPedidoFinalService
     public async Task<IEnumerable<PedidoFinal>> Listar()
     {
         var pedidoFinal = await GetPedidosFinaisComTodasAsPropriedades()
-                                .ToListAsync();
+            .AsNoTracking()
+            .ToListAsync();
 
         return pedidoFinal;
     }
@@ -27,30 +28,25 @@ public class PedidoFinalService : IPedidoFinalService
     {
         return await GetPedidosFinaisComTodasAsPropriedades()
             .Where(p => p.Id == id)
+            .AsNoTracking()
             .FirstOrDefaultAsync();
     }
 
-    public async Task<PedidoFinal?> Cadastrar(PedidoFinalDto pedidoFinalFinal)
+    public async Task<bool> SalvarPedido(PedidoFinal pedidoFinal)
     {
-        var pedido = await CriarPedido(pedidoFinalFinal);
-        if (pedido == null)
-            return null;
-        
-        await _context.AddAsync(pedido);
-
-        var pedidoFoiSalvo = await Salvar(); 
-        return pedidoFoiSalvo ? pedido : null;
+        await _context.PedidoFinal.AddAsync(pedidoFinal);
+        return  await Salvar();
     }
-
-    private async Task<PedidoFinal?> CriarPedido(PedidoFinalDto pedidoFinalDto)
+    
+    public async Task<Resultado<PedidoFinal>> CriarPedido(PedidoFinalDto pedidoFinalDto)
     {
         var clienteDb = await _context.Cliente
             .Where(c => c.Id == pedidoFinalDto.ClienteId)
             .Include(c => c.Endereco).ThenInclude(e => e.Regiao)
             .FirstOrDefaultAsync();
         if (clienteDb == null)
-            return null;
-        
+            return Resultado<PedidoFinal>.Falha("Cliente não encontrado");
+
         var pizzas = new List<PizzaPedido>();
         
         foreach (var pizza in pedidoFinalDto.Pizzas)
@@ -62,24 +58,26 @@ public class PedidoFinalService : IPedidoFinalService
                     .Where(p => p.Nome == sabor)
                     .FirstOrDefaultAsync();
                 if (saborDb == null)
-                    return null;
+                    return Resultado<PedidoFinal>.Falha($"Sabor {sabor} não encontrado");
                 
                 sabores.Add(saborDb);
             }
-
+            
             var tamanhoDb = await _context.Tamanho
                 .Where(t => t.Nome == pizza.Tamanho)
                 .FirstOrDefaultAsync();
             if (tamanhoDb == null)
-                return null;
+                return Resultado<PedidoFinal>.Falha($"Tamanho {pizza.Tamanho} não encontrado");
             if (pizza.Sabores.Count > tamanhoDb.MaxSabores)
-                return null;
+                return Resultado<PedidoFinal>.Falha(
+                    "Quantidade de sabores excede limite de sabores do tamanho");
 
             pizzas.Add(new PizzaPedido(sabores, tamanhoDb, pizza.Quantidade));
         }
 
+        var pedido = new PedidoFinal(clienteDb, pizzas);
         if (pedidoFinalDto.Acompanhamentos == null)
-            return new PedidoFinal(clienteDb, pizzas);
+            return Resultado<PedidoFinal>.Sucesso(pedido);
             
         var acompanhamentos = new List<AcompanhamentoPedido>();
         foreach (var acomp in pedidoFinalDto.Acompanhamentos)
@@ -88,12 +86,14 @@ public class PedidoFinalService : IPedidoFinalService
                 .Where(a => a.Nome == acomp.Acompanhamento)
                 .FirstOrDefaultAsync();
             if (acompDb == null)
-                return null;
+                return Resultado<PedidoFinal>.Falha(
+                    $"Acompanhamento {acomp.Acompanhamento} não encontrado");
             
             acompanhamentos.Add(new AcompanhamentoPedido(acompDb, acomp.Quantidade));
         }
-        
-        return new PedidoFinal(clienteDb, pizzas, acompanhamentos);
+
+        pedido.Acompanhamentos = acompanhamentos;
+        return Resultado<PedidoFinal>.Sucesso(pedido);
     }
 
     public async Task<bool> Excluir(int id)
